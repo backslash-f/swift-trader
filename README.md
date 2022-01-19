@@ -1,2 +1,2 @@
 # swift-trader
-Swift package to automate trading on exchanges such as Binance, Kucoin, etc. 🦾🤖💰
+A Swift package for connecting and trading on crypto exchanges such as Binance and Kucoin.
