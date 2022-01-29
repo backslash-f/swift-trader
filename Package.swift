@@ -3,6 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftTrader",
+    platforms: [
+        .macOS(.v12),
+        .iOS(.v15)
+    ],
     products: [
         .library(
             name: "SwiftTrader",
