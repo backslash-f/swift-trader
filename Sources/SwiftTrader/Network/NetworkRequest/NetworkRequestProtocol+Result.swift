@@ -31,7 +31,12 @@ public extension NetworkRequest {
             }
         default:
             let localizedErrorMessage = HTTPURLResponse.localizedString(forStatusCode: statusCode)
-            return .failure(.statusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage))
+            let requestError: NetworkRequestError = .statusCodeNotOK(
+                statusCode: statusCode,
+                localizedErrorMessage: localizedErrorMessage,
+                data: data
+            )
+            return .failure(requestError)
         }
     }
 }

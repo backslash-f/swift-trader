@@ -10,17 +10,17 @@ import Foundation
 /// The **resource** for requesting an overview of a Kucoin Futures account.
 ///
 /// https://docs.kucoin.com/futures/#account
-public struct KucoinAccountOverviewResource: APIResource {
+public struct KucoinAccountOverviewResource: NetworkResource {
     
     // MARK: - Properties
     
     public var url: URL {
         get throws {
-            let baseURLString = KucoinAPI.URL.base
+            let baseURLString = KucoinAPI.Futures.URL.base
             guard var urlComponents = URLComponents(string: baseURLString) else {
                 throw NetworkRequestError.invalidURLString(urlString: baseURLString)
             }
-            urlComponents.path = KucoinAPI.Path.accountOverview
+            urlComponents.path = KucoinAPI.Futures.Path.accountOverview
             let queryItems = [
                 URLQueryItem(name: KucoinAPI.QueryParam.currency, value: currencySymbol.rawValue)
             ]

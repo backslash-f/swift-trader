@@ -5,6 +5,8 @@
 //  Created by Fernando Fernandes on 24.01.22.
 //
 
+import Foundation
+
 /// Entry point for connecting and trading on crypto exchanges such as Binance and Kucoin.
 public struct SwiftTrader {
     
@@ -23,8 +25,23 @@ public struct SwiftTrader {
 
 public extension SwiftTrader {
     
-    #warning("TODO: create a SwiftTraderResult")
-    func kucoinFuturesAccountOverview() async throws -> NetworkRequestResult {
-        await KucoinAccountOverviewRequest(kucoinAuth: kucoinAuth).execute()
+    func kucoinFuturesAccountOverview() async throws -> Result<KucoinFuturesAccountOverviewResponse, SwiftTraderError> {
+        let request = KucoinAccountOverviewRequest(kucoinAuth: kucoinAuth)
+        switch await request.execute() {
+        case .success(let model):
+            guard let accountOverview = model as? KucoinFuturesAccountOverviewResponse else {
+                let modelString = model.toString()
+                return .failure(.unexpectedResponse(modelString: modelString))
+            }
+            return .success(accountOverview)
+        case .failure(let error):
+            switch error {
+            case .statusCodeNotOK(let statusCode, let errorMessage, let data):
+                let error = SwiftTraderError.error(for: statusCode, localizedErrorMessage: errorMessage, data: data)
+                return .failure(error)
+            default:
+                return .failure(.kucoinFuturesAccountOverviewError(error: error))
+            }
+        }
     }
 }

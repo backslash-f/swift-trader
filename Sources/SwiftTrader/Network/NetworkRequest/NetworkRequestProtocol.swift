@@ -7,7 +7,7 @@
 
 import Foundation
 
-public typealias NetworkRequestResult = Result<Decodable?, NetworkRequestError>
+public typealias NetworkRequestResult = Result<Decodable, NetworkRequestError>
 
 /// Represents a generic network request composed by basic functions that make a network request possible.
 public protocol NetworkRequest {

@@ -1,5 +1,5 @@
 //
-//  URLRequest+HTTPMethod.swift
+// HTTPMethod.swift
 //  
 //
 //  Created by Fernando Fernandes on 29.01.22.

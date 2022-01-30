@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Represents errors that may occur while interacting with Kucoin REST APIs.
+/// Encapsulates Kucoin system errors that may occur while interacting with its REST APIs.
 ///
 /// https://docs.kucoin.com/futures/#requests
 public struct KucoinSystemError: Codable {

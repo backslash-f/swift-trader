@@ -23,13 +23,7 @@ public struct KucoinAccountOverviewRequest: NetworkRequest {
             let accountOverviewResource = KucoinAccountOverviewResource(currencySymbol: currencySymbol)
             var urlRequest = URLRequest(url: try accountOverviewResource.url)
             urlRequest.httpMethod = HTTPMethod.GET.rawValue
-            
-#warning("TODO: header")
-            //    request.setValue(key, forHTTPHeaderField: "KC-API-KEY")
-            //    request.setValue(signature(secret: secret), forHTTPHeaderField: "KC-API-SIGN")
-            //    request.setValue("\(timestampMilliseconds)", forHTTPHeaderField: "KC-API-TIMESTAMP")
-            //    request.setValue(passphrase, forHTTPHeaderField: "KC-API-PASSPHRASE")
-            
+            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
             return urlRequest
         }
     }
@@ -56,9 +50,6 @@ public struct KucoinAccountOverviewRequest: NetworkRequest {
 
 public extension KucoinAccountOverviewRequest {
     
-#warning("TODO: kucoin error")
-    // case couldNotDecodeKucoinError(error: Error)
-    // case statusCodeNotOK(statusCode: Int, error: String, kucoinError: String)
     func decode(_ data: Data) throws -> KucoinFuturesAccountOverviewResponse {
         try JSONDecoder().decode(KucoinFuturesAccountOverviewResponse.self, from: data)
     }

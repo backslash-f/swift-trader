@@ -10,6 +10,17 @@ import Foundation
 /// Holds constants related to  Kucoin REST APIs.
 public struct KucoinAPI {
     
+    public struct Futures {
+
+        public struct Path {
+            static let accountOverview = "/api/v1/account-overview"
+        }
+        
+        public struct URL {
+            static let base = "https://api-futures.kucoin.com"
+        }
+    }
+    
     public struct HeaderField {
         static let apiKey           = "KC-API-KEY"
         static let apiSign          = "KC-API-SIGN"
@@ -17,15 +28,7 @@ public struct KucoinAPI {
         static let apiPassphrase    = "KC-API-PASSPHRASE"
     }
     
-    public struct Path {
-        static let accountOverview = "/api/v1/account-overview"
-    }
-    
     public struct QueryParam {
         static let currency = "currency"
-    }
-    
-    public struct URL {
-        static let base = "https://api-futures.kucoin.com"
     }
 }
