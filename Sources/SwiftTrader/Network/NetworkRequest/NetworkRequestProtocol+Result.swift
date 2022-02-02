@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Holds logic to parse and return results of type `NetworkRequestResult`.
 public extension NetworkRequest {

@@ -19,6 +19,9 @@ public enum NetworkRequestError: Error {
     /// Could not cast response to `HTTPURLResponse`.
     case invalidResponse
     
+    /// Could not instantiate a valid `URLRequest` (e.g.: `NetworkRequest.getter:request`).
+    case invalidRequest(error: Error)
+    
     /// Could not instantiate a `URLComponents` struct using the given `String` URL.
     case invalidURLString(urlString: String)
     

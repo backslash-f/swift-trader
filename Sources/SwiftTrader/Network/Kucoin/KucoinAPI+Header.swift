@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Holds logic to set values for default HTTP header fields common to all Kucoin APIs requests.
 extension KucoinAPI {

@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// A **request** for an overview of a Kucoin Futures account.
 ///
@@ -50,7 +53,7 @@ public struct KucoinAccountOverviewRequest: NetworkRequest {
 
 public extension KucoinAccountOverviewRequest {
     
-    func decode(_ data: Data) throws -> KucoinFuturesAccountOverviewResponse {
+    func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinFuturesAccountOverviewResponse.self, from: data)
     }
 }

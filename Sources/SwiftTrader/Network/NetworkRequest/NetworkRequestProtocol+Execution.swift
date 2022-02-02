@@ -22,21 +22,45 @@ public extension NetworkRequest {
     /// - Parameter request: `URLRequest` containing the target `URL`.
     /// - Returns: `NetworkRequestResult`.
     func execute() async -> NetworkRequestResult {
+        let req: URLRequest
+        do {
+            req = try request
+        } catch {
+            return .failure(.invalidRequest(error: error))
+        }
 #if os(macOS) || os(iOS)
+        return await runOnApplePlatforms(request: req)
+#elseif canImport(FoundationNetworking)
+        return await runOnLinux(request: req)
+#endif
+    }
+}
+
+#warning("TODO: retry mechanism, at least 3 times")
+
+// MARK: - Private
+
+private extension NetworkRequest {
+
+#if os(macOS) || os(iOS)
+    /// macOS and iOS.
+    func runOnApplePlatforms(request: URLRequest) async -> NetworkRequestResult {
         do {
             let (data, response) = try await session.data(for: request)
             return handleResult(data: data, response: response)
         } catch {
-            return handleResult(data: nil, response: nil, error: error)
+            return .failure(.requestFailed(error: error))
         }
-#elseif canImport(FoundationNetworking)
-        // `async/await` isn't fully ported to Linux; use "withCheckedContinuation(function:_:)" instead.
-        let (data, response, error) = await  withCheckedContinuation { continuation in
+    }
+#endif
+
+    /// `async/await` isn't fully ported to Linux; use "withCheckedContinuation(function:_:)" instead.
+    func runOnLinux(request: URLRequest) async -> NetworkRequestResult {
+        let (data, response, error) = await withCheckedContinuation { continuation in
             session.dataTask(with: request) { data, response, error in
                 continuation.resume(returning: (data, response, error))
             }.resume()
-            return handleResult(data: data, response: response, error: error)
         }
-#endif
+        return handleResult(data: data, response: response, error: error)
     }
 }

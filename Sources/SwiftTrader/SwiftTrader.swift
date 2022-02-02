@@ -30,8 +30,7 @@ public extension SwiftTrader {
         switch await request.execute() {
         case .success(let model):
             guard let accountOverview = model as? KucoinFuturesAccountOverviewResponse else {
-                let modelString = model.toString()
-                return .failure(.unexpectedResponse(modelString: modelString))
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
             }
             return .success(accountOverview)
         case .failure(let error):

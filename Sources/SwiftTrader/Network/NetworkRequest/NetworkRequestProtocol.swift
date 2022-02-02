@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public typealias NetworkRequestResult = Result<Decodable, NetworkRequestError>
 
