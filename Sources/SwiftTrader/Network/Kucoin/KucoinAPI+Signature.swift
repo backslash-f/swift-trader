@@ -5,15 +5,8 @@
 //  Created by Fernando Fernandes on 29.01.22.
 //
 
+import Crypto
 import Foundation
-
-#if canImport(CryptoKit)
-import CryptoKit
-#elseif canImport(Vapor)
-// [Server-side Support] Vapor includes SwiftCrypto, which is a Linux-compatible port of Apple's CryptoKit library.
-// https://docs.vapor.codes/4.0/crypto/
-import Vapor
-#endif
 
 /// Holds logic to sign requests against Kucoin APIs.
 public extension KucoinAPI {
