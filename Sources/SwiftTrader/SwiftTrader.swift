@@ -25,14 +25,14 @@ public struct SwiftTrader {
 
 public extension SwiftTrader {
     
-    func kucoinFuturesAccountOverview() async throws -> Result<KucoinFuturesAccountOverviewResponse, SwiftTraderError> {
-        let request = KucoinAccountOverviewRequest(kucoinAuth: kucoinAuth)
+    func kucoinFuturesAccountOverview(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinFuturesAccountOverview, SwiftTraderError> {
+        let request = KucoinFuturesAccountOverviewRequest(currencySymbol: currencySymbol, kucoinAuth: kucoinAuth)
         switch await request.execute() {
         case .success(let model):
-            guard let accountOverview = model as? KucoinFuturesAccountOverviewResponse else {
+            guard let futuresAccountOverview = model as? KucoinFuturesAccountOverview else {
                 return .failure(.unexpectedResponse(modelString: "\(model)"))
             }
-            return .success(accountOverview)
+            return .success(futuresAccountOverview)
         case .failure(let error):
             switch error {
             case .statusCodeNotOK(let statusCode, let errorMessage, let data):

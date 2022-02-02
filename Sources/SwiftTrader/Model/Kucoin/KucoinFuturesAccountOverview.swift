@@ -1,5 +1,5 @@
 //
-//  KucoinFuturesAccountOverviewResponse.swift
+//  KucoinFuturesAccountOverview.swift
 //  
 //
 //  Created by Fernando Fernandes on 27.01.22.
@@ -10,7 +10,7 @@ import Foundation
 /// Kucoin "Get Account Overview" REST API response.
 ///
 /// https://docs.kucoin.com/futures/#account
-public struct KucoinFuturesAccountOverviewResponse: Codable {
+public struct KucoinFuturesAccountOverview: Codable {
     public let code: String
     public let data: KucoinFuturesAccountData
 }

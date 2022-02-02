@@ -17,6 +17,7 @@ public protocol NetworkRequest {
     associatedtype DecodableModel: Decodable
     var session: URLSession { get }
     var request: URLRequest { get throws }
-    func execute() async -> NetworkRequestResult
+    var numberOfRetries: Int { get }
+    func execute(attemptNumber: Int) async -> NetworkRequestResult
     func decode(_ data: Data) throws -> DecodableModel
 }

@@ -21,7 +21,7 @@ public extension NetworkRequest {
     ///
     /// - Parameter request: `URLRequest` containing the target `URL`.
     /// - Returns: `NetworkRequestResult`.
-    func execute() async -> NetworkRequestResult {
+    func execute(attemptNumber: Int = 1) async -> NetworkRequestResult {
         let req: URLRequest
         do {
             req = try request
@@ -29,19 +29,33 @@ public extension NetworkRequest {
             return .failure(.invalidRequest(error: error))
         }
 #if os(macOS) || os(iOS)
-        return await runOnApplePlatforms(request: req)
+        let result = await runOnApplePlatforms(request: req)
+        switch result {
+        case .success:
+            return result
+        case .failure:
+            if attemptNumber <= numberOfRetries {
+#warning("TODO: [CONFIG] Wait time between attempts")
+                let seconds: Double = 2
+                await Task.sleep(UInt64(seconds * Double(NSEC_PER_SEC)))
+#warning("TODO: logger")
+                print("Retrying... \(attemptNumber) of \(numberOfRetries)")
+                fflush(stdout)
+                return await execute(attemptNumber: attemptNumber + 1)
+            } else {
+                return result
+            }
+        }
 #elseif canImport(FoundationNetworking)
         return await runOnLinux(request: req)
 #endif
     }
 }
 
-#warning("TODO: retry mechanism, at least 3 times")
-
 // MARK: - Private
 
 private extension NetworkRequest {
-
+    
 #if os(macOS) || os(iOS)
     /// macOS and iOS.
     func runOnApplePlatforms(request: URLRequest) async -> NetworkRequestResult {
@@ -53,7 +67,7 @@ private extension NetworkRequest {
         }
     }
 #endif
-
+    
     /// `async/await` isn't fully ported to Linux; use "withCheckedContinuation(function:_:)" instead.
     func runOnLinux(request: URLRequest) async -> NetworkRequestResult {
         let (data, response, error) = await withCheckedContinuation { continuation in

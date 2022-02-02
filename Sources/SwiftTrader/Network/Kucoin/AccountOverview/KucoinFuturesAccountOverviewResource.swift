@@ -1,5 +1,5 @@
 //
-//  KucoinAccountOverviewResource.swift
+//  KucoinFuturesAccountOverviewResource.swift
 //  
 //
 //  Created by Fernando Fernandes on 29.01.22.
@@ -10,7 +10,7 @@ import Foundation
 /// The **resource** for requesting an overview of a Kucoin Futures account.
 ///
 /// https://docs.kucoin.com/futures/#account
-public struct KucoinAccountOverviewResource: NetworkResource {
+public struct KucoinFuturesAccountOverviewResource: NetworkResource {
     
     // MARK: - Properties
     
@@ -38,7 +38,7 @@ public struct KucoinAccountOverviewResource: NetworkResource {
     
     // MARK: - Lifecycle
     
-    /// Creates a new `KucoinAccountOverviewResource` instance.
+    /// Creates a new `KucoinFuturesAccountOverviewResource` instance.
     ///
     /// - Parameter currencySymbol: `CurrencySymbol`, default is `USDT`.
     init(currencySymbol: CurrencySymbol = .USDT) {
