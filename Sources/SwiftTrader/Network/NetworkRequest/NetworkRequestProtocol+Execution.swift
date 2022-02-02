@@ -36,9 +36,9 @@ public extension NetworkRequest {
         case .failure:
             if attemptNumber <= numberOfRetries {
 #warning("TODO: [CONFIG] Wait time between attempts")
-                let seconds: Double = 2
-                await Task.sleep(UInt64(seconds * Double(NSEC_PER_SEC)))
-#warning("TODO: logger")
+                // Delay the task by 2 seconds:
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
+#warning("TODO: logger / enable, disable via config, default is ON")
                 print("Retrying... \(attemptNumber) of \(numberOfRetries)")
                 fflush(stdout)
                 return await execute(attemptNumber: attemptNumber + 1)
