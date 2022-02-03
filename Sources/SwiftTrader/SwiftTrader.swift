@@ -12,12 +12,17 @@ public struct SwiftTrader {
     
     // MARK: - Properties
     
-    public let kucoinAuth: KucoinAuth
+    private let settings: SwiftTraderSettings
+    
+    // MARK: Private
+    
+    private let kucoinAuth: KucoinAuth
     
     // MARK: - Lifecycle
     
-    public init(kucoinAuth: KucoinAuth) {
+    public init(kucoinAuth: KucoinAuth, settings: SwiftTraderSettings = DefaultSwiftTraderSettings()) {
         self.kucoinAuth = kucoinAuth
+        self.settings = settings
     }
 }
 
@@ -26,7 +31,11 @@ public struct SwiftTrader {
 public extension SwiftTrader {
     
     func kucoinFuturesAccountOverview(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinFuturesAccountOverview, SwiftTraderError> {
-        let request = KucoinFuturesAccountOverviewRequest(currencySymbol: currencySymbol, kucoinAuth: kucoinAuth)
+        let request = KucoinFuturesAccountOverviewRequest(
+            currencySymbol: currencySymbol,
+            kucoinAuth: kucoinAuth,
+            settings: settings.networkRequestSettings
+        )
         switch await request.execute() {
         case .success(let model):
             guard let futuresAccountOverview = model as? KucoinFuturesAccountOverview else {

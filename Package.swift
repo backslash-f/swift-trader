@@ -15,13 +15,15 @@ let package = Package(
     ],
     dependencies: [
         // [Server-side Support] SwiftCrypto is a Linux-compatible port of Apple's CryptoKit library.
-        .package(url: "https://github.com/apple/swift-crypto.git", from: "2.0.0")
+        .package(url: "https://github.com/apple/swift-crypto.git", from: "2.0.0"),
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0")
     ],
     targets: [
         .target(
             name: "SwiftTrader",
             dependencies: [
-                .product(name: "Crypto", package: "swift-crypto")
+                .product(name: "Crypto", package: "swift-crypto"),
+                .product(name: "Logging", package: "swift-log")
             ]
         ),
         .testTarget(

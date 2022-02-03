@@ -28,19 +28,17 @@ public extension NetworkRequest {
         } catch {
             return .failure(.invalidRequest(error: error))
         }
+        logger.log(message: "req... \(req)", isFlush: false)
+        logger.log(message: "FLUUUUSH", isFlush: true)
 #if os(macOS) || os(iOS)
         let result = await runOnApplePlatforms(request: req)
         switch result {
         case .success:
             return result
         case .failure:
-            if attemptNumber <= numberOfRetries {
-#warning("TODO: [CONFIG] Wait time between attempts")
-                // Delay the task by 2 seconds:
-                try? await Task.sleep(nanoseconds: 2_000_000_000)
-#warning("TODO: logger / enable, disable via config, default is ON")
-                print("Retrying... \(attemptNumber) of \(numberOfRetries)")
-                fflush(stdout)
+            if attemptNumber <= settings.numberOfRetries {
+                logger.log(message: "Retrying... \(attemptNumber) of \(settings.numberOfRetries)", isFlush: false)
+                try? await Task.sleep(nanoseconds: 1_000_000_000 * settings.delayBetweenRetries)
                 return await execute(attemptNumber: attemptNumber + 1)
             } else {
                 return result

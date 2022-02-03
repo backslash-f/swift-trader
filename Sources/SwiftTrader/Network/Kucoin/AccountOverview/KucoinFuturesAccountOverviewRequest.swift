@@ -14,10 +14,17 @@ import FoundationNetworking
 ///
 /// https://docs.kucoin.com/futures/#account
 public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
-    
+
     // MARK: - Properties
     
     public typealias DecodableModel = KucoinFuturesAccountOverview
+    
+    public var logger: SwiftTraderLogger {
+        SwiftTraderLogger(
+            label: "swift-trader.account-overview",
+            isLoggingEnabled: settings.isLoggingEnable
+        )
+    }
     
     public var session: URLSession
     
@@ -31,8 +38,7 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
         }
     }
     
-    #warning("TODO: [CONFIG] number of retries")
-    public var numberOfRetries: Int { 3 }
+    public var settings: NetworkRequestSettings
     
     // MARK: Private
     
@@ -45,10 +51,14 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
     /// Creates a new `KucoinFuturesAccountOverviewRequest` instance.
     ///
     /// - Parameter session: `URLSession` instance, the default is `.shared`.
-    public init(session: URLSession = .shared, currencySymbol: CurrencySymbol = .USDT, kucoinAuth: KucoinAuth) {
+    public init(session: URLSession = .shared,
+                currencySymbol: CurrencySymbol = .USDT,
+                kucoinAuth: KucoinAuth,
+                settings: NetworkRequestSettings) {
         self.session = session
         self.currencySymbol = currencySymbol
         self.kucoinAuth = kucoinAuth
+        self.settings = settings
     }
 }
 
