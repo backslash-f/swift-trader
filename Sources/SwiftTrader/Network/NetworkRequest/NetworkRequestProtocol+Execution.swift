@@ -42,7 +42,7 @@ private extension NetworkRequest {
 #if os(macOS) || os(iOS)
         result = await runOnApplePlatforms(request: request)
 #elseif canImport(FoundationNetworking)
-        result = await runOnLinux(request: req)
+        result = await runOnLinux(request: request)
 #endif
         switch result {
         case .success:
