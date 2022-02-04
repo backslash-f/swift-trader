@@ -28,8 +28,6 @@ public extension NetworkRequest {
         } catch {
             return .failure(.invalidRequest(error: error))
         }
-        logger.log(message: "req... \(req)", isFlush: false)
-        logger.log(message: "FLUUUUSH", isFlush: true)
 #if os(macOS) || os(iOS)
         let result = await runOnApplePlatforms(request: req)
         switch result {
@@ -37,7 +35,7 @@ public extension NetworkRequest {
             return result
         case .failure:
             if attemptNumber <= settings.numberOfRetries {
-                logger.log(message: "Retrying... \(attemptNumber) of \(settings.numberOfRetries)", isFlush: false)
+                logger.log(message: "Retrying... \(attemptNumber) of \(settings.numberOfRetries)")
                 try? await Task.sleep(nanoseconds: 1_000_000_000 * settings.delayBetweenRetries)
                 return await execute(attemptNumber: attemptNumber + 1)
             } else {
