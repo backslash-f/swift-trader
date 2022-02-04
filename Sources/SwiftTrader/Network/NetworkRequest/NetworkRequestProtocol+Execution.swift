@@ -22,27 +22,19 @@ public extension NetworkRequest {
     ///  Failed requests are to be retried `n` times, according to the `numberOfRetries` of `NetworkRequest.getter:settings`.
     ///
     /// - Returns: `NetworkRequestResult`.
-    func execute() async -> NetworkRequestResult {
+    func execute(attemptNumber: Int = 1) async -> NetworkRequestResult {
         let urlRequest: URLRequest
         do {
             urlRequest = try request
         } catch {
             return .failure(.invalidRequest(error: error))
         }
-        return await executeRetrying(request: urlRequest)
-    }
-}
-
-// MARK: - Private
-
-private extension NetworkRequest {
-    
-    func executeRetrying(request: URLRequest, attemptNumber: Int = 1) async -> NetworkRequestResult {
+        
         let result: NetworkRequestResult
 #if os(macOS) || os(iOS)
-        result = await runOnApplePlatforms(request: request)
+        result = await runOnApplePlatforms(request: urlRequest)
 #elseif canImport(FoundationNetworking)
-        result = await runOnLinux(request: request)
+        result = await runOnLinux(request: urlRequest)
 #endif
         switch result {
         case .success:
@@ -51,12 +43,17 @@ private extension NetworkRequest {
             if attemptNumber <= settings.numberOfRetries {
                 log(message: "Retrying... \(attemptNumber) of \(settings.numberOfRetries)")
                 try? await Task.sleep(nanoseconds: 1_000_000_000 * settings.delayBetweenRetries)
-                return await executeRetrying(request: request, attemptNumber: attemptNumber + 1)
+                return await execute(attemptNumber: attemptNumber + 1)
             } else {
                 return result
             }
         }
     }
+}
+
+// MARK: - Private
+
+private extension NetworkRequest {
     
 #if os(macOS) || os(iOS)
     /// `async/await` can be simply called on macOS and iOS platforms; no further action is needed.

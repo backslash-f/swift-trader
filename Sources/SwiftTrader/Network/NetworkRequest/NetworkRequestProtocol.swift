@@ -20,7 +20,7 @@ public protocol NetworkRequest {
     var session: URLSession { get }
     var request: URLRequest { get throws }
     var settings: NetworkRequestSettings { get }
-    func execute() async -> NetworkRequestResult
+    func execute(attemptNumber: Int) async -> NetworkRequestResult
     func decode(_ data: Data) throws -> DecodableModel
     func log(message: Logger.Message)
 }
