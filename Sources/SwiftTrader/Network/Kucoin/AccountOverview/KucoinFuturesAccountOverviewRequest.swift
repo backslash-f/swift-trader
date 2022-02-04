@@ -9,6 +9,7 @@ import Foundation
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
+import Logging
 
 /// A **request** for an overview of a Kucoin Futures account.
 ///
@@ -19,11 +20,8 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
     
     public typealias DecodableModel = KucoinFuturesAccountOverview
     
-    public var logger: SwiftTraderLogger {
-        SwiftTraderLogger(
-            label: "swift-trader.account-overview",
-            isLoggingEnabled: settings.isLoggingEnable
-        )
+    public var logger: Logger {
+        NetworkRequestLogger().default
     }
     
     public var session: URLSession

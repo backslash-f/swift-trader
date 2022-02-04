@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import Logging
 
 /// Conform to this protocol to provide/tweak default `NetworkRequest` settings.
 public protocol NetworkRequestSettings {
     
     /// `true` to enable logging of network requests.
     var isLoggingEnable: Bool { get }
+    
+    /// The log level.
+    var logLevel: Logger.Level { get }
     
     /// The number of retries of failed `NetworkRequest`s.
     var numberOfRetries: Int { get }
@@ -25,6 +29,7 @@ public struct DefaultNetworkRequestSettings: NetworkRequestSettings {
     
     // MARK: - Properties
     
+    public var logLevel: Logger.Level = .debug
     public var isLoggingEnable: Bool = true
     public var numberOfRetries: Int = 3
     public var delayBetweenRetries: UInt64 = 2

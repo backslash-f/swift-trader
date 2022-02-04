@@ -17,34 +17,19 @@ public extension NetworkRequest {
     
     // MARK: - Default Execution
     
-    /// Executes the given request asynchronously (`async/await`) and returns the result.
+    /// Executes the `NetworkRequest.getter:request` asynchronously and returns the `NetworkRequestResult`.
     ///
-    /// - Parameter request: `URLRequest` containing the target `URL`.
+    ///  Failed requests are to be retried `n` times, according to the `numberOfRetries` of `NetworkRequest.getter:settings`.
+    ///
     /// - Returns: `NetworkRequestResult`.
-    func execute(attemptNumber: Int = 1) async -> NetworkRequestResult {
-        let req: URLRequest
+    func execute() async -> NetworkRequestResult {
+        let urlRequest: URLRequest
         do {
-            req = try request
+            urlRequest = try request
         } catch {
             return .failure(.invalidRequest(error: error))
         }
-#if os(macOS) || os(iOS)
-        let result = await runOnApplePlatforms(request: req)
-        switch result {
-        case .success:
-            return result
-        case .failure:
-            if attemptNumber <= settings.numberOfRetries {
-                logger.log(message: "Retrying... \(attemptNumber) of \(settings.numberOfRetries)")
-                try? await Task.sleep(nanoseconds: 1_000_000_000 * settings.delayBetweenRetries)
-                return await execute(attemptNumber: attemptNumber + 1)
-            } else {
-                return result
-            }
-        }
-#elseif canImport(FoundationNetworking)
-        return await runOnLinux(request: req)
-#endif
+        return await executeRetrying(request: urlRequest)
     }
 }
 
@@ -52,8 +37,29 @@ public extension NetworkRequest {
 
 private extension NetworkRequest {
     
+    func executeRetrying(request: URLRequest, attemptNumber: Int = 1) async -> NetworkRequestResult {
+        let result: NetworkRequestResult
 #if os(macOS) || os(iOS)
-    /// macOS and iOS.
+        result = await runOnApplePlatforms(request: request)
+#elseif canImport(FoundationNetworking)
+        result = await runOnLinux(request: req)
+#endif
+        switch result {
+        case .success:
+            return result
+        case .failure:
+            if attemptNumber <= settings.numberOfRetries {
+                log(message: "Retrying... \(attemptNumber) of \(settings.numberOfRetries)")
+                try? await Task.sleep(nanoseconds: 1_000_000_000 * settings.delayBetweenRetries)
+                return await executeRetrying(request: request, attemptNumber: attemptNumber + 1)
+            } else {
+                return result
+            }
+        }
+    }
+    
+#if os(macOS) || os(iOS)
+    /// `async/await` can be simply called on macOS and iOS platforms; no further action is needed.
     func runOnApplePlatforms(request: URLRequest) async -> NetworkRequestResult {
         do {
             let (data, response) = try await session.data(for: request)
@@ -64,7 +70,7 @@ private extension NetworkRequest {
     }
 #endif
     
-    /// `async/await` isn't fully ported to Linux; use "withCheckedContinuation(function:_:)" instead.
+    /// `async/await` isn't fully ported to Linux; use "**withCheckedContinuation(function:_:)**" instead.
     func runOnLinux(request: URLRequest) async -> NetworkRequestResult {
         let (data, response, error) = await withCheckedContinuation { continuation in
             session.dataTask(with: request) { data, response, error in
