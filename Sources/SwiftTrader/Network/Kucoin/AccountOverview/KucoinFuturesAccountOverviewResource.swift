@@ -40,8 +40,8 @@ public struct KucoinFuturesAccountOverviewResource: NetworkResource {
     
     /// Creates a new `KucoinFuturesAccountOverviewResource` instance.
     ///
-    /// - Parameter currencySymbol: `CurrencySymbol`, default is `USDT`.
-    init(currencySymbol: CurrencySymbol = .USDT) {
+    /// - Parameter currencySymbol: `CurrencySymbol`.
+    init(currencySymbol: CurrencySymbol) {
         self.currencySymbol = currencySymbol
     }
 }

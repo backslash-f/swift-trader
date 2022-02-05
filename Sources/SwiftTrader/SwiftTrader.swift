@@ -30,6 +30,8 @@ public struct SwiftTrader {
 
 public extension SwiftTrader {
     
+    // MARK: Account Overview
+    
     func kucoinFuturesAccountOverview(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinFuturesAccountOverview, SwiftTraderError> {
         let request = KucoinFuturesAccountOverviewRequest(
             currencySymbol: currencySymbol,
@@ -38,17 +40,59 @@ public extension SwiftTrader {
         )
         switch await request.execute() {
         case .success(let model):
-            guard let futuresAccountOverview = model as? KucoinFuturesAccountOverview else {
+            guard let accountOverview = model as? KucoinFuturesAccountOverview else {
                 return .failure(.unexpectedResponse(modelString: "\(model)"))
             }
-            return .success(futuresAccountOverview)
+            return .success(accountOverview)
         case .failure(let error):
-            switch error {
-            case .statusCodeNotOK(let statusCode, let errorMessage, let data):
-                let error = SwiftTraderError.error(for: statusCode, localizedErrorMessage: errorMessage, data: data)
-                return .failure(error)
-            default:
-                return .failure(.kucoinFuturesAccountOverviewError(error: error))
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesAccountOverview)
+            return .failure(swiftTraderError)
+        }
+    }
+    
+    // MARK: Order List
+    
+    func kucoinFuturesOrderList(orderStatus: KucoinOrderStatus = .active) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
+        let request = KucoinFuturesOrdersListRequest(
+            orderStatus: orderStatus,
+            kucoinAuth: kucoinAuth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let orderList = model as? KucoinFuturesOrderList else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(orderList)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesOrderList)
+            return .failure(swiftTraderError)
+        }
+    }
+}
+
+// MARK: - Private
+
+/// The currently running SwiftTrader operation.
+private enum Operation {
+    case kucoinFuturesAccountOverview
+    case kucoinFuturesOrderList
+}
+
+private extension SwiftTrader {
+    
+    /// Translates a `NetworkRequestError` to a `SwiftTraderError`.
+    func handle(networkRequestError: NetworkRequestError, operation: Operation) -> SwiftTraderError {
+        switch networkRequestError {
+        case .statusCodeNotOK(let statusCode, let errorMessage, let data):
+            let error = SwiftTraderError.error(for: statusCode, localizedErrorMessage: errorMessage, data: data)
+            return error
+        default:
+            switch operation {
+            case .kucoinFuturesAccountOverview:
+                return .kucoinFuturesAccountOverviewError(error: networkRequestError)
+            case .kucoinFuturesOrderList:
+                return .kucoinOrderListError(error: networkRequestError)
             }
         }
     }

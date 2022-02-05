@@ -14,10 +14,12 @@ public struct KucoinAPI {
 
         public struct Path {
             static let accountOverview = "/api/v1/account-overview"
+            static let orderList = "/api/v1/orders"
         }
         
         public struct URL {
             static let base = "https://api-futures.kucoin.com"
+            static let sandbox = "https://api-sandbox-futures.kucoin.com"
         }
     }
     
@@ -30,5 +32,6 @@ public struct KucoinAPI {
     
     public struct QueryParam {
         static let currency = "currency"
+        static let orderStatus = "status"
     }
 }

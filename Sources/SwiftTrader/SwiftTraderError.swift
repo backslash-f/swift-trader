@@ -17,8 +17,11 @@ public enum SwiftTraderError: Error {
     
     // MARK: - Kucoin Related
     
-    /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesAccountOverview()`.
+    /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesAccountOverview(currencySymbol:)`.
     case kucoinFuturesAccountOverviewError(error: Error)
+    
+    /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
+    case kucoinOrderListError(error: Error)
     
     /// The response status code is something other than `200`.
     ///

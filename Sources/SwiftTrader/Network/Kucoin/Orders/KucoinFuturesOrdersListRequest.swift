@@ -1,5 +1,5 @@
 //
-//  KucoinFuturesAccountOverviewRequest.swift
+//  KucoinFuturesOrdersListRequest.swift
 //  
 //
 //  Created by Fernando Fernandes on 29.01.22.
@@ -11,14 +11,14 @@ import FoundationNetworking
 #endif
 import Logging
 
-/// A **request** for an overview of a Kucoin Futures account.
+/// A **request** for the list of orders.
 ///
-/// https://docs.kucoin.com/futures/#account
-public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
+/// https://docs.kucoin.com/futures/#get-order-list
+public struct KucoinFuturesOrdersListRequest: NetworkRequest {
     
     // MARK: - Properties
     
-    public typealias DecodableModel = KucoinFuturesAccountOverview
+    public typealias DecodableModel = KucoinFuturesOrderList
     
     public var logger: Logger {
         NetworkRequestLogger().default
@@ -28,8 +28,8 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
     
     public var request: URLRequest {
         get throws {
-            let futuresAccountOverviewResource = KucoinFuturesAccountOverviewResource(currencySymbol: currencySymbol)
-            var urlRequest = URLRequest(url: try futuresAccountOverviewResource.url)
+            let futuresOrderListResource = KucoinFuturesOrderListResource(orderStatus: orderStatus)
+            var urlRequest = URLRequest(url: try futuresOrderListResource.url)
             urlRequest.httpMethod = HTTPMethod.GET.rawValue
             try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
             return urlRequest
@@ -40,7 +40,7 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
     
     // MARK: Private
     
-    private let currencySymbol: CurrencySymbol
+    private let orderStatus: KucoinOrderStatus
     
     private let kucoinAuth: KucoinAuth
     
@@ -50,15 +50,15 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
     ///
     /// - Parameters:
     ///   - session: `URLSession`, default is `.shared`.
-    ///   - currencySymbol: `CurrencySymbol`, default is `.USDT`.
+    ///   - orderStatus: `KucoinFuturesOrderStatus`, default is `.active`.
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - settings: `NetworkRequestSettings`.
     public init(session: URLSession = .shared,
-                currencySymbol: CurrencySymbol = .USDT,
+                orderStatus: KucoinOrderStatus = .active,
                 kucoinAuth: KucoinAuth,
                 settings: NetworkRequestSettings) {
         self.session = session
-        self.currencySymbol = currencySymbol
+        self.orderStatus = orderStatus
         self.kucoinAuth = kucoinAuth
         self.settings = settings
     }
@@ -66,9 +66,9 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
 
 // MARK: - Network Request Protocol
 
-public extension KucoinFuturesAccountOverviewRequest {
+public extension KucoinFuturesOrdersListRequest {
     
     func decode(_ data: Data) throws -> DecodableModel {
-        try JSONDecoder().decode(KucoinFuturesAccountOverview.self, from: data)
+        try JSONDecoder().decode(KucoinFuturesOrderList.self, from: data)
     }
 }
