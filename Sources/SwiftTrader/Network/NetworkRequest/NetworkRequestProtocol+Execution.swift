@@ -40,7 +40,7 @@ public extension NetworkRequest {
         case .success:
             return result
         case .failure:
-            if attemptNumber < settings.numberOfRetries {
+            if attemptNumber <= settings.numberOfRetries {
                 log(message: "Retrying... \(attemptNumber) of \(settings.numberOfRetries)")
                 try? await Task.sleep(nanoseconds: 1_000_000_000 * settings.delayBetweenRetries)
                 return await execute(attemptNumber: attemptNumber + 1)
