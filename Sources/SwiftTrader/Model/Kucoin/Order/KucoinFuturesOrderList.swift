@@ -66,10 +66,16 @@ public struct KucoinFuturesOrder: Codable {
     /// Mark of the canceled orders.
     let cancelExist: Bool
     let status: KucoinOrderStatus
-    let createdAt: String
     
-    /// Last update time.
-    let updatedAt: String
+    /// Creation date in milliseconds.
+    let createdAt: Int64
+    /// Creation date as string (E.g.: "Saturday, 5. February 2022 at 22:32:16").
+    let createdAtString: String
+    
+    /// Last update time in milliseconds.
+    let updatedAt: Int64
+    /// Last update time as string (E.g.: "Saturday, 5. February 2022 at 22:32:16")
+    let updatedAtString: String
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -90,9 +96,11 @@ public struct KucoinFuturesOrder: Codable {
         case clientOid
         case isActive
         case cancelExist
-        case createdAt
         case status
+        case createdAt
+        case createdAtString
         case updatedAt
+        case updatedAtString
     }
     
     // MARK: - Lifecycle
@@ -135,10 +143,10 @@ public struct KucoinFuturesOrder: Codable {
         self.cancelExist = try container.decode(Bool.self, forKey: .cancelExist)
         self.status = try container.decode(KucoinOrderStatus.self, forKey: .status)
         
-        let createdAtMilliseconds = try container.decode(Int64.self, forKey: .createdAt)
-        self.createdAt = Date(milliseconds: createdAtMilliseconds).toString()
+        self.createdAt = try container.decode(Int64.self, forKey: .createdAt)
+        self.createdAtString = Date(milliseconds: self.createdAt).toString()
     
-        let updatedAtMilliseconds = try container.decode(Int64.self, forKey: .updatedAt)
-        self.updatedAt = Date(milliseconds: updatedAtMilliseconds).toString()
+        self.updatedAt = try container.decode(Int64.self, forKey: .updatedAt)
+        self.updatedAtString = Date(milliseconds: self.updatedAt).toString()
     }
 }

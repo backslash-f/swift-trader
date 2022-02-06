@@ -23,6 +23,9 @@ public enum SwiftTraderError: Error {
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
     case kucoinOrderListError(error: Error)
     
+    /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPositionList()`.
+    case kucoinPositionListError(error: Error)
+    
     /// The response status code is something other than `200`.
     ///
     /// The underlying Kucoin system error may be verified by reading the returned extra arguments, if present.

@@ -69,20 +69,33 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
+    
+    // MARK: Positions
+    
+    func kucoinFuturesPositionList() async throws -> Result<KucoinFuturesPositionList, SwiftTraderError> {
+        let request = KucoinFuturesPositionListRequest(
+            kucoinAuth: kucoinAuth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let positionList = model as? KucoinFuturesPositionList else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(positionList)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesPositionList)
+            return .failure(swiftTraderError)
+        }
+    }
 }
 
 // MARK: - Private
 
-/// The currently running SwiftTrader operation.
-private enum Operation {
-    case kucoinFuturesAccountOverview
-    case kucoinFuturesOrderList
-}
-
 private extension SwiftTrader {
     
     /// Translates a `NetworkRequestError` to a `SwiftTraderError`.
-    func handle(networkRequestError: NetworkRequestError, operation: Operation) -> SwiftTraderError {
+    func handle(networkRequestError: NetworkRequestError, operation: SwiftTraderOperation) -> SwiftTraderError {
         switch networkRequestError {
         case .statusCodeNotOK(let statusCode, let errorMessage, let data):
             let error = SwiftTraderError.error(for: statusCode, localizedErrorMessage: errorMessage, data: data)
@@ -93,6 +106,8 @@ private extension SwiftTrader {
                 return .kucoinFuturesAccountOverviewError(error: networkRequestError)
             case .kucoinFuturesOrderList:
                 return .kucoinOrderListError(error: networkRequestError)
+            case .kucoinFuturesPositionList:
+                return .kucoinPositionListError(error: networkRequestError)
             }
         }
     }
