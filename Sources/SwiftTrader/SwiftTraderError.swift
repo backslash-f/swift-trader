@@ -20,6 +20,9 @@ public enum SwiftTraderError: Error {
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesAccountOverview(currencySymbol:)`.
     case kucoinFuturesAccountOverviewError(error: Error)
     
+    /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPlaceOrder()`.
+    case kucoinPlaceOrderError(error: Error)
+    
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
     case kucoinOrderListError(error: Error)
     

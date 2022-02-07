@@ -11,5 +11,6 @@ import Foundation
 public enum SwiftTraderOperation {
     case kucoinFuturesAccountOverview
     case kucoinFuturesOrderList
+    case kucoinFuturesPlaceOrder
     case kucoinFuturesPositionList
 }

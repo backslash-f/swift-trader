@@ -14,8 +14,8 @@ public struct KucoinAPI {
 
         public struct Path {
             static let accountOverview  = "/api/v1/account-overview"
-            static let orderList        = "/api/v1/orders"
-            static let positionList     = "/api/v1/positions"
+            static let orders           = "/api/v1/orders"
+            static let positions        = "/api/v1/positions"
         }
         
         public struct URL {

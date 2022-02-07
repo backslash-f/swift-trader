@@ -46,7 +46,7 @@ public struct KucoinFuturesOrdersListRequest: NetworkRequest {
     
     // MARK: - Lifecycle
     
-    /// Creates a new `KucoinFuturesAccountOverviewRequest` instance.
+    /// Creates a new `KucoinFuturesOrdersListRequest` instance.
     ///
     /// - Parameters:
     ///   - session: `URLSession`, default is `.shared`.

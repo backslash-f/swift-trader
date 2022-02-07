@@ -1,16 +1,16 @@
 //
-//  KucoinFuturesOrderListResource.swift
+//  KucoinFuturesPlaceOrderResource.swift
 //
 //
-//  Created by Fernando Fernandes on 04.02.22.
+//  Created by Fernando Fernandes on 07.02.22.
 //
 
 import Foundation
 
-/// The **resource** for requesting the list of current orders.
+/// The **resource** for placing an order.
 ///
-/// https://docs.kucoin.com/futures/#get-order-list
-public struct KucoinFuturesOrderListResource: NetworkResource {
+/// https://docs.kucoin.com/futures/#place-an-order
+public struct KucoinFuturesPlaceOrderResource: NetworkResource {
     
     // MARK: - Properties
     
@@ -21,10 +21,6 @@ public struct KucoinFuturesOrderListResource: NetworkResource {
                 throw NetworkRequestError.invalidURLString(urlString: baseURLString)
             }
             urlComponents.path = KucoinAPI.Futures.Path.orders
-            let queryItems = [
-                URLQueryItem(name: KucoinAPI.QueryParam.orderStatus, value: orderStatus.rawValue)
-            ]
-            urlComponents.queryItems = queryItems
             guard let url = urlComponents.url else {
                 throw NetworkRequestError.invalidURLString(urlString: baseURLString)
             }
@@ -34,11 +30,12 @@ public struct KucoinFuturesOrderListResource: NetworkResource {
     
     // MARK: Private
     
+    #warning("TODO: change from orderStatus to whatever needs sending")
     private let orderStatus: KucoinOrderStatus
     
     // MARK: - Lifecycle
     
-    /// Creates a new `KucoinFuturesOrderListResource` instance.
+    /// Creates a new `KucoinFuturesPlaceOrderResource` instance.
     ///
     /// - Parameter orderStatus: `KucoinFuturesOrderStatus`.
     init(orderStatus: KucoinOrderStatus) {

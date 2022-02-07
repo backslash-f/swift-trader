@@ -70,6 +70,25 @@ public extension SwiftTrader {
         }
     }
     
+    // MARK: Place Order
+    
+    func kucoinFuturesPlaceOrder() async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
+        let request = KucoinFuturesPlaceOrdersRequest(
+            kucoinAuth: kucoinAuth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let placeOrder = model as? KucoinFuturesPlaceOrder else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(placeOrder)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesPlaceOrder)
+            return .failure(swiftTraderError)
+        }
+    }
+    
     // MARK: Positions
     
     func kucoinFuturesPositionList() async throws -> Result<KucoinFuturesPositionList, SwiftTraderError> {
@@ -106,6 +125,8 @@ private extension SwiftTrader {
                 return .kucoinFuturesAccountOverviewError(error: networkRequestError)
             case .kucoinFuturesOrderList:
                 return .kucoinOrderListError(error: networkRequestError)
+            case .kucoinFuturesPlaceOrder:
+                return .kucoinPlaceOrderError(error: networkRequestError)
             case .kucoinFuturesPositionList:
                 return .kucoinPositionListError(error: networkRequestError)
             }
