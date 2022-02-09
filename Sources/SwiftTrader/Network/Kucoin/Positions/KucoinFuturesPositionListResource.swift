@@ -16,7 +16,7 @@ public struct KucoinFuturesPositionListResource: NetworkResource {
     
     public var url: URL {
         get throws {
-            let baseURLString = KucoinAPI.Futures.URL.base
+            let baseURLString = KucoinAPI.Futures.baseURL()
             guard var urlComponents = URLComponents(string: baseURLString) else {
                 throw NetworkRequestError.invalidURLString(urlString: baseURLString)
             }

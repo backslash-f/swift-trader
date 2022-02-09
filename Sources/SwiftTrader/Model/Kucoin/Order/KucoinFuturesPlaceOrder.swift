@@ -12,9 +12,6 @@ import Foundation
 /// https://docs.kucoin.com/futures/#place-an-order
 public struct KucoinFuturesPlaceOrder: Codable {
     public let code: String
-    public let data: KucoinFuturesOrderPlaced
-}
-
-public struct KucoinFuturesOrderPlaced: Codable {
-    public let orderId: String
+    public let msg: String?
+    public let orderId: String?
 }

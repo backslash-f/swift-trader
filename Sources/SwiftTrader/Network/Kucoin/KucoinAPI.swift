@@ -11,16 +11,30 @@ import Foundation
 public struct KucoinAPI {
     
     public struct Futures {
-
+        
         public struct Path {
             static let accountOverview  = "/api/v1/account-overview"
             static let orders           = "/api/v1/orders"
             static let positions        = "/api/v1/positions"
         }
         
-        public struct URL {
-            static let base     = "https://api-futures.kucoin.com"
-            static let sandbox  = "https://api-sandbox-futures.kucoin.com"
+        /// Returns the base `URL` based on an Xcode environment variable.
+        ///
+        /// In case the above fails/is absent, returns the `production` base `URL`.
+        public static func baseURL() -> String {
+            let production = "https://api-futures.kucoin.com"
+            let sandbox = "https://api-sandbox-futures.kucoin.com"
+            if let environment = Environment.environmentFromXcode() {
+                switch environment {
+                case .production:
+                    return production
+                case .sandbox:
+                    return sandbox
+                }
+            } else {
+                // Fallback to production.
+                return production
+            }
         }
     }
     

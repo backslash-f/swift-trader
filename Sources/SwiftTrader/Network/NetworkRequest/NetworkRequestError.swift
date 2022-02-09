@@ -25,7 +25,7 @@ public enum NetworkRequestError: Error {
     /// Could not instantiate a `URLComponents` struct using the given `String` URL.
     case invalidURLString(urlString: String)
     
-    /// The request failed; the `Error` parameter indicates why.
+    /// The request has failed; the `Error` parameter indicates why.
     case requestFailed(error: Error)
     
     /// The response status code is something other than `200`.

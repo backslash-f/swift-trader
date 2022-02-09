@@ -34,7 +34,8 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
             
             #warning("TODO: This has to be parameterized")
             var json = [String:Any]()
-            json["symbol"] = "XBTUSDM"
+            json["clientOid"] = UUID().uuidString
+            json["symbol"] = "XBTUSDTM"
             json["price"] = "42000"
             json["closeOrder"] = true
             
