@@ -44,12 +44,18 @@ private extension KucoinAPI {
     
     /// "KC-API-SIGN"
     static func setAPISignature(request: inout URLRequest, kucoinAuth: KucoinAuth) throws {
+        
+        // MARK: HTTP Method
+        
         guard let httpMethodString = request.httpMethod else {
             throw KucoinAPIError.missingHTTPMethod
         }
         guard let httpMethod = HTTPMethod(rawValue: httpMethodString) else {
             throw KucoinAPIError.unsupportedHTTPMethod
         }
+        
+        // MARK: Path
+        
         guard let url = request.url else {
             throw KucoinAPIError.missingURL(url: request.url)
         }
@@ -62,7 +68,23 @@ private extension KucoinAPI {
         } else {
             finalPath = url.path
         }
-        let signature = try createSignature(for: httpMethod, path: finalPath, secret: kucoinAuth.apiSecret)
+        
+        // MARK: Body
+        
+        let body: String
+        if let bodyData = request.httpBody,
+           let bodyString = String(data: bodyData, encoding: .utf8) {
+            body = bodyString
+        } else {
+            body = ""
+        }
+        
+        let signature = try createSignature(
+            for: httpMethod,
+               path: finalPath,
+               body: body,
+               secret: kucoinAuth.apiSecret
+        )
         request.setValue(signature, forHTTPHeaderField: KucoinAPI.HeaderField.apiSign)
     }
     
