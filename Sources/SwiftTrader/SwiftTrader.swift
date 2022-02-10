@@ -72,8 +72,9 @@ public extension SwiftTrader {
     
     // MARK: Place Order
     
-    func kucoinFuturesPlaceOrder() async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
+    func kucoinFuturesPlaceOrder(parameters: KucoinOrderParameters) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
         let request = KucoinFuturesPlaceOrdersRequest(
+            parameters: parameters,
             kucoinAuth: kucoinAuth,
             settings: settings.networkRequestSettings
         )

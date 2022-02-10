@@ -19,32 +19,33 @@ public struct KucoinFuturesPosition: Codable {
     
     // MARK: - Properties
     
-    let id: String
+    public let id: String
     
     /// E.g.: XBTUSDTM
-    let symbol: String
-    let autoDeposit: Bool
-    let realLeverage: Double
-    let crossMode: Bool
-    let delevPercentage: Double
+    public let symbol: String
+    public let autoDeposit: Bool
+    public let realLeverage: Double
+    public let crossMode: Bool
+    public let delevPercentage: Double
     
     /// Opening date in milliseconds.
-    let openingTimestamp: Int64
+    public let openingTimestamp: Int64
     /// Opening date as string (E.g.: "Saturday, 5. February 2022 at 22:32:16").
-    let openingTimestampString: String
+    public let openingTimestampString: String
     
     /// Current date in milliseconds.
-    let currentTimestamp: Int64
+    public let currentTimestamp: Int64
     /// Current date as string (E.g.: "Saturday, 5. February 2022 at 22:32:16").
-    let currentTimestampString: String
+    public let currentTimestampString: String
     
-    let posInit: Double
-    let currentQty: Int
-    let isOpen: Bool
-    let realisedPnl: Double
-    let unrealisedPnl: Double
-    let avgEntryPrice: Double
-    let liquidationPrice: Double
+    public let posInit: Double
+    public let currentQty: Int
+    public let isOpen: Bool
+    public let markPrice: Double
+    public let realisedPnl: Double
+    public let unrealisedPnl: Double
+    public let avgEntryPrice: Double
+    public let liquidationPrice: Double
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -60,6 +61,7 @@ public struct KucoinFuturesPosition: Codable {
         case posInit
         case currentQty
         case isOpen
+        case markPrice
         case realisedPnl
         case unrealisedPnl
         case avgEntryPrice
@@ -86,6 +88,7 @@ public struct KucoinFuturesPosition: Codable {
         self.posInit = try container.decode(Double.self, forKey: .posInit)
         self.currentQty = try container.decode(Int.self, forKey: .currentQty)
         self.isOpen = try container.decode(Bool.self, forKey: .isOpen)
+        self.markPrice = try container.decode(Double.self, forKey: .markPrice)
         self.realisedPnl = try container.decode(Double.self, forKey: .realisedPnl)
         self.unrealisedPnl = try container.decode(Double.self, forKey: .unrealisedPnl)
         self.avgEntryPrice = try container.decode(Double.self, forKey: .avgEntryPrice)

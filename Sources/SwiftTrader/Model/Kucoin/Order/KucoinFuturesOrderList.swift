@@ -17,65 +17,65 @@ public struct KucoinFuturesOrderList: Codable {
 
 /// Encapsulates an array of `KucoinFuturesOrder` plus pagination information.
 public struct KucoinFuturesOrderData: Codable {
-    let currentPage: Int
-    let pageSize: Int
-    let totalNum: Int
-    let totalPage: Int
-    let items: [KucoinFuturesOrder]
+    public let currentPage: Int
+    public let pageSize: Int
+    public let totalNum: Int
+    public let totalPage: Int
+    public let items: [KucoinFuturesOrder]
 }
 
 public struct KucoinFuturesOrder: Codable {
     
     // MARK: - Properties
     
-    let id: String
+    public let id: String
     
     /// E.g.: BTCUSDT
-    let symbol: String
+    public let symbol: String
     
-    let type: KucoinOrderType
-    let side: KucoinOrderSide
+    public let type: KucoinOrderType
+    public let side: KucoinOrderSide
     
     /// The price of one asset's unit.
-    let price: String
+    public let price: String
     
     /// How much assets were bought.
-    let size: Int
+    public let size: Int
     
     /// The total value of the order.
-    let value: String
-    let filledValue: String
-    let filledSize: Int
-    let stp: KucoinOrderSTP?
+    public let value: String
+    public let filledValue: String
+    public let filledSize: Int
+    public let stp: KucoinOrderSTP?
     
     /// Stop order type (limit or market).
-    let stop: KucoinOrderType?
+    public let stop: KucoinOrderType?
     
     /// Whether the stop order is triggered.
-    let stopTriggered: Bool
+    public let stopTriggered: Bool
     
     /// Whether the stop order is triggered.
-    let stopPrice: String?
-    let leverage: String
-    let reduceOnly: Bool
+    public let stopPrice: String?
+    public let leverage: String
+    public let reduceOnly: Bool
     
     /// Unique order id created by users to identify their orders.
-    let clientOid: String?
-    let isActive: Bool
+    public let clientOid: String?
+    public let isActive: Bool
     
     /// Mark of the canceled orders.
-    let cancelExist: Bool
-    let status: KucoinOrderStatus
+    public let cancelExist: Bool
+    public let status: KucoinOrderStatus
     
     /// Creation date in milliseconds.
-    let createdAt: Int64
+    public let createdAt: Int64
     /// Creation date as string (E.g.: "Saturday, 5. February 2022 at 22:32:16").
-    let createdAtString: String
+    public let createdAtString: String
     
     /// Last update time in milliseconds.
-    let updatedAt: Int64
+    public let updatedAt: Int64
     /// Last update time as string (E.g.: "Saturday, 5. February 2022 at 22:32:16")
-    let updatedAtString: String
+    public let updatedAtString: String
     
     enum CodingKeys: String, CodingKey {
         case id

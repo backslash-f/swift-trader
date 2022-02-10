@@ -14,7 +14,7 @@ public struct KucoinSystemError: Codable {
     public let code: String
     public let message: String
     
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case code
         case message = "msg"
     }

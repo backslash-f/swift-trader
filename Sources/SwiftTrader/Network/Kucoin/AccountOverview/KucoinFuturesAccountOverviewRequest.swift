@@ -49,17 +49,17 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
     /// Creates a new `KucoinFuturesAccountOverviewRequest` instance.
     ///
     /// - Parameters:
-    ///   - session: `URLSession`, default is `.shared`.
     ///   - currencySymbol: `CurrencySymbol`, default is `.USDT`.
     ///   - kucoinAuth: Kucoin authentication data.
+    ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(session: URLSession = .shared,
-                currencySymbol: CurrencySymbol = .USDT,
+    public init(currencySymbol: CurrencySymbol = .USDT,
                 kucoinAuth: KucoinAuth,
+                session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
-        self.session = session
         self.currencySymbol = currencySymbol
         self.kucoinAuth = kucoinAuth
+        self.session = session
         self.settings = settings
     }
 }

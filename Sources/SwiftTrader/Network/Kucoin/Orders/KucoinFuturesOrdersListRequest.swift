@@ -49,17 +49,17 @@ public struct KucoinFuturesOrdersListRequest: NetworkRequest {
     /// Creates a new `KucoinFuturesOrdersListRequest` instance.
     ///
     /// - Parameters:
-    ///   - session: `URLSession`, default is `.shared`.
     ///   - orderStatus: `KucoinFuturesOrderStatus`, default is `.active`.
     ///   - kucoinAuth: Kucoin authentication data.
+    ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(session: URLSession = .shared,
-                orderStatus: KucoinOrderStatus = .active,
+    public init(orderStatus: KucoinOrderStatus = .active,
                 kucoinAuth: KucoinAuth,
+                session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
-        self.session = session
         self.orderStatus = orderStatus
         self.kucoinAuth = kucoinAuth
+        self.session = session
         self.settings = settings
     }
 }

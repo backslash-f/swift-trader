@@ -28,16 +28,22 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
     
     public var request: URLRequest {
         get throws {
-            let futuresPlaceOrderResource = KucoinFuturesPlaceOrderResource(orderStatus: .active)
+            let futuresPlaceOrderResource = KucoinFuturesPlaceOrderResource()
             var urlRequest = URLRequest(url: try futuresPlaceOrderResource.url)
             urlRequest.httpMethod = HTTPMethod.POST.rawValue
             
             #warning("TODO: This has to be parameterized")
             var json = [String:Any]()
             json["clientOid"] = UUID().uuidString
+            json["side"] = "sell"
             json["symbol"] = "XBTUSDTM"
-            json["price"] = "42000"
+            json["type"] = "limit"
+            json["stop"] = "down"
+            json["stopPriceType"] = "TP"
+            json["stopPrice"] = "44970"
+            json["reduceOnly"] = true
             json["closeOrder"] = true
+            json["price"] = "44970"
             
             do {
                 let data = try JSONSerialization.data(withJSONObject: json, options: [])
@@ -57,8 +63,7 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
     
     // MARK: Private
     
-    #warning("TODO: change from orderStatus to whatever needs sending")
-    private let orderStatus: KucoinOrderStatus
+    private let parameters: KucoinOrderParameters
     
     private let kucoinAuth: KucoinAuth
     
@@ -67,17 +72,17 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
     /// Creates a new `KucoinFuturesPlaceOrdersRequest` instance.
     ///
     /// - Parameters:
-    ///   - session: `URLSession`, default is `.shared`.
-    ///   - orderStatus: `KucoinFuturesOrderStatus`, default is `.active`.
+    ///   - parameters: `KucoinOrderParameters` that defines an order.
     ///   - kucoinAuth: Kucoin authentication data.
+    ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(session: URLSession = .shared,
-                orderStatus: KucoinOrderStatus = .active,
+    public init(parameters: KucoinOrderParameters,
                 kucoinAuth: KucoinAuth,
+                session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
-        self.session = session
-        self.orderStatus = orderStatus
+        self.parameters = parameters
         self.kucoinAuth = kucoinAuth
+        self.session = session
         self.settings = settings
     }
 }

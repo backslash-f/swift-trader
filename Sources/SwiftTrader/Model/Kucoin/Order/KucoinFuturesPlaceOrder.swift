@@ -13,5 +13,13 @@ import Foundation
 public struct KucoinFuturesPlaceOrder: Codable {
     public let code: String
     public let msg: String?
-    public let orderId: String?
+    public let data: OrderPlaced?
+}
+
+public struct OrderPlaced: Codable {
+    public let orderID: String
+
+    enum CodingKeys: String, CodingKey {
+        case orderID = "orderId"
+    }
 }

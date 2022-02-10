@@ -27,18 +27,4 @@ public struct KucoinFuturesPlaceOrderResource: NetworkResource {
             return url
         }
     }
-    
-    // MARK: Private
-    
-    #warning("TODO: change from orderStatus to whatever needs sending")
-    private let orderStatus: KucoinOrderStatus
-    
-    // MARK: - Lifecycle
-    
-    /// Creates a new `KucoinFuturesPlaceOrderResource` instance.
-    ///
-    /// - Parameter orderStatus: `KucoinFuturesOrderStatus`.
-    init(orderStatus: KucoinOrderStatus) {
-        self.orderStatus = orderStatus
-    }
 }
