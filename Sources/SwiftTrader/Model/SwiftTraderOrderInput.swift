@@ -14,6 +14,7 @@ public struct SwiftTraderOrderInput {
     
     public let exchange: SwiftTraderExchange
     public let ticker: String
+    public let contractSymbol: String
     public let entryPrice: Double
     public let currentPrice: Double
     public let profitPercentage: Double
@@ -23,12 +24,14 @@ public struct SwiftTraderOrderInput {
     
     public init(exchange: SwiftTraderExchange,
                 ticker: String,
+                contractSymbol: String,
                 entryPrice: Double,
                 currentPrice: Double,
                 profitPercentage: Double,
                 offset: Double) {
         self.exchange = exchange
         self.ticker = ticker
+        self.contractSymbol = contractSymbol
         self.entryPrice = entryPrice
         self.currentPrice = currentPrice
         self.profitPercentage = profitPercentage

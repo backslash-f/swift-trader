@@ -18,12 +18,13 @@ public extension SwiftTrader {
         let targetPercentage: Double = (input.profitPercentage / 100) - (input.offset / 100)
         let priceIncrement: Double = input.entryPrice * targetPercentage
         
+        #warning("TODO: round up?")
         // Why Int? From a Kucoin response: "The parameter shall be a multiple of 1."
         let targetPrice = Int(input.entryPrice + priceIncrement)
         let targetPriceString = String(targetPrice)
         
         return KucoinOrderParameters(
-            symbol: input.ticker,
+            symbol: input.contractSymbol,
             side: .sell,
             type: .limit,
             stop: .down,
