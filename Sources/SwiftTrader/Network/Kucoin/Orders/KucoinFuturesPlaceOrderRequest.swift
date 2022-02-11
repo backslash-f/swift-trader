@@ -32,28 +32,17 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
             var urlRequest = URLRequest(url: try futuresPlaceOrderResource.url)
             urlRequest.httpMethod = HTTPMethod.POST.rawValue
             
-            #warning("TODO: This has to be parameterized")
-            var json = [String:Any]()
-            json["clientOid"] = UUID().uuidString
-            json["side"] = "sell"
-            json["symbol"] = "XBTUSDTM"
-            json["type"] = "limit"
-            json["stop"] = "down"
-            json["stopPriceType"] = "TP"
-            json["stopPrice"] = "44970"
-            json["reduceOnly"] = true
-            json["closeOrder"] = true
-            json["price"] = "44970"
-            
+            // Parameters
+            let parametersJSON = createJSONParameters(from: orderParameters)
             do {
-                let data = try JSONSerialization.data(withJSONObject: json, options: [])
+                let data = try JSONSerialization.data(withJSONObject: parametersJSON, options: [])
                 urlRequest.httpBody = data
-                urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+                urlRequest.addValue(HTTPHeader.Value.applicationJSON, forHTTPHeaderField: HTTPHeader.Field.contentType)
+                urlRequest.addValue(HTTPHeader.Value.applicationJSON, forHTTPHeaderField: HTTPHeader.Field.accept)
             } catch {
-                #warning("TODO: handle error")
-                print("EEEERRRRRROOORRR")
+                throw NetworkRequestError.invalidJSONParameters(error: error)
             }
+            
             try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
             return urlRequest
         }
@@ -63,7 +52,7 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
     
     // MARK: Private
     
-    private let parameters: KucoinOrderParameters
+    private let orderParameters: KucoinOrderParameters
     
     private let kucoinAuth: KucoinAuth
     
@@ -72,15 +61,15 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
     /// Creates a new `KucoinFuturesPlaceOrdersRequest` instance.
     ///
     /// - Parameters:
-    ///   - parameters: `KucoinOrderParameters` that defines an order.
+    ///   - orderParameters: `KucoinOrderParameters`, which define an order.
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(parameters: KucoinOrderParameters,
+    public init(orderParameters: KucoinOrderParameters,
                 kucoinAuth: KucoinAuth,
                 session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
-        self.parameters = parameters
+        self.orderParameters = orderParameters
         self.kucoinAuth = kucoinAuth
         self.session = session
         self.settings = settings
@@ -93,5 +82,25 @@ public extension KucoinFuturesPlaceOrdersRequest {
     
     func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinFuturesPlaceOrder.self, from: data)
+    }
+}
+
+// MARK: - Private
+
+private extension KucoinFuturesPlaceOrdersRequest {
+    
+    func createJSONParameters(from orderParameters: KucoinOrderParameters) -> [String: Any] {
+        [
+            KucoinOrderParameterKey.clientOid.rawValue: UUID().uuidString,
+            KucoinOrderParameterKey.symbol.rawValue: orderParameters.symbol,
+            KucoinOrderParameterKey.side.rawValue: orderParameters.side.rawValue,
+            KucoinOrderParameterKey.type.rawValue: orderParameters.type.rawValue,
+            KucoinOrderParameterKey.stop.rawValue: orderParameters.stop.rawValue,
+            KucoinOrderParameterKey.stopPriceType.rawValue: orderParameters.stopPriceType.rawValue,
+            KucoinOrderParameterKey.stopPrice.rawValue: orderParameters.stopPrice,
+            KucoinOrderParameterKey.price.rawValue: orderParameters.price,
+            KucoinOrderParameterKey.reduceOnly.rawValue: orderParameters.reduceOnly,
+            KucoinOrderParameterKey.closeOrder.rawValue: orderParameters.closeOrder
+        ]
     }
 }

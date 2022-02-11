@@ -22,6 +22,11 @@ public enum NetworkRequestError: Error {
     /// Could not instantiate a valid `URLRequest` (e.g.: `NetworkRequest.getter:request`).
     case invalidRequest(error: Error)
     
+    /// `JSONSerialization` could not produce a valid `JSON` from given parameters.
+    ///
+    /// E.g.: a `JSON` object could not be created from an instance of `KucoinOrderParameters`.
+    case invalidJSONParameters(error: Error)
+    
     /// Could not instantiate a `URLComponents` struct using the given `String` URL.
     case invalidURLString(urlString: String)
     

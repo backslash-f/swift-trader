@@ -50,7 +50,7 @@ public extension SwiftTrader {
         }
     }
     
-    // MARK: Order List
+    // MARK: List Orders
     
     func kucoinFuturesOrderList(orderStatus: KucoinOrderStatus = .active) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
         let request = KucoinFuturesOrdersListRequest(
@@ -70,11 +70,11 @@ public extension SwiftTrader {
         }
     }
     
-    // MARK: Place Order
+    // MARK: Place Orders
     
-    func kucoinFuturesPlaceOrder(parameters: KucoinOrderParameters) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
+    func kucoinFuturesPlaceOrder(_ orderInput: SwiftTraderOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
         let request = KucoinFuturesPlaceOrdersRequest(
-            parameters: parameters,
+            orderParameters: createOrderParameters(for: orderInput),
             kucoinAuth: kucoinAuth,
             settings: settings.networkRequestSettings
         )
@@ -89,6 +89,10 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
+    
+    // MARK: Cancel Orders
+    
+#warning("TODO: https://docs.kucoin.com/futures/#stop-order-mass-cancelation")
     
     // MARK: Positions
     
