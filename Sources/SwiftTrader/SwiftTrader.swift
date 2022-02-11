@@ -6,17 +6,20 @@
 //
 
 import Foundation
+import Logging
 
 /// Entry point for connecting and trading on crypto exchanges such as Binance and Kucoin.
 public struct SwiftTrader {
     
     // MARK: - Properties
     
-    private let settings: SwiftTraderSettings
+    public let logger = SwiftTraderLogger()
     
     // MARK: Private
     
     private let kucoinAuth: KucoinAuth
+    
+    private let settings: SwiftTraderSettings
     
     // MARK: - Lifecycle
     

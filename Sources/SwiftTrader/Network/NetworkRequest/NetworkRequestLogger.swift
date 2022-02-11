@@ -17,7 +17,7 @@ public struct NetworkRequestLogger {
     
     // MARK: - Lifecycle
     
-    public init(label: String = "com.backslash-f.network") {
+    public init(label: String = "com.backslash-f.swift-trader.network") {
         self.default = Logger(label: label)
     }
 }
