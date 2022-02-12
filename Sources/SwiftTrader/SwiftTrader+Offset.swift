@@ -30,7 +30,8 @@ public extension SwiftTrader {
         logger.log("Offset: \(offset.toDecimalString())")
         
         // E.g.: (0.0747 - 0.0073) = 0.0674 (6,74%)
-        let targetPercentage: Double = profitPercentage - offset
+        // Use "abs" to filter out negative numbers.
+        let targetPercentage: Double = abs(profitPercentage - offset)
         logger.log("Target percentage: \(targetPercentage.toDecimalString())")
         
         // E.g.: 42000.69 * 0.0674 = 2830.846506
@@ -55,7 +56,7 @@ public extension SwiftTrader {
         // "44831.536506" becomes "44831.53".
         let charactersToBeRemoved = abs(targetPriceCount - entryPriceCount)
         var targetPriceString = "\(targetPrice.toDecimalString())".dropLast(charactersToBeRemoved)
-        logger.log("Target price normalize: \(targetPriceString)")
+        logger.log("Target price normalized: \(targetPriceString)")
         
         // Finally, avoid the following Kucoin error with minimal effort: "The parameter shall be a multiple of ..."
         // First, just try replacing the last character by "1". E.g.: "0.00002347" becomes "0.00002341"
@@ -73,6 +74,7 @@ public extension SwiftTrader {
         // error when you place the order. The tick size is the smallest price increment in which the prices are quoted.
         if let priceDouble = Double(targetPriceString), priceDouble > 10 {
             targetPriceString = "\(priceDouble.rounded(.down).toDecimalString())"
+            logger.log("Target price string: \(targetPriceString)")
         }
         
         return KucoinOrderParameters(
