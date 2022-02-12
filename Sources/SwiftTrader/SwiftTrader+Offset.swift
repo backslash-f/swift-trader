@@ -14,7 +14,7 @@ import Foundation
 /// such instance is based on a given `SwiftTraderOrderInput`/`offset`.
 public extension SwiftTrader {
     
-    func createOrderParameters(for input: SwiftTraderOrderInput) -> KucoinOrderParameters {
+    func createOrderParameters(for input: SwiftTraderOrderInput) throws -> KucoinOrderParameters {
         logger.log("Creating order parameters...")
         
         // E.g: 7.47 -> 0.0747
@@ -31,50 +31,73 @@ public extension SwiftTrader {
         
         // E.g.: (0.0747 - 0.0073) = 0.0674 (6,74%)
         // Use "abs" to filter out negative numbers.
-        let targetPercentage: Double = abs(profitPercentage - offset)
+        let targetPercentage: Double = profitPercentage - offset
         logger.log("Target percentage: \(targetPercentage.toDecimalString())")
         
         // E.g.: 42000.69 * 0.0674 = 2830.846506
         let priceIncrement: Double = input.entryPrice * targetPercentage
         logger.log("Price increment: \(priceIncrement.toDecimalString())")
         
-        // E.g.: 42000.9 + 2830.846506 = 44831.536506
+        // E.g.: 42000.69 + 2830.846506 = 44831.536506
         let targetPrice: Double = input.entryPrice + priceIncrement
         logger.log("Entry price: \(input.entryPrice.toDecimalString())")
         logger.log("Target price: \(targetPrice.toDecimalString())")
         
-        // Now in order to avoid a huge difference between the entry price and the target price in terms of size,
-        // "normalize" them based on the entry price by first counting its characters.
-        let entryPriceCount = input.entryPrice.toDecimalString().count
-        logger.log("Entry price count: \(entryPriceCount)")
+        var targetPriceString = "\(targetPrice.toDecimalString())"
         
-        // Count the target price characters too.
-        let targetPriceCount = targetPrice.toDecimalString().count
-        logger.log("Target price count: \(targetPriceCount)")
-        
-        // E.g.: 12 - 8 (44831.536506 - 42000.69)
-        // "44831.536506" becomes "44831.53".
-        let charactersToBeRemoved = abs(targetPriceCount - entryPriceCount)
-        var targetPriceString = "\(targetPrice.toDecimalString())".dropLast(charactersToBeRemoved)
-        logger.log("Target price normalized: \(targetPriceString)")
-        
-        // Finally, avoid the following Kucoin error with minimal effort: "The parameter shall be a multiple of ..."
-        // First, just try replacing the last character by "1". E.g.: "0.00002347" becomes "0.00002341"
-        if targetPriceString.components(separatedBy: ".").count > 1 {
-            targetPriceString = targetPriceString.dropLast() + "1"
-        } else {
-            // Handles whole numbers: "3735" becomes "3735.1" (instead of "3731").
-            targetPriceString += ".1"
-        }
-        logger.log("Target price string: \(targetPriceString)")
-        
-        // E.g.: "44831.53" becomes "44831".
-        // Workaround to not call "https://docs.kucoin.com/futures/#get-open-contract-list" (for now).
+        // Finally, handle the following requirement:
+        //
         // "The price specified must be a multiple number of the contract tickSize, otherwise the system will report an
         // error when you place the order. The tick size is the smallest price increment in which the prices are quoted.
-        if let priceDouble = Double(targetPriceString), priceDouble > 10 {
-            targetPriceString = "\(priceDouble.rounded(.down).toDecimalString())"
-            logger.log("Target price string: \(targetPriceString)")
+        guard let tickerSizeDouble = Double(input.tickerSize),
+              let priceDouble = Double(targetPriceString) else {
+                  throw SwiftTraderError.kucoinCouldNotCalculateTheTargetPrice(input: input)
+              }
+        
+        // Whole ticker size like "1", "2", etc.
+        if tickerSizeDouble.truncatingRemainder(dividingBy: 1) == 0 {
+            // E.g.: "44831.53" becomes "44832".
+            targetPriceString = "\(priceDouble.rounded(.up).toDecimalString())"
+            
+        } else {
+            // Handle ticker sizes like "0.0001", "0.05", "0.00000001", etc.
+            //
+            // E.g., considering "0.0001":
+            // - "0.023" becomes "0.0231"
+            // - "0.0456" becomes "0.0451"
+            // - "0.7" becomes "0.7001"
+            guard let targetPriceLastDigit = targetPriceString.last,
+                  let tickerLastDigit = input.tickerSize.last else {
+                      throw SwiftTraderError.kucoinCouldNotCalculateTheTargetPrice(input: input)
+                  }
+            
+            let tickerDigits = input.tickerSize.decimalCount()
+            let targetPriceDigits = targetPriceString.decimalCount()
+            
+            if targetPriceDigits == tickerDigits, targetPriceLastDigit != tickerLastDigit {
+                targetPriceString = targetPriceString.dropLast() + "\(tickerLastDigit)"
+                
+            } else if targetPriceDigits > tickerDigits {
+                let digitsToRemove = (targetPriceDigits - tickerDigits) + 1
+                targetPriceString = targetPriceString.dropLast(digitsToRemove) + "\(tickerLastDigit)"
+                
+            } else if targetPriceDigits < tickerDigits {
+                let digitsToAdd = (tickerDigits - targetPriceDigits)
+                let digits: [String] = Array(repeating: "0", count: digitsToAdd)
+                targetPriceString = targetPriceString + digits.joined(separator: "")
+                targetPriceString = targetPriceString.dropLast() + "\(tickerLastDigit)"
+            }
+        }
+        
+        logger.log("Ticker size: \(input.tickerSize)")
+        logger.log("Target price string: \(targetPriceString)")
+        
+        // Throw in case the target price became lower than the entry price for whatever reason.
+        // Do not place an order in this scenario.
+        guard Double(targetPriceString) ?? 0 > input.entryPrice else {
+            throw SwiftTraderError.kucoinInvalidTargetPrice(
+                entryPrice: input.entryPrice.toDecimalString(),
+                targetPrice: targetPriceString)
         }
         
         return KucoinOrderParameters(

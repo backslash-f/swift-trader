@@ -20,6 +20,12 @@ public enum SwiftTraderError: Error {
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesAccountOverview(currencySymbol:)`.
     case kucoinFuturesAccountOverviewError(error: Error)
     
+    /// Something went wrong while trying to set the target price.
+    case kucoinCouldNotCalculateTheTargetPrice(input: SwiftTraderOrderInput)
+    
+    /// The target price is lower than the entry price; the order will not be placed.
+    case kucoinInvalidTargetPrice(entryPrice: String, targetPrice: String)
+    
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPlaceOrder()`.
     case kucoinPlaceOrderError(error: Error)
     
