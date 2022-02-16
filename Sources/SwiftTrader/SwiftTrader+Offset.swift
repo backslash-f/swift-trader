@@ -21,12 +21,8 @@ public extension SwiftTrader {
         let profitPercentage: Double = (input.profitPercentage / 100)
         logger.log("Profit percentage: \(profitPercentage.toDecimalString())")
         
-        // Instead of creating an order with a fixed target percentage (say 0.025), add some fat to it (e.g.: 0.027)
-        let offsetMargin: Double = 0.02
-        logger.log("Offset margin: \(offsetMargin.toDecimalString())")
-        
-        // E.g.: (0.75 - 0.02) / 100 = 0.0073, which translates to 0.0027 (0,27%)
-        let offset: Double = (input.offset - offsetMargin) / 100
+        // E.g.: 0.75 -> 0.0075
+        let offset: Double = (input.offset / 100)
         logger.log("Offset: \(offset.toDecimalString())")
         
         // E.g.: (0.0747 - 0.0073) = 0.0674 (6,74%)

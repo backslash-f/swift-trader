@@ -97,7 +97,15 @@ public extension SwiftTrader {
     /// - Returns: An instance of `KucoinFuturesPlaceOrder` or `SwiftTraderError`.
     func kucoinFuturesPlaceOrder(_ orderInput: SwiftTraderOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
         
+        #warning("TODO: parameterize cleaning up untriggered stop orders")
         let orderParameters = try createOrderParameters(for: orderInput)
+    
+        do {
+            #warning("TODO: test")
+            try await kucoinFuturesCancelStopOrders(symbol: orderInput.contractSymbol)
+        } catch {
+            #warning("TODO: log")
+        }
         
         let request = KucoinFuturesPlaceOrdersRequest(
             orderParameters: orderParameters,
@@ -124,7 +132,7 @@ public extension SwiftTrader {
     ///
     /// - Parameter symbol: `String`, represents the specific contract for which all the untriggered stop orders will be cancelled.
     /// - Returns: An instance of `KucoinFuturesCancelStopOrders` or `SwiftTraderError`.
-    func kucoinFuturesCancelStopOrders(symbol: String) async throws -> Result<KucoinFuturesCancelStopOrders, SwiftTraderError> {
+    @discardableResult func kucoinFuturesCancelStopOrders(symbol: String) async throws -> Result<KucoinFuturesCancelStopOrders, SwiftTraderError> {
         let request = KucoinFuturesCancelOrdersRequest(
             symbol: symbol,
             kucoinAuth: kucoinAuth,
