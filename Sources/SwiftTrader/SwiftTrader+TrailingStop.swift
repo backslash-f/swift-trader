@@ -26,7 +26,10 @@ public extension SwiftTrader {
         logger.log("Offset: \(offset.toDecimalString())")
         
         guard offset < profitPercentage else {
-            throw SwiftTraderError.kucoinInvalidOffset(offset: offset, profitPercentage: profitPercentage)
+            throw SwiftTraderError.kucoinInvalidOffset(
+                offset: input.offset,
+                profitPercentage: input.profitPercentage
+            )
         }
         
         // E.g.: (0.0747 - 0.0075) = 0.0672 (6,72%)
