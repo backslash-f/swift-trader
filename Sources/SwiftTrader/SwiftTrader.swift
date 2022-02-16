@@ -92,35 +92,42 @@ public extension SwiftTrader {
     ///
     /// https://docs.kucoin.com/futures/#place-an-order
     ///
-    /// - Parameter orderInput: `SwiftTraderOrderInput` instance that encapsulates
+    /// - Parameter orderInput: `SwiftTraderStopLimitOrderInput` instance that encapsulates
     /// all the arguments required for submiting the stop limit order.
     /// - Returns: An instance of `KucoinFuturesPlaceOrder` or `SwiftTraderError`.
-    func kucoinFuturesPlaceStopLimitOrder(_ stopLimitOrderInput: SwiftTraderStopLimitOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
-        
-        let orderParameters = try createStopLimitOrderParameters(for: stopLimitOrderInput)
-    
-        if stopLimitOrderInput.clean {
-            do {
-                try await kucoinFuturesCancelStopOrders(symbol: stopLimitOrderInput.contractSymbol)
-            } catch {
-                logger.log("Could not cancel untriggered stop orders: \(error)")
+    func kucoinFuturesPlaceStopLimitOrder(_ orderInput: SwiftTraderStopLimitOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
+        do {
+            let orderParameters = try createStopLimitOrderParameters(for: orderInput)
+            
+            if orderInput.clean {
+                do {
+                    try await kucoinFuturesCancelStopOrders(symbol: orderInput.contractSymbol)
+                } catch {
+                    logger.log("Could not cancel untriggered stop orders: \(error)")
+                }
             }
-        }
-        
-        let request = KucoinFuturesPlaceOrdersRequest(
-            orderParameters: orderParameters,
-            kucoinAuth: kucoinAuth,
-            settings: settings.networkRequestSettings
-        )
-        switch await request.execute() {
-        case .success(let model):
-            guard let placeOrder = model as? KucoinFuturesPlaceOrder else {
-                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            
+            let request = KucoinFuturesPlaceOrdersRequest(
+                orderParameters: orderParameters,
+                kucoinAuth: kucoinAuth,
+                settings: settings.networkRequestSettings
+            )
+            switch await request.execute() {
+            case .success(let model):
+                guard let placeOrder = model as? KucoinFuturesPlaceOrder else {
+                    return .failure(.unexpectedResponse(modelString: "\(model)"))
+                }
+                return .success(placeOrder)
+            case .failure(let error):
+                let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesPlaceStopLimitOrder)
+                return .failure(swiftTraderError)
             }
-            return .success(placeOrder)
-        case .failure(let error):
-            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesPlaceStopLimitOrder)
-            return .failure(swiftTraderError)
+        } catch {
+            if let swiftTraderError = error as? SwiftTraderError {
+                return .failure(swiftTraderError)
+            } else {
+                return .failure(.unexpected(error))
+            }
         }
     }
     

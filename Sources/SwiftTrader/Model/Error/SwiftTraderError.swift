@@ -12,6 +12,9 @@ public enum SwiftTraderError: Error {
     
     // MARK: - Generic
     
+    /// An unexpected error happened.
+    case unexpected(_ error: Error)
+    
     /// The returned model is unexpected.
     case unexpectedResponse(modelString: String)
     
