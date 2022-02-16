@@ -10,6 +10,7 @@ import Foundation
 /// The currently running `SwiftTrader` operation.
 public enum SwiftTraderOperation {
     case kucoinFuturesAccountOverview
+    case kucoinFuturesCancelStopOrders
     case kucoinFuturesOrderList
     case kucoinFuturesPlaceOrder
     case kucoinFuturesPositionList

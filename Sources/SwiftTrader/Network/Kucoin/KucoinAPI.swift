@@ -16,6 +16,7 @@ public struct KucoinAPI {
             static let accountOverview  = "/api/v1/account-overview"
             static let orders           = "/api/v1/orders"
             static let positions        = "/api/v1/positions"
+            static let stopOrders       = "/api/v1/stopOrders"
         }
         
         /// Returns the base `URL` based on an Xcode environment variable.
@@ -48,5 +49,6 @@ public struct KucoinAPI {
     public struct QueryParam {
         static let currency     = "currency"
         static let orderStatus  = "status"
+        static let symbol       = "symbol"
     }
 }

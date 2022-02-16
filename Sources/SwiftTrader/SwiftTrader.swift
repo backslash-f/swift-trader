@@ -35,6 +35,12 @@ public extension SwiftTrader {
     
     // MARK: Account Overview
     
+    /// Retrieves the overview of a Kucoin Futures account.
+    ///
+    /// https://docs.kucoin.com/futures/#account
+    ///
+    /// - Parameter currencySymbol: The `CurrencySymbol` of the account balance. The default is `.USDT`.
+    /// - Returns: An instance of `KucoinFuturesAccountOverview` or `SwiftTraderError`.
     func kucoinFuturesAccountOverview(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinFuturesAccountOverview, SwiftTraderError> {
         let request = KucoinFuturesAccountOverviewRequest(
             currencySymbol: currencySymbol,
@@ -55,6 +61,13 @@ public extension SwiftTrader {
     
     // MARK: List Orders
     
+    /// Retrieves the list of active Futures orders.
+    ///
+    /// Notice: this does **not** include the list of stop orders
+    /// https://docs.kucoin.com/futures/#get-order-list
+    ///
+    /// - Parameter orderStatus: `KucoinFuturesOrderStatus`, default is `.active`.
+    /// - Returns: An instance of `KucoinFuturesOrderList` or `SwiftTraderError`.
     func kucoinFuturesOrderList(orderStatus: KucoinOrderStatus = .active) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
         let request = KucoinFuturesOrdersListRequest(
             orderStatus: orderStatus,
@@ -75,6 +88,13 @@ public extension SwiftTrader {
     
     // MARK: Place Orders
     
+    /// Places a Futures order.
+    ///
+    /// https://docs.kucoin.com/futures/#place-an-order
+    ///
+    /// - Parameter orderInput: `SwiftTraderOrderInput` instance that encapsulates
+    /// all the arguments required for submiting the orders.
+    /// - Returns: An instance of `KucoinFuturesPlaceOrder` or `SwiftTraderError`.
     func kucoinFuturesPlaceOrder(_ orderInput: SwiftTraderOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
         
         let orderParameters = try createOrderParameters(for: orderInput)
@@ -98,10 +118,37 @@ public extension SwiftTrader {
     
     // MARK: Cancel Orders
     
-#warning("TODO: https://docs.kucoin.com/futures/#stop-order-mass-cancelation")
+    /// Cancels all untriggered Futures stop orders of a given symbol (contract).
+    ///
+    /// https://docs.kucoin.com/futures/#stop-order-mass-cancelation
+    ///
+    /// - Parameter symbol: `String`, represents the specific contract for which all the untriggered stop orders will be cancelled.
+    /// - Returns: An instance of `KucoinFuturesCancelStopOrders` or `SwiftTraderError`.
+    func kucoinFuturesCancelStopOrders(symbol: String) async throws -> Result<KucoinFuturesCancelStopOrders, SwiftTraderError> {
+        let request = KucoinFuturesCancelOrdersRequest(
+            symbol: symbol,
+            kucoinAuth: kucoinAuth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let cancelledOrders = model as? KucoinFuturesCancelStopOrders else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(cancelledOrders)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesCancelStopOrders)
+            return .failure(swiftTraderError)
+        }
+    }
     
     // MARK: Positions
     
+    /// Lists open Futures positions.
+    ///
+    /// https://docs.kucoin.com/futures/#get-position-list
+    ///
+    /// - Returns: An instance of `KucoinFuturesPositionList` or `SwiftTraderError`.
     func kucoinFuturesPositionList() async throws -> Result<KucoinFuturesPositionList, SwiftTraderError> {
         let request = KucoinFuturesPositionListRequest(
             kucoinAuth: kucoinAuth,
@@ -133,13 +180,15 @@ private extension SwiftTrader {
         default:
             switch operation {
             case .kucoinFuturesAccountOverview:
-                return .kucoinFuturesAccountOverviewError(error: networkRequestError)
+                return .kucoinFuturesAccountOverview(error: networkRequestError)
+            case .kucoinFuturesCancelStopOrders:
+                return .kucoinFuturesCancelStopOrders(error: networkRequestError)
             case .kucoinFuturesOrderList:
-                return .kucoinOrderListError(error: networkRequestError)
+                return .kucoinOrderList(error: networkRequestError)
             case .kucoinFuturesPlaceOrder:
-                return .kucoinPlaceOrderError(error: networkRequestError)
+                return .kucoinPlaceOrder(error: networkRequestError)
             case .kucoinFuturesPositionList:
-                return .kucoinPositionListError(error: networkRequestError)
+                return .kucoinPositionList(error: networkRequestError)
             }
         }
     }

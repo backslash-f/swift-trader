@@ -18,7 +18,10 @@ public enum SwiftTraderError: Error {
     // MARK: - Kucoin Related
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesAccountOverview(currencySymbol:)`.
-    case kucoinFuturesAccountOverviewError(error: Error)
+    case kucoinFuturesAccountOverview(error: Error)
+    
+    /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesCancelStopOrders(symbol:)`.
+    case kucoinFuturesCancelStopOrders(error: Error)
     
     /// Something went wrong while trying to set the target price.
     case kucoinCouldNotCalculateTheTargetPrice(input: SwiftTraderOrderInput)
@@ -27,13 +30,13 @@ public enum SwiftTraderError: Error {
     case kucoinInvalidTargetPrice(entryPrice: String, targetPrice: String)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPlaceOrder()`.
-    case kucoinPlaceOrderError(error: Error)
+    case kucoinPlaceOrder(error: Error)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
-    case kucoinOrderListError(error: Error)
+    case kucoinOrderList(error: Error)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPositionList()`.
-    case kucoinPositionListError(error: Error)
+    case kucoinPositionList(error: Error)
     
     /// The response status code is something other than `200`.
     ///

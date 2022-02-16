@@ -9,6 +9,7 @@ import Foundation
 
 /// Holds HTTP method related constants.
 public enum HTTPMethod: String {
+    case DELETE
     case GET
     case POST
 }
