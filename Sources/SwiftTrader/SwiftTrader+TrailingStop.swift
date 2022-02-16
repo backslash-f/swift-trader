@@ -1,5 +1,5 @@
 //
-//  SwiftTrader+Offset.swift
+//  SwiftTrader+TrailingStop.swift
 //  
 //
 //  Created by Fernando Fernandes on 10.02.22.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-/// Creates a set of predefined parameters for interacting with target exchanges, based on a given offset.
+/// Creates a set of parameters for placing stop limit orders on the target exchange.
 ///
 /// For example: before executing a `KucoinFuturesPlaceOrdersRequest`, this extension will create
 /// a `KucoinOrderParameters` instance that can be used as an argument. The business logic for creating
-/// such instance is based on a given `SwiftTraderOrderInput`/`offset`.
+/// such instance is based on a given `SwiftTraderStopLimitOrderInput`/`offset`.
 public extension SwiftTrader {
     
-    func createOrderParameters(for input: SwiftTraderOrderInput) throws -> KucoinOrderParameters {
+    func createStopLimitOrderParameters(for input: SwiftTraderStopLimitOrderInput) throws -> KucoinOrderParameters {
         logger.log("Creating order parameters...")
         
         // E.g: 7.47 -> 0.0747
@@ -25,7 +25,11 @@ public extension SwiftTrader {
         let offset: Double = (input.offset / 100)
         logger.log("Offset: \(offset.toDecimalString())")
         
-        // E.g.: (0.0747 - 0.0073) = 0.0674 (6,74%)
+        guard offset < profitPercentage else {
+            throw SwiftTraderError.kucoinInvalidOffset(offset: offset, profitPercentage: profitPercentage)
+        }
+        
+        // E.g.: (0.0747 - 0.0075) = 0.0672 (6,72%)
         // Use "abs" to filter out negative numbers.
         let targetPercentage: Double = profitPercentage - offset
         logger.log("Target percentage: \(targetPercentage.toDecimalString())")

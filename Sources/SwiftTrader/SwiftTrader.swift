@@ -88,23 +88,23 @@ public extension SwiftTrader {
     
     // MARK: Place Orders
     
-    /// Places a Futures order.
+    /// Places a Futures stop limit order.
     ///
     /// https://docs.kucoin.com/futures/#place-an-order
     ///
     /// - Parameter orderInput: `SwiftTraderOrderInput` instance that encapsulates
-    /// all the arguments required for submiting the orders.
+    /// all the arguments required for submiting the stop limit order.
     /// - Returns: An instance of `KucoinFuturesPlaceOrder` or `SwiftTraderError`.
-    func kucoinFuturesPlaceOrder(_ orderInput: SwiftTraderOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
+    func kucoinFuturesPlaceStopLimitOrder(_ stopLimitOrderInput: SwiftTraderStopLimitOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
         
-        #warning("TODO: parameterize cleaning up untriggered stop orders")
-        let orderParameters = try createOrderParameters(for: orderInput)
+        let orderParameters = try createStopLimitOrderParameters(for: stopLimitOrderInput)
     
-        do {
-            #warning("TODO: test")
-            try await kucoinFuturesCancelStopOrders(symbol: orderInput.contractSymbol)
-        } catch {
-            #warning("TODO: log")
+        if stopLimitOrderInput.clean {
+            do {
+                try await kucoinFuturesCancelStopOrders(symbol: stopLimitOrderInput.contractSymbol)
+            } catch {
+                logger.log("Could not cancel untriggered stop orders: \(error)")
+            }
         }
         
         let request = KucoinFuturesPlaceOrdersRequest(
@@ -119,7 +119,7 @@ public extension SwiftTrader {
             }
             return .success(placeOrder)
         case .failure(let error):
-            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesPlaceOrder)
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesPlaceStopLimitOrder)
             return .failure(swiftTraderError)
         }
     }
@@ -193,8 +193,8 @@ private extension SwiftTrader {
                 return .kucoinFuturesCancelStopOrders(error: networkRequestError)
             case .kucoinFuturesOrderList:
                 return .kucoinOrderList(error: networkRequestError)
-            case .kucoinFuturesPlaceOrder:
-                return .kucoinPlaceOrder(error: networkRequestError)
+            case .kucoinFuturesPlaceStopLimitOrder:
+                return .kucoinPlaceStopLimitOrder(error: networkRequestError)
             case .kucoinFuturesPositionList:
                 return .kucoinPositionList(error: networkRequestError)
             }
