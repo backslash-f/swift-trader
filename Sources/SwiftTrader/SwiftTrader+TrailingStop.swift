@@ -41,8 +41,12 @@ public extension SwiftTrader {
         let priceIncrement: Double = input.entryPrice * targetPercentage
         logger.log("Price increment: \(priceIncrement.toDecimalString())")
         
-        // E.g.: 42000.69 + 2830.846506 = 44831.536506
-        let targetPrice: Double = input.entryPrice + priceIncrement
+        // "Long" example: 42000.69 + 2830.846506 = 44831.536506
+        // "Short" example: 42000.69 - 2830.846506 = 39169.843494
+        let targetPrice: Double = input.isLong ?
+        input.entryPrice + priceIncrement :
+        input.entryPrice - priceIncrement
+        
         logger.log("Entry price: \(input.entryPrice.toDecimalString())")
         logger.log("Target price: \(targetPrice.toDecimalString())")
         
@@ -95,19 +99,29 @@ public extension SwiftTrader {
         logger.log("Ticker size: \(input.tickerSize)")
         logger.log("Target price string: \(targetPriceString)")
         
-        // Throw in case the target price became lower than the entry price for whatever reason.
-        // Do not place an order in this scenario.
-        guard Double(targetPriceString) ?? 0 > input.entryPrice else {
-            throw SwiftTraderError.kucoinInvalidTargetPrice(
-                entryPrice: input.entryPrice.toDecimalString(),
-                targetPrice: targetPriceString)
+        if input.isLong {
+            guard Double(targetPriceString) ?? 0 > input.entryPrice else {
+                // Long position: throw in case the target price became LOWER than the entry price
+                // for whatever reason. Do not place an order in this scenario.
+                throw SwiftTraderError.kucoinInvalidTargetPriceLower(
+                    entryPrice: input.entryPrice.toDecimalString(),
+                    targetPrice: targetPriceString)
+            }
+        } else {
+            guard Double(targetPriceString) ?? 0 < input.entryPrice else {
+                // Short position: throw in case the target price became HIGHER than the entry price
+                // for whatever reason. Do not place an order in this scenario.
+                throw SwiftTraderError.kucoinInvalidTargetPriceHigher(
+                    entryPrice: input.entryPrice.toDecimalString(),
+                    targetPrice: targetPriceString)
+            }
         }
         
         return KucoinOrderParameters(
             symbol: input.contractSymbol,
             side: .sell,
             type: .limit,
-            stop: .down,
+            stop: input.isLong ? .down : .up,
             stopPriceType: .TP,
             stopPrice: "\(targetPriceString)",
             price: "\(targetPriceString)",

@@ -48,8 +48,11 @@ public enum SwiftTraderError: Error {
     /// The offsett has to be lower than the percentage of the profit; the order will not be placed.
     case kucoinInvalidOffset(offset: Double, profitPercentage: Double)
     
-    /// The target price is lower than the entry price; the order will not be placed.
-    case kucoinInvalidTargetPrice(entryPrice: String, targetPrice: String)
+    /// (`long` position) The target price is lower than the entry price; the order will not be placed.
+    case kucoinInvalidTargetPriceLower(entryPrice: String, targetPrice: String)
+    
+    /// (`short` position) The target price is higher than the entry price; the order will not be placed.
+    case kucoinInvalidTargetPriceHigher(entryPrice: String, targetPrice: String)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
     case kucoinOrderList(error: Error)

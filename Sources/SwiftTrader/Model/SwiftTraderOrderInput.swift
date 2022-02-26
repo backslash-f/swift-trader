@@ -12,52 +12,58 @@ public struct SwiftTraderStopLimitOrderInput {
     
     // MARK: - Properties
     
+    public let clean: Bool
+    public let contractSymbol: String
+    public let currentPrice: Double
+    public let entryPrice: Double
     public let exchange: SwiftTraderExchange
+    public let isLong: Bool
     public let ticker: String
     public let tickerSize: String
-    public let contractSymbol: String
-    public let entryPrice: Double
-    public let currentPrice: Double
-    public let profitPercentage: Double
     public let offset: Double
-    public let clean: Bool
+    public let profitPercentage: Double
     
     // MARK: - Lifecycle
     
     /// Creates a `SwiftTraderOrderInput` instance.
     ///
     /// - Parameters:
+    ///   - clean: When `true`, all the untriggered stop orders for the `contractSymbol` will be cancelled before placing a new one.
+    ///   Cleaning is done via `SwiftTrader.kucoinFuturesCancelStopOrders(symbol:)`. In case that fails, the execution continues
+    ///   and a new order will be placed regardless.
+    ///   - contractSymbol: E.g.: XBTCUSDTM
+    ///   - currentPrice: The current price of the asset.
+    ///   - entryPrice: E.g.: "42.856", "43567.98", "127.01".
     ///   - exchange: E.g.: Kucoin, Binance
+    ///   - isLong: Indicates the side of the position. `true` indicates "long". `false` indicates "short. The side is taken into consideration
+    ///   when performing trailing stop logic.
     ///   - ticker: E.g.: BTCUSDT
     ///   - tickerSize: E.g.: "1", "0.05", "0.00001"
-    ///   - contractSymbol: E.g.: XBTCUSDTM
-    ///   - entryPrice: E.g.: "42.856", "43567.98", "127.01".
-    ///   - currentPrice: The current price of the asset.
-    ///   - profitPercentage: The percentage of the profit at this point, e.g.: "1.5", "0.67".
     ///   - offset: How far the **"target price"** of the stop order will be from the `currentPrice`. For example,
     ///   suppose the `profitPercentage` is `1.0%` and the `offset` is `0.75%`. The stop order to be placed will be `0.25%`
     ///   of the current price (`1.0%` - `0.75%`). Using the same `offset`, if the `profitPercentage` is now `2.0%`, the stop order
     ///   will be placed at `1.25%` of the current price (`2.0%` - `0.75%`).
-    ///   - clean: When `true`, all the untriggered stop orders for the `contractSymbol` will be cancelled before placing a new one.
-    ///   Cleaning is done via `SwiftTrader.kucoinFuturesCancelStopOrders(symbol:)`. In case that fails, the execution continues
-    ///   and a new order will be placed regardless.
-    public init(exchange: SwiftTraderExchange,
+    ///   - profitPercentage: The percentage of the profit at this point, e.g.: "1.5", "0.67".
+    public init(clean: Bool,
+                contractSymbol: String,
+                currentPrice: Double,
+                entryPrice: Double,
+                exchange: SwiftTraderExchange,
+                isLong: Bool,
                 ticker: String,
                 tickerSize: String,
-                contractSymbol: String,
-                entryPrice: Double,
-                currentPrice: Double,
-                profitPercentage: Double,
                 offset: Double,
-                clean: Bool) {
+                profitPercentage: Double
+    ) {
+        self.clean = clean
+        self.contractSymbol = contractSymbol
+        self.currentPrice = currentPrice
+        self.entryPrice = entryPrice
         self.exchange = exchange
+        self.isLong = isLong
         self.ticker = ticker
         self.tickerSize = tickerSize
-        self.contractSymbol = contractSymbol
-        self.entryPrice = entryPrice
-        self.currentPrice = currentPrice
-        self.profitPercentage = profitPercentage
         self.offset = offset
-        self.clean = clean
+        self.profitPercentage = profitPercentage
     }
 }
