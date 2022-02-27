@@ -99,7 +99,7 @@ public extension SwiftTrader {
         do {
             let orderParameters = try createStopLimitOrderParameters(for: orderInput)
             
-            if orderInput.clean {
+            if orderInput.cancelStopOrders {
                 do {
                     try await kucoinFuturesCancelStopOrders(symbol: orderInput.contractSymbol)
                 } catch {

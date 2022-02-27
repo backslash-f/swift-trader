@@ -12,7 +12,7 @@ public struct SwiftTraderStopLimitOrderInput {
     
     // MARK: - Properties
     
-    public let clean: Bool
+    public let cancelStopOrders: Bool
     public let contractSymbol: String
     public let currentPrice: Double
     public let entryPrice: Double
@@ -28,8 +28,8 @@ public struct SwiftTraderStopLimitOrderInput {
     /// Creates a `SwiftTraderOrderInput` instance.
     ///
     /// - Parameters:
-    ///   - clean: When `true`, all the untriggered stop orders for the `contractSymbol` will be cancelled before placing a new one.
-    ///   Cleaning is done via `SwiftTrader.kucoinFuturesCancelStopOrders(symbol:)`. In case that fails, the execution continues
+    ///   - cancelStopOrders: When `true`, all the untriggered stop orders for the `contractSymbol` will be cancelled before placing a new one.
+    ///   Cancelling is done via `SwiftTrader.kucoinFuturesCancelStopOrders(symbol:)`. In case that fails, the execution continues
     ///   and a new order will be placed regardless.
     ///   - contractSymbol: E.g.: XBTCUSDTM
     ///   - currentPrice: The current price of the asset.
@@ -44,7 +44,7 @@ public struct SwiftTraderStopLimitOrderInput {
     ///   - profitPercentage: The percentage of the profit at this point, e.g.: "1.5", "0.67".
     ///   - ticker: E.g.: BTCUSDT
     ///   - tickerSize: E.g.: "1", "0.05", "0.00001"
-    public init(clean: Bool,
+    public init(cancelStopOrders: Bool,
                 contractSymbol: String,
                 currentPrice: Double,
                 entryPrice: Double,
@@ -54,7 +54,7 @@ public struct SwiftTraderStopLimitOrderInput {
                 profitPercentage: Double,
                 ticker: String,
                 tickerSize: String) {
-        self.clean = clean
+        self.cancelStopOrders = cancelStopOrders
         self.contractSymbol = contractSymbol
         self.currentPrice = currentPrice
         self.entryPrice = entryPrice
