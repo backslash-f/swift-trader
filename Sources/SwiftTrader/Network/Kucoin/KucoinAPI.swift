@@ -47,8 +47,8 @@ public struct KucoinAPI {
     }
     
     public struct QueryParam {
-        static let currency     = "currency"
-        static let orderStatus  = "status"
-        static let symbol       = "symbol"
+        public static let currency     = "currency"
+        public static let orderStatus  = "status"
+        public static let symbol       = "symbol"
     }
 }

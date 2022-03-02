@@ -40,7 +40,7 @@ public enum SwiftTraderError: Error {
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesCancelStopOrders(symbol:)`.
     case kucoinFuturesCancelStopOrders(error: Error)
     
-    // MARK: Order
+    // MARK: Orders
     
     /// Something went wrong while trying to set the target price.
     case kucoinCouldNotCalculateTheTargetPrice(input: SwiftTraderStopLimitOrderInput)
@@ -55,13 +55,16 @@ public enum SwiftTraderError: Error {
     case kucoinInvalidTargetPriceHigher(entryPrice: String, targetPrice: String)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
-    case kucoinOrderList(error: Error)
+    case kucoinFuturesOrderList(error: Error)
+    
+    /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesStopOrderList(symbol:)`.
+    case kucoinFuturesStopOrderList(error: Error)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPlaceStopLimitOrder()`.
-    case kucoinPlaceStopLimitOrder(error: Error)
+    case kucoinFuturesPlaceStopLimitOrder(error: Error)
     
     // MARK: Positions
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPositionList()`.
-    case kucoinPositionList(error: Error)
+    case kucoinFuturesPositionList(error: Error)
 }

@@ -1,16 +1,16 @@
 //
-//  KucoinFuturesCancelOrdersResource.swift
+//  KucoinFuturesListStopOrdersResource.swift
 //
 //
-//  Created by Fernando Fernandes on 16.02.22.
+//  Created by Fernando Fernandes on 02.03.22.
 //
 
 import Foundation
 
-/// The **resource** for requesting the cancellation of all untriggered stop orders of a given (contract) symbol.
+/// The **resource** for requesting the list of all untriggered stop orders of a given (contract) symbol.
 ///
-/// https://docs.kucoin.com/futures/#stop-order-mass-cancelation
-public struct KucoinFuturesCancelOrdersResource: NetworkResource {
+/// https://docs.kucoin.com/futures/#get-untriggered-stop-order-list
+public struct KucoinFuturesListStopOrdersResource: NetworkResource {
     
     // MARK: - Properties
     
@@ -38,9 +38,9 @@ public struct KucoinFuturesCancelOrdersResource: NetworkResource {
     
     // MARK: - Lifecycle
     
-    /// Creates a new `KucoinFuturesCancelOrdersResource` instance.
+    /// Creates a new `KucoinFuturesListStopOrdersResource` instance.
     ///
-    /// - Parameter symbol: `String`,  represents the specific contract for which all the untriggered stop orders will be cancelled.
+    /// - Parameter symbol: `String`,  represents the specific contract for which all the untriggered stop orders will be listed.
     /// E.g.: "XBTUSDM".
     init(symbol: String) {
         self.symbol = symbol

@@ -1,8 +1,8 @@
 //
-//  KucoinFuturesCancelOrdersRequest.swift
+//  KucoinFuturesListStopOrdersRequest.swift
 //  
 //
-//  Created by Fernando Fernandes on 16.02.22.
+//  Created by Fernando Fernandes on 02.03.22.
 //
 
 import Foundation
@@ -11,14 +11,14 @@ import FoundationNetworking
 #endif
 import Logging
 
-/// A **request** for cancelling all untriggered stop orders of a given (contract) symbol.
+/// A **request** for listing all untriggered stop orders of a given (contract) symbol.
 ///
-/// https://docs.kucoin.com/futures/#stop-order-mass-cancelation
-public struct KucoinFuturesCancelOrdersRequest: NetworkRequest {
+/// https://docs.kucoin.com/futures/#get-untriggered-stop-order-list
+public struct KucoinFuturesListStopOrdersRequest: NetworkRequest {
     
     // MARK: - Properties
     
-    public typealias DecodableModel = KucoinFuturesCancelStopOrders
+    public typealias DecodableModel = KucoinFuturesOrderList
     
     public var logger: Logger {
         NetworkRequestLogger().default
@@ -28,9 +28,9 @@ public struct KucoinFuturesCancelOrdersRequest: NetworkRequest {
     
     public var request: URLRequest {
         get throws {
-            let futuresCancelOrdersResource = KucoinFuturesCancelOrdersResource(symbol: symbol)
-            var urlRequest = URLRequest(url: try futuresCancelOrdersResource.url)
-            urlRequest.httpMethod = HTTPMethod.DELETE.rawValue
+            let futuresListOrdersResource = KucoinFuturesListStopOrdersResource(symbol: symbol)
+            var urlRequest = URLRequest(url: try futuresListOrdersResource.url)
+            urlRequest.httpMethod = HTTPMethod.GET.rawValue
             try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
             return urlRequest
         }
@@ -46,10 +46,10 @@ public struct KucoinFuturesCancelOrdersRequest: NetworkRequest {
     
     // MARK: - Lifecycle
     
-    /// Creates a new `KucoinFuturesOrdersListRequest` instance.
+    /// Creates a new `KucoinFuturesListStopOrdersRequest` instance.
     ///
     /// - Parameters:
-    ///   - symbol: `String`, represents the specific contract for which all the untriggered stop orders will be cancelled.
+    ///   - symbol: `String`, represents the specific contract for which all the untriggered stop orders will be listed.
     ///   E.g.: "XBTUSDM".
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
@@ -67,9 +67,9 @@ public struct KucoinFuturesCancelOrdersRequest: NetworkRequest {
 
 // MARK: - Network Request Protocol
 
-public extension KucoinFuturesCancelOrdersRequest {
+public extension KucoinFuturesListStopOrdersRequest {
     
     func decode(_ data: Data) throws -> DecodableModel {
-        try JSONDecoder().decode(KucoinFuturesCancelStopOrders.self, from: data)
+        try JSONDecoder().decode(KucoinFuturesOrderList.self, from: data)
     }
 }

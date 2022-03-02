@@ -134,7 +134,7 @@ public struct KucoinFuturesOrder: Codable {
             self.stop = nil
         }
         
-        self.stopTriggered = try container.decode(Bool.self, forKey: .stopTriggered)
+        self.stopTriggered = try container.decodeIfPresent(Bool.self, forKey: .stopTriggered) ?? false
         self.stopPrice = try container.decodeIfPresent(String.self, forKey: .stopPrice)
         self.leverage = try container.decode(String.self, forKey: .leverage)
         self.reduceOnly = try container.decode(Bool.self, forKey: .reduceOnly)

@@ -12,6 +12,7 @@ public enum SwiftTraderOperation {
     case kucoinFuturesAccountOverview
     case kucoinFuturesCancelStopOrders
     case kucoinFuturesOrderList
+    case kucoinFuturesStopOrderList
     case kucoinFuturesPlaceStopLimitOrder
     case kucoinFuturesPositionList
 }

@@ -61,6 +61,30 @@ public extension SwiftTrader {
     
     // MARK: List Orders
     
+    /// Retrieves the list of un-triggered stop orders.
+    ///
+    /// https://docs.kucoin.com/futures/#get-untriggered-stop-order-list
+    ///
+    /// - Parameter orderStatus: `KucoinFuturesOrderStatus`, default is `.active`.
+    /// - Returns: An instance of `KucoinFuturesOrderList` or `SwiftTraderError`.
+    func kucoinFuturesStopOrderList(symbol: String) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
+        let request = KucoinFuturesListStopOrdersRequest(
+            symbol: symbol,
+            kucoinAuth: kucoinAuth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let stopOrders = model as? KucoinFuturesOrderList else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(stopOrders)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinFuturesStopOrderList)
+            return .failure(swiftTraderError)
+        }
+    }
+    
     /// Retrieves the list of active Futures orders.
     ///
     /// Notice: this does **not** include the list of stop orders
@@ -198,12 +222,14 @@ private extension SwiftTrader {
                 return .kucoinFuturesAccountOverview(error: networkRequestError)
             case .kucoinFuturesCancelStopOrders:
                 return .kucoinFuturesCancelStopOrders(error: networkRequestError)
+            case .kucoinFuturesStopOrderList:
+                return .kucoinFuturesStopOrderList(error: networkRequestError)
             case .kucoinFuturesOrderList:
-                return .kucoinOrderList(error: networkRequestError)
+                return .kucoinFuturesOrderList(error: networkRequestError)
             case .kucoinFuturesPlaceStopLimitOrder:
-                return .kucoinPlaceStopLimitOrder(error: networkRequestError)
+                return .kucoinFuturesPlaceStopLimitOrder(error: networkRequestError)
             case .kucoinFuturesPositionList:
-                return .kucoinPositionList(error: networkRequestError)
+                return .kucoinFuturesPositionList(error: networkRequestError)
             }
         }
     }
