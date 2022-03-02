@@ -36,8 +36,9 @@ public struct KucoinFuturesOrder: Codable {
     public let type: KucoinOrderType
     public let side: KucoinOrderSide
     
-    /// The price of one asset's unit.
-    public let price: String
+    /// The price of one asset's unit. Although this is returned in Sandbox,
+    /// it returns `null` in production. Therefore it's an optional.
+    public let price: String?
     
     /// How much assets were bought.
     public let size: Int
@@ -112,7 +113,7 @@ public struct KucoinFuturesOrder: Codable {
         self.symbol = try container.decode(String.self, forKey: .symbol)
         self.type = try container.decode(KucoinOrderType.self, forKey: .type)
         self.side = try container.decode(KucoinOrderSide.self, forKey: .side)
-        self.price = try container.decode(String.self, forKey: .price)
+        self.price = try container.decodeIfPresent(String.self, forKey: .price)
         self.size = try container.decode(Int.self, forKey: .size)
         self.value = try container.decode(String.self, forKey: .value)
         self.filledValue = try container.decode(String.self, forKey: .filledValue)
