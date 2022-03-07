@@ -12,9 +12,9 @@ public extension SwiftTraderError {
     
     static func error(for statusCode: Int, localizedErrorMessage: String, data: Data) -> SwiftTraderError {
         guard let kucoinError = try? JSONDecoder().decode(KucoinSystemError.self, from: data) else {
-            return .statusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
+            return .kucoinStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
         }
-        return .statusCodeNotOK(
+        return .kucoinStatusCodeNotOK(
             statusCode: statusCode,
             localizedErrorMessage: localizedErrorMessage,
             kucoinErrorCode: kucoinError.code,

@@ -20,10 +20,13 @@ public enum SwiftTraderError: Error {
     
     // MARK: - Kucoin Related
     
+    /// No `KucoinAuth` instance was given; it will be impossible to authenticate with Kucoin.
+    case kucoinMissingAuthentication
+    
     /// The response status code is something other than `200`.
     ///
     /// The underlying Kucoin system error may be verified by reading the returned extra arguments, if present.
-    case statusCodeNotOK(
+    case kucoinStatusCodeNotOK(
         statusCode: Int,
         localizedErrorMessage: String,
         kucoinErrorCode: String? = nil,

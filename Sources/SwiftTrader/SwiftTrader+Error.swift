@@ -1,0 +1,37 @@
+//
+//  SwiftTrader+Error.swift
+//  
+//
+//  Created by Fernando Fernandes on 07.03.22.
+//
+
+import Foundation
+
+public extension SwiftTrader {
+    
+    /// Translates a `NetworkRequestError` to a `SwiftTraderError`.
+    func handle(networkRequestError: NetworkRequestError, operation: SwiftTraderOperation) -> SwiftTraderError {
+        switch networkRequestError {
+            
+        case .statusCodeNotOK(let statusCode, let errorMessage, let data):
+            let error = SwiftTraderError.error(for: statusCode, localizedErrorMessage: errorMessage, data: data)
+            return error
+            
+        default:
+            switch operation {
+            case .kucoinFuturesAccountOverview:
+                return .kucoinFuturesAccountOverview(error: networkRequestError)
+            case .kucoinFuturesCancelStopOrders:
+                return .kucoinFuturesCancelStopOrders(error: networkRequestError)
+            case .kucoinFuturesStopOrderList:
+                return .kucoinFuturesStopOrderList(error: networkRequestError)
+            case .kucoinFuturesOrderList:
+                return .kucoinFuturesOrderList(error: networkRequestError)
+            case .kucoinFuturesPlaceStopLimitOrder:
+                return .kucoinFuturesPlaceStopLimitOrder(error: networkRequestError)
+            case .kucoinFuturesPositionList:
+                return .kucoinFuturesPositionList(error: networkRequestError)
+            }
+        }
+    }
+}
