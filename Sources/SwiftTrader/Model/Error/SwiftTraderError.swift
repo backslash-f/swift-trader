@@ -18,6 +18,17 @@ public enum SwiftTraderError: Error {
     /// The returned model is unexpected.
     case unexpectedResponse(modelString: String)
     
+    // MARK: - FTX Related
+    
+    /// No `FTXAuth` instance was given; it will be impossible to authenticate with FTX.
+    case ftxMissingAuthentication
+    
+    /// And error ocurred while executing the function `SwiftTrader.ftxPositions`.
+    case ftxPositions(error: Error)
+    
+    /// The response status code is something other than `200`.
+    case ftxStatusCodeNotOK(statusCode: Int, localizedErrorMessage: String)
+
     // MARK: - Kucoin Related
     
     /// No `KucoinAuth` instance was given; it will be impossible to authenticate with Kucoin.

@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Holds data required to authenticate the requests against Kucoin APIs.
+/// Holds data required to authenticate requests against Kucoin APIs.
 public struct KucoinAuth {
 
     // MARK: - Properties

@@ -12,13 +12,12 @@ public extension SwiftTrader {
     /// Translates a `NetworkRequestError` to a `SwiftTraderError`.
     func handle(networkRequestError: NetworkRequestError, operation: SwiftTraderOperation) -> SwiftTraderError {
         switch networkRequestError {
-            
         case .statusCodeNotOK(let statusCode, let errorMessage, let data):
-            let error = SwiftTraderError.error(for: statusCode, localizedErrorMessage: errorMessage, data: data)
-            return error
-            
+            return SwiftTraderError.error(for: operation, statusCode: statusCode, localizedErrorMessage: errorMessage, data: data)
         default:
             switch operation {
+            case .ftxPositions:
+                return .ftxPositions(error: networkRequestError)
             case .kucoinFuturesAccountOverview:
                 return .kucoinFuturesAccountOverview(error: networkRequestError)
             case .kucoinFuturesCancelStopOrders:

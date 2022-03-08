@@ -12,16 +12,18 @@ import Logging
 public struct SwiftTrader {
     
     // MARK: - Properties
-    
-    public let logger = SwiftTraderLogger()
-    
+
+    public let ftxAuth: FTXAuth?
     public let kucoinAuth: KucoinAuth?
-    
+    public let logger = SwiftTraderLogger()
     public let settings: SwiftTraderSettings
     
     // MARK: - Lifecycle
     
-    public init(kucoinAuth: KucoinAuth?, settings: SwiftTraderSettings = DefaultSwiftTraderSettings()) {
+    public init(ftxAuth: FTXAuth?,
+                kucoinAuth: KucoinAuth?,
+                settings: SwiftTraderSettings = DefaultSwiftTraderSettings()) {
+        self.ftxAuth = ftxAuth
         self.kucoinAuth = kucoinAuth
         self.settings = settings
     }
