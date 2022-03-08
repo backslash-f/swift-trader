@@ -12,11 +12,11 @@ import Foundation
 /// https://docs.ftx.com/#get-positions
 public struct FTXPositionList: Codable {
     public let success: Bool
-    public let result: [Position]
+    public let result: [FTXPosition]
 }
 
 // Represents an open position within FTX.
-public struct Position: Codable {
+public struct FTXPosition: Codable {
     
     // MARK: - Properties
     

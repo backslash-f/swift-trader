@@ -13,10 +13,11 @@ import Foundation
 public struct KucoinFuturesPlaceOrder: Codable {
     public let code: String
     public let msg: String?
-    public let data: OrderPlaced?
+    public let data: KucoinOrder?
 }
 
-public struct OrderPlaced: Codable {
+// Represents an order that was placed within Kucoin.
+public struct KucoinOrder: Codable {
     public let orderID: String
 
     enum CodingKeys: String, CodingKey {
