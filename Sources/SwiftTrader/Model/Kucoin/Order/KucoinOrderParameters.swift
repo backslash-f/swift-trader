@@ -16,7 +16,7 @@ public struct KucoinOrderParameters {
     
     public let clientOid = UUID().uuidString
     public let symbol: String
-    public let side: KucoinOrderSide
+    public let side: OrderSide
     public let type: KucoinOrderType
     public let stop: KucoinOrderStop
     public let stopPriceType: KucoinOrderStopPriceType
@@ -28,7 +28,7 @@ public struct KucoinOrderParameters {
     // MARK: - Lifecycle
     
     public init(symbol: String,
-                side: KucoinOrderSide,
+                side: OrderSide,
                 type: KucoinOrderType,
                 stop: KucoinOrderStop,
                 stopPriceType: KucoinOrderStopPriceType,

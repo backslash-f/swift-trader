@@ -11,28 +11,31 @@ import Foundation
 public extension SwiftTraderError {
     
     static func error(for operation: SwiftTraderOperation, statusCode: Int, localizedErrorMessage: String, data: Data) -> SwiftTraderError {
-        
         switch operation {
-            
-        case .ftxPositions:
-            return .ftxStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
-            
+        case .ftxPositions, .ftxPlaceStopLimitOrder:
+            guard let ftxError = try? JSONDecoder().decode(FTXError.self, from: data) else {
+                return .ftxStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
+            }
+            return .ftxStatusCodeNotOK(
+                statusCode: statusCode,
+                localizedErrorMessage: localizedErrorMessage,
+                isSuccess: ftxError.isSuccess,
+                errorMessage: ftxError.errorMessage
+            )
         case .kucoinFuturesAccountOverview,
                 .kucoinFuturesCancelStopOrders,
                 .kucoinFuturesOrderList,
                 .kucoinFuturesStopOrderList,
                 .kucoinFuturesPlaceStopLimitOrder,
                 .kucoinFuturesPositionList:
-            
             guard let kucoinError = try? JSONDecoder().decode(KucoinSystemError.self, from: data) else {
                 return .kucoinStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
             }
-            
             return .kucoinStatusCodeNotOK(
                 statusCode: statusCode,
                 localizedErrorMessage: localizedErrorMessage,
-                kucoinErrorCode: kucoinError.code,
-                kucoinErrorMessage: kucoinError.message
+                errorCode: kucoinError.code,
+                errorMessage: kucoinError.message
             )
         }
     }

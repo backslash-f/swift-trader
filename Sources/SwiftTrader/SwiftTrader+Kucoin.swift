@@ -110,7 +110,7 @@ public extension SwiftTrader {
             return .failure(.kucoinMissingAuthentication)
         }
         do {
-            let orderParameters = try createStopLimitOrderParameters(for: orderInput)
+            let targetPrice = try calculateTargetPrice(for: orderInput)
             
             if orderInput.cancelStopOrders {
                 do {
@@ -119,6 +119,18 @@ public extension SwiftTrader {
                     logger.log("Could not cancel untriggered stop orders: \(error)")
                 }
             }
+            
+            let orderParameters = KucoinOrderParameters(
+                symbol: orderInput.contractSymbol,
+                side: .sell,
+                type: .limit,
+                stop: orderInput.isLong ? .down : .up,
+                stopPriceType: .TP,
+                stopPrice: targetPrice.priceString,
+                price: targetPrice.priceString,
+                reduceOnly: true,
+                closeOrder: true
+            )
             
             let request = KucoinFuturesPlaceOrdersRequest(
                 orderParameters: orderParameters,

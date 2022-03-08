@@ -9,7 +9,14 @@ import Foundation
 
 /// The currently running `SwiftTrader` operation.
 public enum SwiftTraderOperation {
+    
+    // MARK: - FTX
+    
     case ftxPositions
+    case ftxPlaceStopLimitOrder
+    
+    // MARK: - Kucoin
+    
     case kucoinFuturesAccountOverview
     case kucoinFuturesCancelStopOrders
     case kucoinFuturesOrderList

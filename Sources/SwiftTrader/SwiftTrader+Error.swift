@@ -18,6 +18,8 @@ public extension SwiftTrader {
             switch operation {
             case .ftxPositions:
                 return .ftxPositions(error: networkRequestError)
+            case .ftxPlaceStopLimitOrder:
+                return .ftxPlaceStopLimitOrder(error: networkRequestError)
             case .kucoinFuturesAccountOverview:
                 return .kucoinFuturesAccountOverview(error: networkRequestError)
             case .kucoinFuturesCancelStopOrders:

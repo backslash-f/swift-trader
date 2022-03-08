@@ -7,14 +7,17 @@
 
 import Foundation
 
-/// Creates a set of parameters for placing stop limit orders on the target exchange.
-///
-/// For example: before executing a `KucoinFuturesPlaceOrdersRequest`, this extension will create
-/// a `KucoinOrderParameters` instance that can be used as an argument. The business logic for creating
-/// such instance is based on a given `SwiftTraderStopLimitOrderInput`/`offset`.
+/// Holds logic to calculate a trailing stop price.
 public extension SwiftTrader {
     
-    func createStopLimitOrderParameters(for input: SwiftTraderStopLimitOrderInput) throws -> KucoinOrderParameters {
+    typealias TargetPriceTuple = (priceString: String, priceDouble: Double)
+    
+    /// Calculates a trailing stop price according to the parameters of the given `SwiftTraderStopLimitOrderInput`,
+    /// such as the `profitPercentage`, `offset`, etc.
+    ///
+    /// - Parameter input: `SwiftTraderStopLimitOrderInput`
+    /// - Returns: `TargetPriceTuple`, which contains the calculated price in both `String` and `Double` format.
+    func calculateTargetPrice(for input: SwiftTraderStopLimitOrderInput) throws -> TargetPriceTuple {
         logger.log("Creating order parameters...")
         
         // E.g: 7.47 -> 0.0747
@@ -26,10 +29,7 @@ public extension SwiftTrader {
         logger.log("Offset: \(offset.toDecimalString())")
         
         guard offset < profitPercentage else {
-            throw SwiftTraderError.kucoinInvalidOffset(
-                offset: input.offset,
-                profitPercentage: input.profitPercentage
-            )
+            throw SwiftTraderError.invalidOffset(offset: input.offset, profitPercentage: input.profitPercentage)
         }
         
         // E.g.: (0.0747 - 0.0075) = 0.0672 (6,72%)
@@ -58,7 +58,7 @@ public extension SwiftTrader {
         // error when you place the order. The tick size is the smallest price increment in which the prices are quoted.
         guard let tickerSizeDouble = Double(input.tickerSize),
               let priceDouble = Double(targetPriceString) else {
-                  throw SwiftTraderError.kucoinCouldNotCalculateTheTargetPrice(input: input)
+                  throw SwiftTraderError.couldNotCalculateTargetPrice(input: input)
               }
         
         // Whole ticker size like "1", "2", etc.
@@ -75,7 +75,7 @@ public extension SwiftTrader {
             // - "0.7" becomes "0.7001"
             guard let targetPriceLastDigit = targetPriceString.last,
                   let tickerLastDigit = input.tickerSize.last else {
-                      throw SwiftTraderError.kucoinCouldNotCalculateTheTargetPrice(input: input)
+                      throw SwiftTraderError.couldNotCalculateTargetPrice(input: input)
                   }
             
             let tickerDigits = input.tickerSize.decimalCount()
@@ -99,35 +99,27 @@ public extension SwiftTrader {
         logger.log("Ticker size: \(input.tickerSize)")
         logger.log("Target price string: \(targetPriceString)")
         
+        let targetPriceDouble = Double(targetPriceString) ?? 0
+        
         if input.isLong {
-            guard Double(targetPriceString) ?? 0 > input.entryPrice else {
+            guard targetPriceDouble > input.entryPrice else {
                 // Long position: throw in case the target price became LOWER than the entry price
                 // for whatever reason. Do not place an order in this scenario.
-                throw SwiftTraderError.kucoinInvalidTargetPriceLower(
+                throw SwiftTraderError.invalidTargetPriceTooLow(
                     entryPrice: input.entryPrice.toDecimalString(),
-                    targetPrice: targetPriceString)
+                    targetPrice: targetPriceString
+                )
             }
         } else {
-            guard Double(targetPriceString) ?? 0 < input.entryPrice else {
+            guard targetPriceDouble < input.entryPrice else {
                 // Short position: throw in case the target price became HIGHER than the entry price
                 // for whatever reason. Do not place an order in this scenario.
-                throw SwiftTraderError.kucoinInvalidTargetPriceHigher(
+                throw SwiftTraderError.invalidTargetPriceTooHigh(
                     entryPrice: input.entryPrice.toDecimalString(),
-                    targetPrice: targetPriceString)
+                    targetPrice: targetPriceString
+                )
             }
         }
-        
-        return KucoinOrderParameters(
-            symbol: input.contractSymbol,
-            side: .sell,
-            type: .limit,
-            stop: input.isLong ? .down : .up,
-            stopPriceType: .TP,
-            stopPrice: "\(targetPriceString)",
-            price: "\(targetPriceString)",
-            reduceOnly: true,
-            closeOrder: true
-        )
+        return (targetPriceString, targetPriceDouble)
     }
 }
-

@@ -18,7 +18,24 @@ public enum SwiftTraderError: Error {
     /// The returned model is unexpected.
     case unexpectedResponse(modelString: String)
     
+    // MARK: Target Price Calculation
+    
+    /// Something went wrong while trying to set the target price.
+    case couldNotCalculateTargetPrice(input: SwiftTraderStopLimitOrderInput)
+    
+    /// The offsett has to be lower than the percentage of the profit; the order will not be placed.
+    case invalidOffset(offset: Double, profitPercentage: Double)
+    
+    /// (`long` position) The target price is lower than the entry price; the order will not be placed.
+    case invalidTargetPriceTooLow(entryPrice: String, targetPrice: String)
+    
+    /// (`short` position) The target price is higher than the entry price; the order will not be placed.
+    case invalidTargetPriceTooHigh(entryPrice: String, targetPrice: String)
+    
     // MARK: - FTX Related
+    
+    /// The number of the assets that were bought has to be greater than zero.
+    case ftxInvalidSize
     
     /// No `FTXAuth` instance was given; it will be impossible to authenticate with FTX.
     case ftxMissingAuthentication
@@ -26,8 +43,16 @@ public enum SwiftTraderError: Error {
     /// And error ocurred while executing the function `SwiftTrader.ftxPositions`.
     case ftxPositions(error: Error)
     
+    /// And error ocurred while executing the function `SwiftTrader.ftxPlaceStopLimitOrder`.
+    case ftxPlaceStopLimitOrder(error: Error)
+    
     /// The response status code is something other than `200`.
-    case ftxStatusCodeNotOK(statusCode: Int, localizedErrorMessage: String)
+    case ftxStatusCodeNotOK(
+        statusCode: Int,
+        localizedErrorMessage: String,
+        isSuccess: Bool? = nil,
+        errorMessage: String? = nil
+    )
 
     // MARK: - Kucoin Related
     
@@ -40,8 +65,8 @@ public enum SwiftTraderError: Error {
     case kucoinStatusCodeNotOK(
         statusCode: Int,
         localizedErrorMessage: String,
-        kucoinErrorCode: String? = nil,
-        kucoinErrorMessage: String? = nil
+        errorCode: String? = nil,
+        errorMessage: String? = nil
     )
     
     // MARK: Account Overview
@@ -55,18 +80,6 @@ public enum SwiftTraderError: Error {
     case kucoinFuturesCancelStopOrders(error: Error)
     
     // MARK: Orders
-    
-    /// Something went wrong while trying to set the target price.
-    case kucoinCouldNotCalculateTheTargetPrice(input: SwiftTraderStopLimitOrderInput)
-    
-    /// The offsett has to be lower than the percentage of the profit; the order will not be placed.
-    case kucoinInvalidOffset(offset: Double, profitPercentage: Double)
-    
-    /// (`long` position) The target price is lower than the entry price; the order will not be placed.
-    case kucoinInvalidTargetPriceLower(entryPrice: String, targetPrice: String)
-    
-    /// (`short` position) The target price is higher than the entry price; the order will not be placed.
-    case kucoinInvalidTargetPriceHigher(entryPrice: String, targetPrice: String)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
     case kucoinFuturesOrderList(error: Error)

@@ -23,8 +23,8 @@ public struct FTXPosition: Codable {
     public let cost: Double
     public let cumulativeBuySize: Double?
     public let cumulativeSellSize: Double?
-    public let entryPrice: Double
-    public let estimatedLiquidationPrice: Double
+    public let entryPrice: Double?
+    public let estimatedLiquidationPrice: Double?
     public let future: String
     public let initialMarginRequirement: Double
     public let longOrderSize: Double
@@ -71,8 +71,8 @@ public struct FTXPosition: Codable {
         self.cost = try container.decode(Double.self, forKey: .cost)
         self.cumulativeBuySize = try container.decodeIfPresent(Double.self, forKey: .cumulativeBuySize)
         self.cumulativeSellSize = try container.decodeIfPresent(Double.self, forKey: .cumulativeSellSize)
-        self.entryPrice = try container.decode(Double.self, forKey: .entryPrice)
-        self.estimatedLiquidationPrice = try container.decode(Double.self, forKey: .estimatedLiquidationPrice)
+        self.entryPrice = try container.decodeIfPresent(Double.self, forKey: .entryPrice)
+        self.estimatedLiquidationPrice = try container.decodeIfPresent(Double.self, forKey: .estimatedLiquidationPrice)
         self.future = try container.decode(String.self, forKey: .future)
         self.initialMarginRequirement = try container.decode(Double.self, forKey: .initialMarginRequirement)
         self.longOrderSize = try container.decode(Double.self, forKey: .longOrderSize)

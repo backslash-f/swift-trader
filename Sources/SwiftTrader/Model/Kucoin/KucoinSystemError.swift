@@ -1,5 +1,5 @@
 //
-//  KucoinError.swift
+//  KucoinSystemError.swift
 //  
 //
 //  Created by Fernando Fernandes on 28.01.22.

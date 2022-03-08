@@ -37,7 +37,7 @@ public struct FTXOrder: Codable {
     public let size: Double
     public let status: String
     public let type: String
-    public let orderPrice: String?
+    public let orderPrice: Double?
     public let error: String?
     public let triggeredAt: String?
     public let reduceOnly: Bool
@@ -75,7 +75,7 @@ public struct FTXOrder: Codable {
         self.size = try container.decode(Double.self, forKey: .size)
         self.status = try container.decode(String.self, forKey: .status)
         self.type = try container.decode(String.self, forKey: .type)
-        self.orderPrice = try container.decodeIfPresent(String.self, forKey: .orderPrice)
+        self.orderPrice = try container.decodeIfPresent(Double.self, forKey: .orderPrice)
         self.error = try container.decodeIfPresent(String.self, forKey: .error)
         self.triggeredAt = try container.decodeIfPresent(String.self, forKey: .triggeredAt)
         self.reduceOnly = try container.decode(Bool.self, forKey: .reduceOnly)

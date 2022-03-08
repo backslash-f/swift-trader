@@ -20,6 +20,7 @@ public struct SwiftTraderStopLimitOrderInput {
     public let isLong: Bool
     public let offset: Double
     public let profitPercentage: Double
+    public let size: Double
     public let ticker: String
     public let tickerSize: String
     
@@ -42,6 +43,7 @@ public struct SwiftTraderStopLimitOrderInput {
     ///   of the current price (`1.0%` - `0.75%`). Using the same `offset`, if the `profitPercentage` is now `2.0%`, the stop order
     ///   will be placed at `1.25%` of the current price (`2.0%` - `0.75%`).
     ///   - profitPercentage: The percentage of the profit at this point, e.g.: "1.5", "0.67".
+    ///   - size: How much assets were bought.
     ///   - ticker: E.g.: BTCUSDT
     ///   - tickerSize: E.g.: "1", "0.05", "0.00001"
     public init(cancelStopOrders: Bool,
@@ -52,6 +54,7 @@ public struct SwiftTraderStopLimitOrderInput {
                 isLong: Bool,
                 offset: Double,
                 profitPercentage: Double,
+                size: Double,
                 ticker: String,
                 tickerSize: String) {
         self.cancelStopOrders = cancelStopOrders
@@ -62,6 +65,7 @@ public struct SwiftTraderStopLimitOrderInput {
         self.isLong = isLong
         self.offset = offset
         self.profitPercentage = profitPercentage
+        self.size = size
         self.ticker = ticker
         self.tickerSize = tickerSize
     }
