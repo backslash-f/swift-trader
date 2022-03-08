@@ -7,6 +7,9 @@
 
 import Crypto
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Holds generic algorithms to sign network requests (e.g.: `SHA256 HMAC`).
 public struct NetworkRequestSignee {
