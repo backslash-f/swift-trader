@@ -32,7 +32,7 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
             var urlRequest = URLRequest(url: try futuresPlaceOrderResource.url)
             urlRequest.httpMethod = HTTPMethod.POST.rawValue
             
-            // Parameters
+            // Parameters.
             let parametersJSON = createJSONParameters(from: orderParameters)
             do {
                 let data = try JSONSerialization.data(withJSONObject: parametersJSON, options: [])

@@ -10,7 +10,7 @@ import Foundation
 /// Interface to Kucoin APIs.
 public extension SwiftTrader {
     
-    // MARK: Account Overview
+    // MARK: - Account Overview
     
     /// Retrieves the overview of a Kucoin Futures account.
     ///
@@ -39,7 +39,7 @@ public extension SwiftTrader {
         }
     }
     
-    // MARK: List Orders
+    // MARK: - List Orders
     
     /// Retrieves the list of un-triggered stop orders.
     ///
@@ -96,7 +96,7 @@ public extension SwiftTrader {
         }
     }
     
-    // MARK: Place Orders
+    // MARK: - Place Orders
     
     /// Places a Futures stop limit order.
     ///
@@ -156,7 +156,7 @@ public extension SwiftTrader {
         }
     }
     
-    // MARK: Cancel Orders
+    // MARK: - Cancel Orders
     
     /// Cancels all untriggered Futures stop orders of a given symbol (contract).
     ///
@@ -185,7 +185,7 @@ public extension SwiftTrader {
         }
     }
     
-    // MARK: Positions
+    // MARK: - Positions
     
     /// Lists open Futures positions.
     ///

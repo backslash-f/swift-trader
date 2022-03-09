@@ -21,7 +21,8 @@ public struct FTXAPI {
     }
     
     public struct Path {
-        static let positions            = "/api/positions"
         static let conditionalOrders    = "/api/conditional_orders"
+        static let orders               = "/api/orders"
+        static let positions            = "/api/positions"
     }
 }

@@ -12,8 +12,9 @@ public enum SwiftTraderOperation {
     
     // MARK: - FTX
     
-    case ftxPositions
+    case ftxCancelAllOrders
     case ftxPlaceStopLimitOrder
+    case ftxPositions
     
     // MARK: - Kucoin
     

@@ -40,11 +40,14 @@ public enum SwiftTraderError: Error {
     /// No `FTXAuth` instance was given; it will be impossible to authenticate with FTX.
     case ftxMissingAuthentication
     
-    /// And error ocurred while executing the function `SwiftTrader.ftxPositions`.
-    case ftxPositions(error: Error)
+    /// And error ocurred while executing the function `SwiftTrader.ftxCancelAllOrders`.
+    case ftxCancelAllOrders(error: Error)
     
     /// And error ocurred while executing the function `SwiftTrader.ftxPlaceStopLimitOrder`.
     case ftxPlaceStopLimitOrder(error: Error)
+    
+    /// And error ocurred while executing the function `SwiftTrader.ftxPositions`.
+    case ftxPositions(error: Error)
     
     /// The response status code is something other than `200`.
     case ftxStatusCodeNotOK(

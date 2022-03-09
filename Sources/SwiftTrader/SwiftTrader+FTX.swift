@@ -10,7 +10,36 @@ import Foundation
 /// Interface to FTX APIs.
 public extension SwiftTrader {
     
-    // MARK: Place Orders
+    // MARK: - Cancel Orders
+    
+    /// Cancels all open orders.
+    ///
+    /// https://docs.ftx.com/?python#cancel-all-orders
+    ///
+    /// - Parameter cancelOrderParameters: `FTXCancelOrderParameters` that defines the orders to be cancelled..
+    /// - Returns: An instance of `FTXCancelOrder` or `SwiftTraderError`.
+    @discardableResult func cancelAllOrders(cancelOrderParameters: FTXCancelOrderParameters) async throws -> Result<FTXCancelOrder, SwiftTraderError> {
+        guard let auth = ftxAuth else {
+            return .failure(.ftxMissingAuthentication)
+        }
+        let request = FTXCancelAllOrdersRequest(
+            cancelOrderParameters: cancelOrderParameters,
+            ftxAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let cancelOrder = model as? FTXCancelOrder else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(cancelOrder)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .ftxCancelAllOrders)
+            return .failure(swiftTraderError)
+        }
+    }
+    
+    // MARK: - Place Orders
     
     /// Places a stop limit order within FTX.
     ///
@@ -30,7 +59,19 @@ public extension SwiftTrader {
         do {
             let targetPrice = try calculateTargetPrice(for: orderInput)
             
-            #warning("TODO: cancel previous stop orders")
+            if orderInput.cancelStopOrders {
+                do {
+                    let cancelOrderParameters = FTXCancelOrderParameters(
+                        market: orderInput.contractSymbol,
+                        side: .sell,
+                        conditionalOrdersOnly: true,
+                        limitOrdersOnly: false
+                    )
+                    try await cancelAllOrders(cancelOrderParameters: cancelOrderParameters)
+                } catch {
+                    logger.log("Could not cancel untriggered stop orders: \(error)")
+                }
+            }
             
             let orderParameters = FTXTriggerOrderParameters(
                 market: orderInput.contractSymbol,
@@ -66,7 +107,6 @@ public extension SwiftTrader {
             }
         }
     }
-    
     
     // MARK: Positions
     

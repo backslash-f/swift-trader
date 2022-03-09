@@ -12,7 +12,7 @@ public extension SwiftTraderError {
     
     static func error(for operation: SwiftTraderOperation, statusCode: Int, localizedErrorMessage: String, data: Data) -> SwiftTraderError {
         switch operation {
-        case .ftxPositions, .ftxPlaceStopLimitOrder:
+        case .ftxCancelAllOrders, .ftxPlaceStopLimitOrder, .ftxPositions:
             guard let ftxError = try? JSONDecoder().decode(FTXError.self, from: data) else {
                 return .ftxStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
             }
