@@ -18,19 +18,19 @@ public enum SwiftTraderError: Error {
     /// The returned model is unexpected.
     case unexpectedResponse(modelString: String)
     
-    // MARK: Target Price Calculation
+    // MARK: Limit Price Calculation
     
-    /// Something went wrong while trying to set the target price.
-    case couldNotCalculateTargetPrice(input: SwiftTraderStopLimitOrderInput)
+    /// Something went wrong while trying to set the limit price.
+    case couldNotCalculateLimitPrice(input: SwiftTraderStopLimitOrderInput)
     
     /// The offsett has to be lower than the percentage of the profit; the order will not be placed.
     case invalidOffset(offset: Double, profitPercentage: Double)
     
-    /// (`long` position) The target price is lower than the entry price; the order will not be placed.
-    case invalidTargetPriceTooLow(entryPrice: String, targetPrice: String)
+    /// (`long` position) The limit price is lower than the entry price; the order will not be placed.
+    case limitPriceTooLow(entryPrice: String, limitPrice: String)
     
-    /// (`short` position) The target price is higher than the entry price; the order will not be placed.
-    case invalidTargetPriceTooHigh(entryPrice: String, targetPrice: String)
+    /// (`short` position) The limit price is higher than the entry price; the order will not be placed.
+    case limitPriceTooHigh(entryPrice: String, limitPrice: String)
     
     // MARK: - FTX Related
     

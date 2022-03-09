@@ -110,7 +110,7 @@ public extension SwiftTrader {
             return .failure(.kucoinMissingAuthentication)
         }
         do {
-            let targetPrice = try calculateTargetPrice(for: orderInput)
+            let stopLimitPrice = try calculateStopLimitPrice(for: orderInput)
             
             if orderInput.cancelStopOrders {
                 do {
@@ -126,8 +126,8 @@ public extension SwiftTrader {
                 type: .limit,
                 stop: orderInput.isLong ? .down : .up,
                 stopPriceType: .TP,
-                stopPrice: targetPrice.priceString,
-                price: targetPrice.priceString,
+                stopPrice: stopLimitPrice.stop.string,
+                price: stopLimitPrice.limit.string,
                 reduceOnly: true,
                 closeOrder: true
             )

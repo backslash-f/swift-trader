@@ -57,7 +57,7 @@ public extension SwiftTrader {
             return .failure(.ftxInvalidSize)
         }
         do {
-            let targetPrice = try calculateTargetPrice(for: orderInput)
+            let stopLimitPrice = try calculateStopLimitPrice(for: orderInput)
             
             if orderInput.cancelStopOrders {
                 do {
@@ -80,8 +80,8 @@ public extension SwiftTrader {
                 type: .stop,
                 reduceOnly: true,
                 retryUntilFilled: true,
-                triggerPrice: targetPrice.priceDouble,
-                orderPrice: targetPrice.priceDouble
+                triggerPrice: stopLimitPrice.stop.double,
+                orderPrice: stopLimitPrice.limit.double
             )
             
             let request = FTXPlaceOrderRequest(
