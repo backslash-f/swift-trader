@@ -25,4 +25,8 @@ public struct FTXAPI {
         static let orders               = "/api/orders"
         static let positions            = "/api/positions"
     }
+    
+    public struct QueryParam {
+        public static let market   = "market"
+    }
 }

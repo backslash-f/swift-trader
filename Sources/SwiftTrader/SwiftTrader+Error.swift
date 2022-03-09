@@ -16,12 +16,14 @@ public extension SwiftTrader {
             return SwiftTraderError.error(for: operation, statusCode: statusCode, localizedErrorMessage: errorMessage, data: data)
         default:
             switch operation {
+            case .ftxCancelAllOrders:
+                return .ftxCancelAllOrders(error: networkRequestError)
             case .ftxPlaceStopLimitOrder:
                 return .ftxPlaceStopLimitOrder(error: networkRequestError)
             case .ftxPositions:
                 return .ftxPositions(error: networkRequestError)
-            case .ftxCancelAllOrders:
-                return .ftxCancelAllOrders(error: networkRequestError)
+            case .ftxTriggerOrdersList:
+                return .ftxTriggerOrdersList(error: networkRequestError)
             case .kucoinFuturesAccountOverview:
                 return .kucoinFuturesAccountOverview(error: networkRequestError)
             case .kucoinFuturesCancelStopOrders:

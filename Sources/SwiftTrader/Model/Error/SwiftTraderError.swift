@@ -49,6 +49,9 @@ public enum SwiftTraderError: Error {
     /// And error ocurred while executing the function `SwiftTrader.ftxPositions`.
     case ftxPositions(error: Error)
     
+    /// And error ocurred while executing the function `SwiftTrader.ftxTriggerOrdersList`.
+    case ftxTriggerOrdersList(error: Error)
+    
     /// The response status code is something other than `200`.
     case ftxStatusCodeNotOK(
         statusCode: Int,

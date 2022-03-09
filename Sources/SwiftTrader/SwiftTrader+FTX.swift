@@ -134,4 +134,33 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
+    
+    // MARK: - List Orders
+    
+    /// Retrieves the list of open trigger orders.
+    ///
+    /// https://docs.ftx.com/?python#get-open-trigger-orders
+    ///
+    /// - Parameter market: `String`,  Restrict to cancelling orders only on this market. E.g.: "PAXG-PERP".
+    /// - Returns: An instance of `FTXTriggerOrders` or `SwiftTraderError`.
+    func ftxTriggerOrdersList(market: String) async throws -> Result<FTXTriggerOrders, SwiftTraderError> {
+        guard let auth = ftxAuth else {
+            return .failure(.ftxMissingAuthentication)
+        }
+        let request = FTXListTriggerOrdersRequest(
+            market: market,
+            ftxAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let triggerOrders = model as? FTXTriggerOrders else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(triggerOrders)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .ftxTriggerOrdersList)
+            return .failure(swiftTraderError)
+        }
+    }
 }
