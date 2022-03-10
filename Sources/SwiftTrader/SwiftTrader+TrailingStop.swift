@@ -20,8 +20,8 @@ public extension SwiftTrader {
     /// - Returns: `StopLimitPriceTuple`, which contains the calculated stop (trigger) price and limit price.
     /// The stop price and the limit price are also tuples. These tuples provide the price in both `String` and `Double` format.
     func calculateStopLimitPrice(for input: SwiftTraderStopLimitOrderInput) throws -> StopLimitPriceTuple {
-        logger.log("Creating order parameters...")
-        logger.log("Exchange: \(input.exchange)")
+        logger.log("Exchange: \(input.exchange.rawValue.uppercased())")
+        logger.log("Calculating stop and limit prices...")
         
         // E.g: 7.47 -> 0.0747
         let profitPercentage: Double = (input.profitPercentage / 100)
