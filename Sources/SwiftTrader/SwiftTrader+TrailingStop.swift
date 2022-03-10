@@ -42,15 +42,14 @@ public extension SwiftTrader {
         // E.g.: 42000.69 * 0.0674 = 2830.846506
         let priceIncrement: Double = input.entryPrice * targetPercentage
         logger.log("Price increment: \(priceIncrement.toDecimalString())")
+        logger.log("Ticker size: \(input.tickerSize)")
+        logger.log("Entry price string: \(input.entryPrice.toDecimalString())")
         
         // "Long" example: 42000.69 + 2830.846506 = 44831.536506
         // "Short" example: 42000.69 - 2830.846506 = 39169.843494
         let limitPrice: Double = input.isLong ?
         input.entryPrice + priceIncrement :
         input.entryPrice - priceIncrement
-        
-        logger.log("Entry price: \(input.entryPrice.toDecimalString())")
-        logger.log("Limit price: \(limitPrice.toDecimalString())")
         
         var limitPriceString = "\(limitPrice.toDecimalString())"
         
@@ -81,25 +80,24 @@ public extension SwiftTrader {
                   }
             
             let tickerDigits = input.tickerSize.decimalCount()
-            let limitPriceDigits = limitPriceString.decimalCount()
-            
-            if limitPriceDigits == tickerDigits, limitPriceLastDigit != tickerLastDigit {
+            let limitPriceDecimalDigits = limitPriceString.decimalCount()
+                
+            if ((limitPriceDecimalDigits == 0) || (limitPriceDecimalDigits == tickerDigits)),
+               limitPriceLastDigit != tickerLastDigit {
                 limitPriceString = limitPriceString.dropLast() + "\(tickerLastDigit)"
                 
-            } else if limitPriceDigits > tickerDigits {
-                let digitsToRemove = (limitPriceDigits - tickerDigits) + 1
+            } else if limitPriceDecimalDigits > tickerDigits {
+                let digitsToRemove = (limitPriceDecimalDigits - tickerDigits) + 1
                 limitPriceString = limitPriceString.dropLast(digitsToRemove) + "\(tickerLastDigit)"
                 
-            } else if limitPriceDigits < tickerDigits {
-                let digitsToAdd = (tickerDigits - limitPriceDigits)
+            } else if limitPriceDecimalDigits < tickerDigits,
+                      limitPriceLastDigit != tickerLastDigit {
+                let digitsToAdd = (tickerDigits - limitPriceDecimalDigits)
                 let digits: [String] = Array(repeating: "0", count: digitsToAdd)
                 limitPriceString = limitPriceString + digits.joined(separator: "")
                 limitPriceString = limitPriceString.dropLast() + "\(tickerLastDigit)"
             }
         }
-        
-        logger.log("Ticker size: \(input.tickerSize)")
-        logger.log("Limit price string: \(limitPriceString)")
         
         let limitPriceDouble = Double(limitPriceString) ?? 0
         
@@ -124,6 +122,9 @@ public extension SwiftTrader {
         }
         let limitPriceTuple = (limitPriceString, limitPriceDouble)
         
+        logger.log("Limit price string: \(limitPriceString)")
+        logger.log("Limit price double: \(limitPriceDouble)")
+        
         // Stop price logic. It aims to give the order some room to be filled.
         //
         // For long positions: the stop price has to be greater than the limit price:
@@ -143,6 +144,9 @@ public extension SwiftTrader {
         
         let stopPriceString = stopPriceDouble.toDecimalString()
         let stopPriceTuple = (stopPriceString, stopPriceDouble)
+        
+        logger.log("Stop price string: \(stopPriceString)")
+        logger.log("Stop price double: \(stopPriceDouble)")
         
         return (stopPriceTuple, limitPriceTuple)
     }

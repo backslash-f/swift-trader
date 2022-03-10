@@ -17,7 +17,13 @@ public extension String {
     ///  - 0.00003456: returns "8"
     ///  - 2: returns "0"
     func decimalCount() -> Int {
-        let decimalPartString = self.split(separator: ".").last
-        return decimalPartString?.count ?? 0
+        let split = self.split(separator: ".")
+        guard split.count > 1 else {
+            return 0
+        }
+        guard let decimalPartString = split.last else {
+            return 0
+        }
+        return decimalPartString.count
     }
 }
