@@ -79,7 +79,7 @@ public extension SwiftTrader {
                 size: orderInput.size,
                 type: .stop,
                 reduceOnly: true,
-                retryUntilFilled: true,
+                retryUntilFilled: orderInput.retryUntilFilled,
                 triggerPrice: stopLimitPrice.stop.double,
                 orderPrice: stopLimitPrice.limit.double
             )
