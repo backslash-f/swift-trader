@@ -24,6 +24,7 @@ public extension SwiftTrader {
         logger.log("Contract: \(input.contractSymbol)")
         
         logger.log("Calculating stop and limit prices...")
+        logger.log("Side: \(input.isLong ? "LONG": "SHORT")")
         
         // E.g: 7.47 -> 0.0747
         let profitPercentage: Double = (input.profitPercentage / 100)
@@ -55,52 +56,7 @@ public extension SwiftTrader {
         input.entryPrice - priceIncrement
         
         var limitPriceString = "\(limitPrice.toDecimalString())"
-        
-        // Finally, handle the following requirement:
-        //
-        // "The price specified must be a multiple number of the contract tickSize, otherwise the system will report an
-        // error when you place the order. The tick size is the smallest price increment in which the prices are quoted.
-        guard let tickerSizeDouble = Double(input.tickerSize),
-              let priceDouble = Double(limitPriceString) else {
-                  throw SwiftTraderError.couldNotCalculateLimitPrice(input: input)
-              }
-        
-        // Whole ticker size like "1", "2", etc.
-        if tickerSizeDouble.truncatingRemainder(dividingBy: 1) == 0 {
-            // E.g.: "44831.53" becomes "44832".
-            limitPriceString = "\(priceDouble.rounded(.up).toDecimalString())"
-            
-        } else {
-            // Handle ticker sizes like "0.0001", "0.05", "0.00000001", etc.
-            //
-            // E.g., considering "0.0001":
-            // - "0.023" becomes "0.0231"
-            // - "0.0456" becomes "0.0451"
-            // - "0.7" becomes "0.7001"
-            guard let limitPriceLastDigit = limitPriceString.last,
-                  let tickerLastDigit = input.tickerSize.last else {
-                      throw SwiftTraderError.couldNotCalculateLimitPrice(input: input)
-                  }
-            
-            let tickerDigits = input.tickerSize.decimalCount()
-            let limitPriceDecimalDigits = limitPriceString.decimalCount()
-                
-            if ((limitPriceDecimalDigits == 0) || (limitPriceDecimalDigits == tickerDigits)),
-               limitPriceLastDigit != tickerLastDigit {
-                limitPriceString = limitPriceString.dropLast() + "\(tickerLastDigit)"
-                
-            } else if limitPriceDecimalDigits > tickerDigits {
-                let digitsToRemove = (limitPriceDecimalDigits - tickerDigits) + 1
-                limitPriceString = limitPriceString.dropLast(digitsToRemove) + "\(tickerLastDigit)"
-                
-            } else if limitPriceDecimalDigits < tickerDigits,
-                      limitPriceLastDigit != tickerLastDigit {
-                let digitsToAdd = (tickerDigits - limitPriceDecimalDigits)
-                let digits: [String] = Array(repeating: "0", count: digitsToAdd)
-                limitPriceString = limitPriceString + digits.joined(separator: "")
-                limitPriceString = limitPriceString.dropLast() + "\(tickerLastDigit)"
-            }
-        }
+        try format(priceString: &limitPriceString, input: input)
         
         let limitPriceDouble = Double(limitPriceString) ?? 0
         
@@ -139,18 +95,83 @@ public extension SwiftTrader {
         // - Limit price: 127.49    <- sell when the price reaches this level
         //
         // The increment is the result of the ticker size multiplied by 10, e.g.: 0.1 * 10 = 10
+        guard let tickerSizeDouble = Double(input.tickerSize) else {
+            throw SwiftTraderError.couldNotConvertToDouble(string: input.tickerSize)
+        }
         let stopPriceIncrement: Double = (tickerSizeDouble * 10)
         
-        let stopPriceDouble = input.isLong ?
+        let stopPrice = input.isLong ?
         limitPriceDouble + stopPriceIncrement :
         limitPriceDouble - stopPriceIncrement
         
-        let stopPriceString = stopPriceDouble.toDecimalString()
+        var stopPriceString = stopPrice.toDecimalString()
+        try format(priceString: &stopPriceString, input: input)
+        
+        guard let stopPriceDouble = Double(stopPriceString) else {
+            throw SwiftTraderError.couldNotConvertToDouble(string: stopPriceString)
+        }
+        
         let stopPriceTuple = (stopPriceString, stopPriceDouble)
         
         logger.log("Stop price string: \(stopPriceString)")
         logger.log("Stop price double: \(stopPriceDouble)")
         
         return (stopPriceTuple, limitPriceTuple)
+    }
+}
+
+private extension SwiftTrader {
+    
+    /// Handle the following requirement (e.g. Kucoin): *"The price specified must be a multiple number of the
+    /// contract `tickSize`, otherwise the system will report an error when you place the order."*
+    ///
+    /// - Parameters:
+    ///   - priceString: `String`, price to be formatted.
+    ///   - input: Holds the tick size -- the smallest price increment in which the prices are quoted.
+    func format(priceString: inout String, input: SwiftTraderStopLimitOrderInput) throws {
+        
+        guard let tickerSizeDouble = Double(input.tickerSize) else {
+            throw SwiftTraderError.couldNotConvertToDouble(string: input.tickerSize)
+        }
+        guard let priceDouble = Double(priceString) else {
+            throw SwiftTraderError.couldNotConvertToDouble(string: priceString)
+        }
+        
+        // Whole ticker size like "1", "2", etc.
+        if tickerSizeDouble.truncatingRemainder(dividingBy: 1) == 0 {
+            // E.g.: "44831.53" becomes "44832".
+            priceString = "\(priceDouble.rounded(.up).toDecimalString())"
+            
+        } else {
+            // Handle ticker sizes like "0.0001", "0.05", "0.00000001", etc.
+            //
+            // E.g., considering "0.0001":
+            // - "0.023" becomes "0.0231"
+            // - "0.0456" becomes "0.0451"
+            // - "0.7" becomes "0.7001"
+            guard let priceLastDigit = priceString.last,
+                  let tickerLastDigit = input.tickerSize.last else {
+                throw SwiftTraderError.invalidLastDigit
+            }
+            
+            let tickerDigits = input.tickerSize.decimalCount()
+            let priceDecimalDigits = priceString.decimalCount()
+            
+            if ((priceDecimalDigits == 0) || (priceDecimalDigits == tickerDigits)),
+               priceLastDigit != tickerLastDigit {
+                priceString = priceString.dropLast() + "\(tickerLastDigit)"
+                
+            } else if priceDecimalDigits > tickerDigits {
+                let digitsToRemove = (priceDecimalDigits - tickerDigits) + 1
+                priceString = priceString.dropLast(digitsToRemove) + "\(tickerLastDigit)"
+                
+            } else if priceDecimalDigits < tickerDigits,
+                      priceLastDigit != tickerLastDigit {
+                let digitsToAdd = (tickerDigits - priceDecimalDigits)
+                let digits: [String] = Array(repeating: "0", count: digitsToAdd)
+                priceString = priceString + digits.joined(separator: "")
+                priceString = priceString.dropLast() + "\(tickerLastDigit)"
+            }
+        }
     }
 }

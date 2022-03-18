@@ -18,10 +18,13 @@ public enum SwiftTraderError: Error {
     /// The returned model is unexpected.
     case unexpectedResponse(modelString: String)
     
-    // MARK: Limit Price Calculation
+    // MARK: Limit/Stop Price Calculation
     
-    /// Something went wrong while trying to set the limit price.
-    case couldNotCalculateLimitPrice(input: SwiftTraderStopLimitOrderInput)
+    /// Something went wrong while trying to convert the given `String` to `Double`.
+    case couldNotConvertToDouble(string: String)
+    
+    /// Couldn't extract either price or ticket last digits.
+    case invalidLastDigit
     
     /// The offsett has to be lower than the percentage of the profit; the order will not be placed.
     case invalidOffset(offset: Double, profitPercentage: Double)
