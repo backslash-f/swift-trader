@@ -25,7 +25,7 @@ public extension SwiftTrader {
 
         logger.log("Calculating stop and limit prices...")
         logger.log("Side: \(input.isLong ? "LONG": "SHORT")")
-        logger.log("Size: \(input.size")
+        logger.log("Size: \(input.size)")
 
         // E.g: 7.47 -> 0.0747
         let profitPercentage: Double = (input.profitPercentage / 100)
