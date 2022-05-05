@@ -59,11 +59,13 @@ public extension SwiftTrader {
         do {
             let stopLimitPrice = try calculateStopLimitPrice(for: orderInput)
             
+            let side: OrderSide = orderInput.isLong ? .sell : .buy
+            
             if orderInput.cancelStopOrders {
                 do {
                     let cancelOrderParameters = FTXCancelOrderParameters(
                         market: orderInput.contractSymbol,
-                        side: .sell,
+                        side: side,
                         conditionalOrdersOnly: true,
                         limitOrdersOnly: false
                     )
@@ -75,7 +77,7 @@ public extension SwiftTrader {
             
             let orderParameters = FTXTriggerOrderParameters(
                 market: orderInput.contractSymbol,
-                side: .sell,
+                side: side,
                 size: orderInput.size,
                 type: .stop,
                 reduceOnly: true,
