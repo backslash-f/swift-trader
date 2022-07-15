@@ -10,6 +10,9 @@ import Foundation
 /// Holds constants related to  Kucoin REST APIs.
 public struct KucoinAPI {
     
+    #warning("TODO: Sandbox option")
+    //let sandbox         = "https://api-sandbox.kucoin.com"
+    
     public struct Futures {
         
         public struct Path {
@@ -22,15 +25,17 @@ public struct KucoinAPI {
         /// Returns the base `URL` based on an Xcode environment variable.
         ///
         /// In case the above fails/is absent, returns the `production` base `URL`.
-        public static func baseURL() -> String {
-            let production = "https://api-futures.kucoin.com"
-            let sandbox = "https://api-sandbox-futures.kucoin.com"
+        public static func baseURL() throws -> String {
+            let production      = "https://api-futures.kucoin.com"
+            let sandboxFutures  = "https://api-sandbox-futures.kucoin.com"
             if let environment = Environment.environmentFromXcode() {
                 switch environment {
                 case .production:
                     return production
                 case .sandbox:
-                    return sandbox
+                    throw SwiftTraderError.invalidOption
+                case .sandboxFutures:
+                    return sandboxFutures
                 }
             } else {
                 // Fallback to production.

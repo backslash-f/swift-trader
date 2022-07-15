@@ -11,6 +11,7 @@ import Foundation
 public enum Environment: String {
     case production
     case sandbox
+    case sandboxFutures
 }
 
 // MARK: - Interface
