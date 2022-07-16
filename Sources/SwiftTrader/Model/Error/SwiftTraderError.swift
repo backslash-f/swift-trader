@@ -81,6 +81,11 @@ public enum SwiftTraderError: Error {
         errorMessage: String? = nil
     )
     
+    // MARK: Accounts
+    
+    /// And error ocurred while executing the function `SwiftTrader.kucoinAccounts(currencySymbol:)`.
+    case kucoinAccounts(error: Error)
+    
     // MARK: Account Overview
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesAccountOverview(currencySymbol:)`.

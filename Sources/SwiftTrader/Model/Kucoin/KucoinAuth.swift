@@ -12,6 +12,7 @@ public struct KucoinAuth {
 
     // MARK: - Properties
 
+    #warning("TODO: introduce FUTURES key/secret/passphrase - on its own structs")
     public let apiKey: String
     public let apiSecret: String
     public let apiPassphrase: String

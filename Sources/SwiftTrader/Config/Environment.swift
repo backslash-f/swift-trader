@@ -10,6 +10,7 @@ import Foundation
 /// Defines the target exchange environment, such as `production` or `sandbox`.
 public enum Environment: String {
     case production
+    case productionFutures
     case sandbox
     case sandboxFutures
 }

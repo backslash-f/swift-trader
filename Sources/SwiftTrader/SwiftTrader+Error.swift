@@ -24,6 +24,8 @@ public extension SwiftTrader {
                 return .ftxPositions(error: networkRequestError)
             case .ftxTriggerOrdersList:
                 return .ftxTriggerOrdersList(error: networkRequestError)
+            case .kucoinAccounts:
+                return .kucoinAccounts(error: networkRequestError)
             case .kucoinFuturesAccountOverview:
                 return .kucoinFuturesAccountOverview(error: networkRequestError)
             case .kucoinFuturesCancelStopOrders:
