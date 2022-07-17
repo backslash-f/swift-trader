@@ -31,7 +31,7 @@ public struct KucoinFuturesPositionListRequest: NetworkRequest {
             let futuresPositionListResource = KucoinFuturesPositionListResource()
             var urlRequest = URLRequest(url: try futuresPositionListResource.url)
             urlRequest.httpMethod = HTTPMethod.GET.rawValue
-            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
+            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.futures)
             return urlRequest
         }
     }

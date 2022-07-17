@@ -27,8 +27,6 @@ public extension KucoinAPI {
                     return production
                 case .sandbox:
                     return sandbox
-                default:
-                    throw SwiftTraderError.invalidOption
                 }
             } else {
                 // Fallback to production.

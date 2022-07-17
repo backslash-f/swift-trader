@@ -31,7 +31,7 @@ public struct KucoinFuturesCancelOrdersRequest: NetworkRequest {
             let futuresCancelOrdersResource = KucoinFuturesCancelOrdersResource(symbol: symbol)
             var urlRequest = URLRequest(url: try futuresCancelOrdersResource.url)
             urlRequest.httpMethod = HTTPMethod.DELETE.rawValue
-            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
+            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.futures)
             return urlRequest
         }
     }

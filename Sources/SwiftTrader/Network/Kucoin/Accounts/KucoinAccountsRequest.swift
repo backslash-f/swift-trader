@@ -32,7 +32,7 @@ public struct KucoinAccountsRequest: NetworkRequest {
             let accountsResource = KucoinAccountsResource(currencySymbol: currencySymbol)
             var urlRequest = URLRequest(url: try accountsResource.url)
             urlRequest.httpMethod = HTTPMethod.GET.rawValue
-            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
+            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.spot)
             return urlRequest
         }
     }

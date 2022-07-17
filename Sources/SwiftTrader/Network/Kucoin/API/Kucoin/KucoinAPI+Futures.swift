@@ -26,12 +26,10 @@ public extension KucoinAPI {
             let sandbox     = "https://api-sandbox-futures.kucoin.com"
             if let environment = Environment.environmentFromXcode() {
                 switch environment {
-                case .productionFutures:
+                case .production:
                     return production
-                case .sandboxFutures:
-                    return sandbox
-                default:
-                    throw SwiftTraderError.invalidOption
+                case .sandbox:
+                    return sandbox                
                 }
             } else {
                 // Fallback to production.

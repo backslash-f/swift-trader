@@ -20,11 +20,12 @@ extension KucoinAPI {
     /// - Parameters:
     ///   - request: `URLRequest` where the header field values are to be set.
     ///   - kucoinAuth: `KucoinAuth` that holds Kucoin authentication data.
-    static func setRequestHeaderFields(request: inout URLRequest, kucoinAuth: KucoinAuth) throws {
+    static func setRequestHeaderFields(request: inout URLRequest,
+                                       kucoinAuth: KucoinAuthorizing) throws {
         setAPIKey(request: &request, kucoinAuth: kucoinAuth)
         setAPIPassphrase(request: &request, kucoinAuth: kucoinAuth)
         try setAPISignature(request: &request, kucoinAuth: kucoinAuth)
-        setAPITimestamp(request: &request, kucoinAuth: kucoinAuth)
+        setAPITimestamp(request: &request)
     }
 }
 
@@ -33,26 +34,38 @@ extension KucoinAPI {
 private extension KucoinAPI {
     
     /// "KC-API-KEY"
-    static func setAPIKey(request: inout URLRequest, kucoinAuth: KucoinAuth) {
-        request.setValue(kucoinAuth.apiKey, forHTTPHeaderField: KucoinAPI.HeaderField.apiKey)
+    static func setAPIKey(request: inout URLRequest,
+                          kucoinAuth: KucoinAuthorizing) {
+        request.setValue(
+            kucoinAuth.apiKey,
+            forHTTPHeaderField: KucoinAPI.HeaderField.apiKey
+        )
     }
     
     /// "KC-API-PASSPHRASE"
-    static func setAPIPassphrase(request: inout URLRequest, kucoinAuth: KucoinAuth) {
-        request.setValue(kucoinAuth.apiPassphrase, forHTTPHeaderField: KucoinAPI.HeaderField.apiPassphrase)
+    static func setAPIPassphrase(request: inout URLRequest,
+                                 kucoinAuth: KucoinAuthorizing) {
+        request.setValue(
+            kucoinAuth.apiPassphrase,
+            forHTTPHeaderField: KucoinAPI.HeaderField.apiPassphrase
+        )
     }
     
     /// "KC-API-SIGN"
-    static func setAPISignature(request: inout URLRequest, kucoinAuth: KucoinAuth) throws {
+    static func setAPISignature(request: inout URLRequest,
+                                kucoinAuth: KucoinAuthorizing) throws {
         try NetworkRequestSignee.createHMACSignature(
             for: &request,
-               secret: kucoinAuth.apiSecret,
-               httpHeaderField: KucoinAPI.HeaderField.apiSign
+            secret: kucoinAuth.apiSecret,
+            httpHeaderField: KucoinAPI.HeaderField.apiSign
         )
     }
     
     /// "KC-API-TIMESTAMP"
-    static func setAPITimestamp(request: inout URLRequest, kucoinAuth: KucoinAuth) {
-        request.setValue("\(Date().timestampMilliseconds)", forHTTPHeaderField: KucoinAPI.HeaderField.apiTimestamp)
+    static func setAPITimestamp(request: inout URLRequest) {
+        request.setValue(
+            "\(Date().timestampMilliseconds)",
+            forHTTPHeaderField: KucoinAPI.HeaderField.apiTimestamp
+        )
     }
 }

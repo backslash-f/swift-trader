@@ -43,7 +43,7 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
                 throw NetworkRequestError.invalidJSONParameters(error: error)
             }
             
-            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth)
+            try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.futures)
             return urlRequest
         }
     }

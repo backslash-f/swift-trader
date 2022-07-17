@@ -35,9 +35,6 @@ public enum SwiftTraderError: Error {
     /// (`short` position) The limit price is higher than the entry price; the order will not be placed.
     case limitPriceTooHigh(entryPrice: String, limitPrice: String)
     
-    /// For example, `sandbox` for Futures sandbox (instead of `sandboxFutures`).
-    case invalidOption
-    
     // MARK: - FTX Related
     
     /// The number of the assets that were bought has to be greater than zero.
