@@ -1,5 +1,5 @@
 //
-//  KucoinAccountsResource.swift
+//  KucoinListAccountsResource.swift
 //  
 //
 //  Created by Fernando Fernandes on 16.07.22.
@@ -10,7 +10,7 @@ import Foundation
 /// The **resource** for listing Kucoin accounts.
 ///
 /// https://docs.kucoin.com/#list-accounts
-public struct KucoinAccountsResource: NetworkResource {
+public struct KucoinListAccountsResource: NetworkResource {
     
     // MARK: - Properties
     
@@ -20,7 +20,7 @@ public struct KucoinAccountsResource: NetworkResource {
             guard var urlComponents = URLComponents(string: baseURLString) else {
                 throw NetworkRequestError.invalidURLString(urlString: baseURLString)
             }
-            urlComponents.path = KucoinAPI.Spot.Path.accounts
+            urlComponents.path = KucoinAPI.Spot.Path.accounts()
             let queryItems = [
                 URLQueryItem(name: KucoinAPI.QueryParam.currency, value: currencySymbol.rawValue)
             ]
@@ -38,7 +38,7 @@ public struct KucoinAccountsResource: NetworkResource {
     
     // MARK: - Lifecycle
     
-    /// Creates a new `KucoinAccountsResource` instance.
+    /// Creates a new `KucoinListAccountsResource` instance.
     ///
     /// - Parameter currencySymbol: `CurrencySymbol`.
     init(currencySymbol: CurrencySymbol) {

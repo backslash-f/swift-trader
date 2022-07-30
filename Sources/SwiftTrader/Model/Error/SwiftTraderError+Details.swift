@@ -25,7 +25,8 @@ public extension SwiftTraderError {
                 isSuccess: ftxError.isSuccess,
                 errorMessage: ftxError.errorMessage
             )
-        case .kucoinAccounts,
+        case .kucoinSpotListAccounts,
+                .kucoinSpotGetAccount,
                 .kucoinFuturesAccountOverview,
                 .kucoinFuturesCancelStopOrders,
                 .kucoinFuturesOrderList,

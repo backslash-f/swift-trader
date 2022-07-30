@@ -12,7 +12,22 @@ public extension KucoinAPI {
     struct Spot {
         
         public struct Path {
-            static let accounts  = "/api/v1/accounts"
+            
+            /// Returns the path for getting accounts within Kucoin spot.
+            ///
+            /// `pathComponent` required as `URL.appendingPathComponent(_:)` will be deprecated and
+            /// `URL.appending(path:directoryHint:)` is only available in macOS 13 and later (so not in Linux / Heroku).
+            ///
+            /// - Parameter pathComponent: use this parameter to append extra info to the returned
+            /// `String`, e.g.: "/api/v1/accounts/5bd6e9286d99522a52e458de"
+            /// - Returns: `/api/v1/accounts` or `/api/v1/accounts/pathComponent`
+            static func accounts(pathComponent: String? = nil) -> String {
+                if let path = pathComponent {
+                    return "/api/v1/accounts" + "/" + path
+                } else {
+                    return "/api/v1/accounts"
+                }
+            }
         }
         
         /// Returns the base `URL` based on an Xcode environment variable.

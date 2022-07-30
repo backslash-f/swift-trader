@@ -18,6 +18,7 @@ public struct KucoinAPI {
     }
     
     public struct QueryParam {
+        public static let accountId    = "accountId"
         public static let currency     = "currency"
         public static let orderStatus  = "status"
         public static let symbol       = "symbol"

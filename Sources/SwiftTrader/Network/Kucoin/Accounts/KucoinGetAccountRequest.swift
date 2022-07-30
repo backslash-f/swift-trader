@@ -1,8 +1,8 @@
 //
-//  KucoinAccountsRequest.swift
-//  
+//  KucoinGetAccountRequest.swift
 //
-//  Created by Fernando Fernandes on 16.07.22.
+//
+//  Created by Fernando Fernandes on 30.07.22.
 //
 
 import Foundation
@@ -12,14 +12,14 @@ import FoundationNetworking
 #endif
 import Logging
 
-/// A **request** for listing Kucoin accounts.
+/// A **request** for getting a Kucoin account.
 ///
-/// https://docs.kucoin.com/#list-accounts
-public struct KucoinAccountsRequest: NetworkRequest {
+/// https://docs.kucoin.com/#get-an-account
+public struct KucoinGetAccountRequest: NetworkRequest {
     
     // MARK: - Properties
     
-    public typealias DecodableModel = KucoinAccounts
+    public typealias DecodableModel = KucoinSpotGetAccount
     
     public var logger: Logger {
         NetworkRequestLogger().default
@@ -29,8 +29,8 @@ public struct KucoinAccountsRequest: NetworkRequest {
     
     public var request: URLRequest {
         get throws {
-            let accountsResource = KucoinAccountsResource(currencySymbol: currencySymbol)
-            var urlRequest = URLRequest(url: try accountsResource.url)
+            let accountResource = KucoinGetAccountResource(accountID: accountID)
+            var urlRequest = URLRequest(url: try accountResource.url)
             urlRequest.httpMethod = HTTPMethod.GET.rawValue
             try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.spot)
             return urlRequest
@@ -41,24 +41,24 @@ public struct KucoinAccountsRequest: NetworkRequest {
     
     // MARK: Private
     
-    private let currencySymbol: CurrencySymbol
+    private let accountID: String
     
     private let kucoinAuth: KucoinAuth
     
     // MARK: - Lifecycle
     
-    /// Creates a new `KucoinAccountsRequest` instance.
+    /// Creates a new `KucoinListAccountsRequest` instance.
     ///
     /// - Parameters:
-    ///   - currencySymbol: `CurrencySymbol`, default is `.USDT`.
+    ///   - accountID: `String`, the ID of the account.
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(currencySymbol: CurrencySymbol = .USDT,
+    public init(accountID: String,
                 kucoinAuth: KucoinAuth,
                 session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
-        self.currencySymbol = currencySymbol
+        self.accountID = accountID
         self.kucoinAuth = kucoinAuth
         self.session = session
         self.settings = settings
@@ -67,9 +67,9 @@ public struct KucoinAccountsRequest: NetworkRequest {
 
 // MARK: - Network Request Protocol
 
-public extension KucoinAccountsRequest {
+public extension KucoinGetAccountRequest {
     
     func decode(_ data: Data) throws -> DecodableModel {
-        try JSONDecoder().decode(KucoinAccounts.self, from: data)
+        try JSONDecoder().decode(KucoinSpotGetAccount.self, from: data)
     }
 }
