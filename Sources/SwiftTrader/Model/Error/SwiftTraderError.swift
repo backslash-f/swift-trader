@@ -85,6 +85,9 @@ public enum SwiftTraderError: Error {
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinGetAccount(accountID:)`.
     case kucoinSpotGetAccount(error: Error)
+
+    /// And error ocurred while executing the function `SwiftTrader.kucoinGetTransferable()`.
+    case kucoinSpotGetTransferable(error: Error)
     
     // MARK: Account Overview
     

@@ -19,7 +19,7 @@ public struct KucoinGetAccountRequest: NetworkRequest {
     
     // MARK: - Properties
     
-    public typealias DecodableModel = KucoinSpotGetAccount
+    public typealias DecodableModel = KucoinSpotGetAccountResponse
     
     public var logger: Logger {
         NetworkRequestLogger().default
@@ -70,6 +70,6 @@ public struct KucoinGetAccountRequest: NetworkRequest {
 public extension KucoinGetAccountRequest {
     
     func decode(_ data: Data) throws -> DecodableModel {
-        try JSONDecoder().decode(KucoinSpotGetAccount.self, from: data)
+        try JSONDecoder().decode(KucoinSpotGetAccountResponse.self, from: data)
     }
 }

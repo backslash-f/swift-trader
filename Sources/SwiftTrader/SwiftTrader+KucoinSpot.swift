@@ -20,7 +20,7 @@ public extension SwiftTrader {
     ///
     /// - Parameter currencySymbol: The `CurrencySymbol` of the account balance. The default is `.USDT`.
     /// - Returns: An instance of `KucoinSpotListAccounts` or `SwiftTraderError`.
-    func kucoinSpotListAccounts(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinSpotListAccounts, SwiftTraderError> {
+    func kucoinSpotListAccounts(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinSpotListAccountsResponse, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
@@ -31,7 +31,7 @@ public extension SwiftTrader {
         )
         switch await request.execute() {
         case .success(let model):
-            guard let accounts = model as? KucoinSpotListAccounts else {
+            guard let accounts = model as? KucoinSpotListAccountsResponse else {
                 return .failure(.unexpectedResponse(modelString: "\(model)"))
             }
             return .success(accounts)
@@ -49,7 +49,7 @@ public extension SwiftTrader {
     ///
     /// - Parameter accountID: The ID of the account.
     /// - Returns: An instance of of `KucoinSpotGetAccount` or `SwiftTraderError`.
-    func kucoinSpotGetAccount(accountID: String) async throws -> Result<KucoinSpotGetAccount, SwiftTraderError> {
+    func kucoinSpotGetAccount(accountID: String) async throws -> Result<KucoinSpotGetAccountResponse, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
@@ -60,12 +60,39 @@ public extension SwiftTrader {
         )
         switch await request.execute() {
         case .success(let model):
-            guard let accounts = model as? KucoinSpotGetAccount else {
+            guard let accounts = model as? KucoinSpotGetAccountResponse else {
                 return .failure(.unexpectedResponse(modelString: "\(model)"))
             }
             return .success(accounts)
         case .failure(let error):
             let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotGetAccount)
+            return .failure(swiftTraderError)
+        }
+    }
+    
+    // MARK: - Transferable
+    
+    /// Returns the transferable balance of a specified account.
+    ///
+    /// https://docs.kucoin.com/#get-the-transferable
+    ///
+    /// - Returns: An instance of of `KucoinSpotGetTransferableResponse` or `SwiftTraderError`.
+    func kucoinSpotGetTransferable() async throws -> Result<KucoinSpotGetTransferableResponse, SwiftTraderError> {
+        guard let auth = kucoinAuth else {
+            return .failure(.kucoinMissingAuthentication)
+        }
+        let request = KucoinGetTransferableRequest(
+            kucoinAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let transferable = model as? KucoinSpotGetTransferableResponse else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(transferable)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotGetTransferable)
             return .failure(swiftTraderError)
         }
     }

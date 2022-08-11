@@ -1,8 +1,8 @@
 //
-//  KucoinListAccountsRequest.swift
+//  KucoinGetTransferableRequest.swift
 //  
 //
-//  Created by Fernando Fernandes on 16.07.22.
+//  Created by Fernando Fernandes on 11.08.22.
 //
 
 import Foundation
@@ -12,53 +12,57 @@ import FoundationNetworking
 #endif
 import Logging
 
-/// A **request** for listing Kucoin accounts.
+/// A **request** for getting the transferable balance of a specified account.
 ///
-/// https://docs.kucoin.com/#list-accounts
-public struct KucoinListAccountsRequest: NetworkRequest {
-    
+/// https://docs.kucoin.com/#get-the-transferable
+public struct KucoinGetTransferableRequest: NetworkRequest {
+
     // MARK: - Properties
-    
-    public typealias DecodableModel = KucoinSpotListAccountsResponse
-    
+
+    public typealias DecodableModel = KucoinSpotGetTransferableResponse
+
     public var logger: Logger {
         NetworkRequestLogger().default
     }
-    
+
     public var session: URLSession
-    
+
     public var request: URLRequest {
         get throws {
-            let accountsResource = KucoinListAccountsResource(currencySymbol: currencySymbol)
+            let accountsResource = KucoinGetTransferableResource(currencySymbol: currencySymbol,
+                                                                 accountType: accountType)
             var urlRequest = URLRequest(url: try accountsResource.url)
             urlRequest.httpMethod = HTTPMethod.GET.rawValue
             try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.spot)
             return urlRequest
         }
     }
-    
+
     public var settings: NetworkRequestSettings
-    
+
     // MARK: Private
-    
+
     private let currencySymbol: CurrencySymbol
-    
+    private let accountType: KucoinAccountType
     private let kucoinAuth: KucoinAuth
-    
+
     // MARK: - Lifecycle
-    
-    /// Creates a new `KucoinListAccountsRequest` instance.
+
+    /// Creates a new `KucoinGetTransferableRequest` instance.
     ///
     /// - Parameters:
-    ///   - currencySymbol: `CurrencySymbol`, default is `.USDT`.
+    ///   - currencySymbol: `CurrencySymbol`. Default is `.BTC`.
+    ///   - accountType: `KucoinAccountType`. Default is `.trade`.
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(currencySymbol: CurrencySymbol = .USDT,
+    public init(currencySymbol: CurrencySymbol = .BTC,
+                accountType: KucoinAccountType = .trade,
                 kucoinAuth: KucoinAuth,
                 session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
         self.currencySymbol = currencySymbol
+        self.accountType = accountType
         self.kucoinAuth = kucoinAuth
         self.session = session
         self.settings = settings
@@ -67,9 +71,9 @@ public struct KucoinListAccountsRequest: NetworkRequest {
 
 // MARK: - Network Request Protocol
 
-public extension KucoinListAccountsRequest {
-    
+public extension KucoinGetTransferableRequest {
+
     func decode(_ data: Data) throws -> DecodableModel {
-        try JSONDecoder().decode(KucoinSpotListAccountsResponse.self, from: data)
+        try JSONDecoder().decode(KucoinSpotGetTransferableResponse.self, from: data)
     }
 }
