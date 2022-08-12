@@ -115,14 +115,13 @@ public extension SwiftTrader {
         do {
             let stopLimitPrice = try calculateStopLimitPrice(for: orderInput)
 
-#warning("TODO: cancel untriggered orders")
-            //            if orderInput.cancelStopOrders {
-            //                do {
-            //                    try await kucoinFuturesCancelStopOrders(symbol: orderInput.contractSymbol)
-            //                } catch {
-            //                    logger.log("Could not cancel untriggered stop orders: \(error)")
-            //                }
-            //            }
+            if orderInput.cancelStopOrders {
+                do {
+                    try await kucoinSpotCancelStopOrders(symbol: orderInput.contractSymbol)
+                } catch {
+                    logger.log("Could not cancel untriggered stop orders: \(error)")
+                }
+            }
 
             let orderParameters = KucoinSpotOrderParameters(
                 side: orderInput.isLong ? .sell : .buy,
