@@ -1,5 +1,5 @@
 //
-//  KucoinSpotOrdersListRequest.swift
+//  KucoinSpotStopOrdersListRequest.swift
 //  
 //
 //  Created by Fernando Fernandes on 12.08.22.
@@ -11,14 +11,14 @@ import FoundationNetworking
 #endif
 import Logging
 
-/// A **request** for the list of spot orders.
+/// A **request** for the list of spot **stop** orders.
 ///
-/// https://docs.kucoin.com/#list-orders
-public struct KucoinSpotOrdersListRequest: NetworkRequest {
+/// https://docs.kucoin.com/#list-stop-orders
+public struct KucoinSpotStopOrdersListRequest: NetworkRequest {
 
     // MARK: - Properties
 
-    public typealias DecodableModel = KucoinSpotOrderListResponse
+    public typealias DecodableModel = KucoinSpotStopOrderListResponse
 
     public var logger: Logger {
         NetworkRequestLogger().default
@@ -28,8 +28,8 @@ public struct KucoinSpotOrdersListRequest: NetworkRequest {
 
     public var request: URLRequest {
         get throws {
-            let spotOrderListResource = KucoinSpotOrderListResource(orderStatus: orderStatus)
-            var urlRequest = URLRequest(url: try spotOrderListResource.url)
+            let spotStopOrderListResource = KucoinSpotStopOrderListResource()
+            var urlRequest = URLRequest(url: try spotStopOrderListResource.url)
             urlRequest.httpMethod = HTTPMethod.GET.rawValue
             try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.spot)
             return urlRequest
@@ -40,8 +40,6 @@ public struct KucoinSpotOrdersListRequest: NetworkRequest {
 
     // MARK: Private
 
-    private let orderStatus: KucoinOrderStatus
-
     private let kucoinAuth: KucoinAuth
 
     // MARK: - Lifecycle
@@ -49,15 +47,12 @@ public struct KucoinSpotOrdersListRequest: NetworkRequest {
     /// Creates a new `KucoinSpotOrdersListRequest` instance.
     ///
     /// - Parameters:
-    ///   - orderStatus: `KucoinOrderStatus`, default is `.active`.
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(orderStatus: KucoinOrderStatus = .active,
-                kucoinAuth: KucoinAuth,
+    public init(kucoinAuth: KucoinAuth,
                 session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
-        self.orderStatus = orderStatus
         self.kucoinAuth = kucoinAuth
         self.session = session
         self.settings = settings
@@ -66,9 +61,10 @@ public struct KucoinSpotOrdersListRequest: NetworkRequest {
 
 // MARK: - Network Request Protocol
 
-public extension KucoinSpotOrdersListRequest {
+public extension KucoinSpotStopOrdersListRequest {
 
     func decode(_ data: Data) throws -> DecodableModel {
-        try JSONDecoder().decode(KucoinSpotOrderListResponse.self, from: data)
+        try JSONDecoder().decode(KucoinSpotStopOrderListResponse.self, from: data)
     }
 }
+

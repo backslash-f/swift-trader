@@ -182,4 +182,29 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
+
+    /// Lists active Spot **stop** orders.
+    ///
+    /// https://docs.kucoin.com/#list-stop-orders
+    ///
+    /// - Returns: An instance of `KucoinSpotStopOrderListResponse` or `SwiftTraderError`.
+    func kucoinSpotStopOrderList() async throws -> Result<KucoinSpotStopOrderListResponse, SwiftTraderError> {
+        guard let auth = kucoinAuth else {
+            return .failure(.kucoinMissingAuthentication)
+        }
+        let request = KucoinSpotStopOrdersListRequest(
+            kucoinAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let positionList = model as? KucoinSpotStopOrderListResponse else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(positionList)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotStopOrderList)
+            return .failure(swiftTraderError)
+        }
+    }
 }
