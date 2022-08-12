@@ -88,9 +88,6 @@ public enum SwiftTraderError: Error {
 
     /// And error ocurred while executing the function `SwiftTrader.kucoinGetTransferable()`.
     case kucoinSpotGetTransferable(error: Error)
-
-    /// And error ocurred while executing the function `SwiftTrader.SwiftTrader.kucoinSpotPlaceStopLimitOrder(_:)`.
-    case kucoinSpotPlaceStopLimitOrder(error: Error)
     
     // MARK: Account Overview
     
@@ -106,12 +103,18 @@ public enum SwiftTraderError: Error {
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesOrderList(orderStatus:)`.
     case kucoinFuturesOrderList(error: Error)
+
+    /// And error ocurred while executing the function `SwiftTrader.kucoinSpotOrderList(orderStatus:)`.
+    case kucoinSpotOrderList(error: Error)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesStopOrderList(symbol:)`.
     case kucoinFuturesStopOrderList(error: Error)
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPlaceStopLimitOrder()`.
     case kucoinFuturesPlaceStopLimitOrder(error: Error)
+
+    /// And error ocurred while executing the function `SwiftTrader.SwiftTrader.kucoinSpotPlaceStopLimitOrder(_:)`.
+    case kucoinSpotPlaceStopLimitOrder(error: Error)
     
     // MARK: Positions
     

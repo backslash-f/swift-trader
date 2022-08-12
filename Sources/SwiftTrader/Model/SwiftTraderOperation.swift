@@ -25,6 +25,7 @@ public enum SwiftTraderOperation {
     case kucoinSpotGetAccount
     case kucoinSpotGetTransferable
     case kucoinSpotPlaceStopLimitOrder
+    case kucoinSpotOrderList
     
     // MARK: Futures
     

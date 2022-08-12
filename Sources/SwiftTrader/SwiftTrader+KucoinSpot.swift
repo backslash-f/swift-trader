@@ -99,7 +99,7 @@ public extension SwiftTrader {
         }
     }
 
-    // MARK: - Place Orders
+    // MARK: - Orders
 
     /// Places a spot stop limit order.
     ///
@@ -125,7 +125,7 @@ public extension SwiftTrader {
             //            }
 
             let orderParameters = KucoinSpotOrderParameters(
-                side: .sell,
+                side: orderInput.isLong ? .sell : .buy,
                 symbol: orderInput.contractSymbol,
                 type: .limit,
                 stop: orderInput.isLong ? .loss : .entry,
@@ -155,6 +155,31 @@ public extension SwiftTrader {
             } else {
                 return .failure(.unexpected(error))
             }
+        }
+    }
+
+    /// Lists active Spot orders.
+    ///
+    /// https://docs.kucoin.com/#list-orders
+    ///
+    /// - Returns: An instance of `KucoinSpotOrderListResponse` or `SwiftTraderError`.
+    func kucoinSpotOrderList() async throws -> Result<KucoinSpotOrderListResponse, SwiftTraderError> {
+        guard let auth = kucoinAuth else {
+            return .failure(.kucoinMissingAuthentication)
+        }
+        let request = KucoinSpotOrdersListRequest(
+            kucoinAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let positionList = model as? KucoinSpotOrderListResponse else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(positionList)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotOrderList)
+            return .failure(swiftTraderError)
         }
     }
 }
