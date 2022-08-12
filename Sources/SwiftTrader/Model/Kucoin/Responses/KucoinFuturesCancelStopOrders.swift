@@ -10,7 +10,8 @@ import Foundation
 /// Kucoin "Stop Order Mass cancelation" REST API response.
 ///
 /// https://docs.kucoin.com/futures/#stop-order-mass-cancelation
-public struct KucoinFuturesCancelStopOrders: Codable {
+/// https://docs.kucoin.com/#cancel-orders
+public struct KucoinCancelStopOrdersResponse: Codable {
     public let code: String
     public let data: KucoinCancelledStopOrders
 }

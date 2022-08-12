@@ -12,9 +12,10 @@ public extension KucoinAPI {
     struct Spot {
         
         public struct Path {
-            static let orders       = "/api/v1/orders"
-            static let stopOrder    = "/api/v1/stop-order"
-            static let transferable = accounts(pathComponent: "transferable")
+            static let orders           = "/api/v1/orders"
+            static let stopOrder        = "/api/v1/stop-order"
+            static let stopOrderCancel  = "/api/v1/stop-order/cancel"
+            static let transferable     = accounts(pathComponent: "transferable")
             
             /// Returns the path for getting accounts within Kucoin spot.
             ///

@@ -98,6 +98,9 @@ public enum SwiftTraderError: Error {
     
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesCancelStopOrders(symbol:)`.
     case kucoinFuturesCancelStopOrders(error: Error)
+
+    /// And error ocurred while executing the function `SwiftTrader.kucoinSpotCancelStopOrders(symbol:)`.
+    case kucoinSpotCancelStopOrders(error: Error)
     
     // MARK: Orders
     

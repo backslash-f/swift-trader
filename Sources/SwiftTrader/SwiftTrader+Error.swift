@@ -36,6 +36,8 @@ public extension SwiftTrader {
                 return .kucoinSpotOrderList(error: networkRequestError)
             case .kucoinSpotStopOrderList:
                 return .kucoinFuturesPositionList(error: networkRequestError)
+            case .kucoinSpotCancelStopOrders:
+                return .kucoinSpotCancelStopOrders(error: networkRequestError)
             case .kucoinFuturesAccountOverview:
                 return .kucoinFuturesAccountOverview(error: networkRequestError)
             case .kucoinFuturesCancelStopOrders:

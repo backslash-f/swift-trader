@@ -207,4 +207,31 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
+
+    /// Cancels all untriggered stop orders of a given symbol (contract).
+    ///
+    /// https://docs.kucoin.com/#cancel-orders
+    ///
+    /// - Parameter symbol: `String`, represents the specific contract for which all the untriggered stop orders will be cancelled.
+    /// - Returns: An instance of `KucoinCancelStopOrdersResponse` or `SwiftTraderError`.
+    @discardableResult func kucoinSpotCancelStopOrders(symbol: String) async throws -> Result<KucoinCancelStopOrdersResponse, SwiftTraderError> {
+        guard let auth = kucoinAuth else {
+            return .failure(.kucoinMissingAuthentication)
+        }
+        let request = KucoinSpotCancelOrdersRequest(
+            symbol: symbol,
+            kucoinAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let cancelledOrders = model as? KucoinCancelStopOrdersResponse else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(cancelledOrders)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotCancelStopOrders)
+            return .failure(swiftTraderError)
+        }
+    }
 }
