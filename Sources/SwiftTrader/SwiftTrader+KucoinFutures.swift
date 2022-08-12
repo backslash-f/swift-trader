@@ -104,8 +104,8 @@ public extension SwiftTrader {
     ///
     /// - Parameter orderInput: `SwiftTraderStopLimitOrderInput` instance that encapsulates
     /// all the arguments required for submiting the stop limit order.
-    /// - Returns: An instance of `KucoinFuturesPlaceOrder` or `SwiftTraderError`.
-    func kucoinFuturesPlaceStopLimitOrder(_ orderInput: SwiftTraderStopLimitOrderInput) async throws -> Result<KucoinFuturesPlaceOrder, SwiftTraderError> {
+    /// - Returns: An instance of `KucoinPlaceOrderResponse` or `SwiftTraderError`.
+    func kucoinFuturesPlaceStopLimitOrder(_ orderInput: SwiftTraderStopLimitOrderInput) async throws -> Result<KucoinPlaceOrderResponse, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
@@ -120,7 +120,7 @@ public extension SwiftTrader {
                 }
             }
             
-            let orderParameters = KucoinOrderParameters(
+            let orderParameters = KucoinFuturesOrderParameters(
                 symbol: orderInput.contractSymbol,
                 side: .sell,
                 type: .limit,
@@ -139,7 +139,7 @@ public extension SwiftTrader {
             )
             switch await request.execute() {
             case .success(let model):
-                guard let placeOrder = model as? KucoinFuturesPlaceOrder else {
+                guard let placeOrder = model as? KucoinPlaceOrderResponse else {
                     return .failure(.unexpectedResponse(modelString: "\(model)"))
                 }
                 return .success(placeOrder)

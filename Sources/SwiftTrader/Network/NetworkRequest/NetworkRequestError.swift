@@ -24,7 +24,7 @@ public enum NetworkRequestError: Error {
     
     /// `JSONSerialization` could not produce a valid `JSON` from given parameters.
     ///
-    /// E.g.: a `JSON` object could not be created from an instance of `KucoinOrderParameters`.
+    /// E.g.: a `JSON` object could not be created from an instance of `KucoinFuturesOrderParameters`.
     case invalidJSONParameters(error: Error)
     
     /// Could not instantiate a `URLComponents` struct using the given `String` URL.

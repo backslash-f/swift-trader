@@ -1,5 +1,5 @@
 //
-//  KucoinOrderParameters.swift
+//  KucoinFuturesOrderParameters.swift
 //  
 //
 //  Created by Fernando Fernandes on 10.02.22.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-/// Encapsulates parameters do place an order, for example via `KucoinFuturesPlaceOrdersRequest`.
+/// Encapsulates parameters do place a futures order.
 ///
 /// https://docs.kucoin.com/futures/#place-an-order
-public struct KucoinOrderParameters {
+public struct KucoinFuturesOrderParameters {
     
     // MARK: - Properties
     
@@ -18,7 +18,7 @@ public struct KucoinOrderParameters {
     public let symbol: String
     public let side: OrderSide
     public let type: KucoinOrderType
-    public let stop: KucoinOrderStop
+    public let stop: KucoinOrderStop.Futures
     public let stopPriceType: KucoinOrderStopPriceType
     public let stopPrice: String
     public let price: String
@@ -30,7 +30,7 @@ public struct KucoinOrderParameters {
     public init(symbol: String,
                 side: OrderSide,
                 type: KucoinOrderType,
-                stop: KucoinOrderStop,
+                stop: KucoinOrderStop.Futures,
                 stopPriceType: KucoinOrderStopPriceType,
                 stopPrice: String,
                 price: String,
@@ -58,6 +58,7 @@ public enum KucoinOrderParameterKey: String {
     case stopPriceType
     case stopPrice
     case price
+    case size
     case reduceOnly
     case closeOrder
 }

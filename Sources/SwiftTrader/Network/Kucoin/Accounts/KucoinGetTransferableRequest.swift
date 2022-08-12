@@ -51,12 +51,12 @@ public struct KucoinGetTransferableRequest: NetworkRequest {
     /// Creates a new `KucoinGetTransferableRequest` instance.
     ///
     /// - Parameters:
-    ///   - currencySymbol: `CurrencySymbol`. Default is `.BTC`.
+    ///   - currencySymbol: `CurrencySymbol`.
     ///   - accountType: `KucoinAccountType`. Default is `.trade`.
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(currencySymbol: CurrencySymbol = .BTC,
+    public init(currencySymbol: CurrencySymbol,
                 accountType: KucoinAccountType = .trade,
                 kucoinAuth: KucoinAuth,
                 session: URLSession = .shared,

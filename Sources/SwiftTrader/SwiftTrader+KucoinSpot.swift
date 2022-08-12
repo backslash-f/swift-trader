@@ -76,12 +76,14 @@ public extension SwiftTrader {
     ///
     /// https://docs.kucoin.com/#get-the-transferable
     ///
+    /// - Parameter currencySymbol: The `CurrencySymbol` of the account balance. The default is `.USDT`.
     /// - Returns: An instance of of `KucoinSpotGetTransferableResponse` or `SwiftTraderError`.
-    func kucoinSpotGetTransferable() async throws -> Result<KucoinSpotGetTransferableResponse, SwiftTraderError> {
+    func kucoinSpotGetTransferable(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinSpotGetTransferableResponse, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
         let request = KucoinGetTransferableRequest(
+            currencySymbol: currencySymbol,
             kucoinAuth: auth,
             settings: settings.networkRequestSettings
         )
@@ -94,6 +96,65 @@ public extension SwiftTrader {
         case .failure(let error):
             let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotGetTransferable)
             return .failure(swiftTraderError)
+        }
+    }
+
+    // MARK: - Place Orders
+
+    /// Places a spot stop limit order.
+    ///
+    /// https://docs.kucoin.com/#place-a-new-order
+    ///
+    /// - Parameter orderInput: `SwiftTraderStopLimitOrderInput` instance that encapsulates
+    /// all the arguments required for submiting the stop limit order.
+    /// - Returns: An instance of `KucoinPlaceOrderResponse` or `SwiftTraderError`.
+    func kucoinSpotPlaceStopLimitOrder(_ orderInput: SwiftTraderStopLimitOrderInput) async throws -> Result<KucoinPlaceOrderResponse, SwiftTraderError> {
+        guard let auth = kucoinAuth else {
+            return .failure(.kucoinMissingAuthentication)
+        }
+        do {
+            let stopLimitPrice = try calculateStopLimitPrice(for: orderInput)
+
+#warning("TODO: cancel untriggered orders")
+            //            if orderInput.cancelStopOrders {
+            //                do {
+            //                    try await kucoinFuturesCancelStopOrders(symbol: orderInput.contractSymbol)
+            //                } catch {
+            //                    logger.log("Could not cancel untriggered stop orders: \(error)")
+            //                }
+            //            }
+
+            let orderParameters = KucoinSpotOrderParameters(
+                side: .sell,
+                symbol: orderInput.contractSymbol,
+                type: .limit,
+                stop: orderInput.isLong ? .loss : .entry,
+                stopPrice: stopLimitPrice.stop.string,
+                price: stopLimitPrice.limit.string,
+                size: "\(orderInput.size)"
+            )
+
+            let request = KucoinSpotPlaceOrdersRequest(
+                orderParameters: orderParameters,
+                kucoinAuth: auth,
+                settings: settings.networkRequestSettings
+            )
+            switch await request.execute() {
+            case .success(let model):
+                guard let placeOrder = model as? KucoinPlaceOrderResponse else {
+                    return .failure(.unexpectedResponse(modelString: "\(model)"))
+                }
+                return .success(placeOrder)
+            case .failure(let error):
+                let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotPlaceStopLimitOrder)
+                return .failure(swiftTraderError)
+            }
+        } catch {
+            if let swiftTraderError = error as? SwiftTraderError {
+                return .failure(swiftTraderError)
+            } else {
+                return .failure(.unexpected(error))
+            }
         }
     }
 }

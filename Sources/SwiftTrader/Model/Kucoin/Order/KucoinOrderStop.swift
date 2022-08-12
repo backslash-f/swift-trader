@@ -7,12 +7,21 @@
 
 import Foundation
 
-/// Either down or up.
-public enum KucoinOrderStop: String {
-    
-    /// Triggers when the price reaches or goes below a stop price.
-    case down
+/// Futures: Either down or up.
+/// Spot: Either loss or entry.
+public enum KucoinOrderStop {
 
-    /// Triggers when the price reaches or goes above the a stop price.
-    case up
+    public enum Futures: String {
+        /// Triggers when the price reaches or goes below a stop price.
+        case down
+        /// Triggers when the price reaches or goes above the a stop price.
+        case up
+    }
+
+    public enum Spot: String {
+        /// Triggers when the last trade price changes to a value at or below the stop price.
+        case loss
+        /// Triggers when the last trade price changes to a value at or above the stop price.
+        case entry
+    }
 }
