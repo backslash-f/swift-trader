@@ -8,14 +8,12 @@
 # swift-trader
 A Swift package for connecting and trading on crypto exchanges such as Kucoin and FTX.
 
-It can calculate the stop and limit prices for a **trailing stop strategy** based on a set of given input parameters.  
+💰 It can calculate the stop and limit prices for a **trailing stop strategy** based on a set of given input parameters.  
 Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BTrailingStop.swift)
 
-Supports being deployed to Heroku (Linux). Tested with [Vapor](https://github.com/vapor/vapor).  
-This means [trading automation](https://youtu.be/gMRee2srpe8) by using webhooks and scripts such as the [Profit Percentage Tracker](https://www.tradingview.com/script/p6NBsV48-Profit-Percentage-Tracker/) (TradingView). #ka-ching!
+🤖 Supports being deployed to Heroku (Linux). Tested with [Vapor](https://github.com/vapor/vapor). This means [trading automation](https://youtu.be/gMRee2srpe8) by using webhooks and scripts such as the [Profit Percentage Tracker](https://www.tradingview.com/script/p6NBsV48-Profit-Percentage-Tracker/) (TradingView). #ka-ching!
 
-List of working APIs:
-
+📖 List of working APIs:
 [Kucoin Futures](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BKucoinFutures.swift) | Explanation | API Documentation
 --- | --- | ---
 `SwiftTrader.kucoinFuturesAccountOverview` | Retrieves the overview of a Kucoin Futures account. | https://docs.kucoin.com/futures/#account
