@@ -12,7 +12,7 @@ public extension SwiftTrader {
     
     // MARK: - List Accounts
     
-    /// Get the list of accounts.
+    /// Gets the list of accounts.
     ///
     /// There are three types of accounts: 1) main account 2) trade account 3) margin account.
     ///
@@ -43,7 +43,7 @@ public extension SwiftTrader {
     
     // MARK: - Account
     
-    /// Information for a single account.
+    /// Retrieves information for a single account.
     ///
     /// https://docs.kucoin.com/#get-an-account
     ///
