@@ -16,6 +16,8 @@ public extension SwiftTrader {
             return SwiftTraderError.error(for: operation, statusCode: statusCode, localizedErrorMessage: errorMessage, data: data)
         default:
             switch operation {
+            case .binanceSpotNewStopLimitOrder:
+                return .binanceSpotNewStopLimitOrder(error: networkRequestError)
             case .ftxCancelAllOrders:
                 return .ftxCancelAllOrders(error: networkRequestError)
             case .ftxPlaceStopLimitOrder:

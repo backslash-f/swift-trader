@@ -1,5 +1,5 @@
 //
-//  BinanceSpotPlaceOrderResource.swift
+//  BinanceSpotNewOrderResource.swift
 //  
 //
 //  Created by Fernando Fernandes on 03.12.22.
@@ -10,7 +10,7 @@ import Foundation
 /// The **resource** for placing an order.
 ///
 /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
-public struct BinanceSpotPlaceOrderResource: NetworkResource {
+public struct BinanceSpotNewOrderResource: NetworkResource {
     
     // MARK: - Properties
     

@@ -35,6 +35,22 @@ public enum SwiftTraderError: Error {
     /// (`short` position) The limit price is higher than the entry price; the order will not be placed.
     case limitPriceTooHigh(entryPrice: String, limitPrice: String)
     
+    // MARK: - Binance Related
+    
+    /// No `BinanceAuth` instance was given; it will be impossible to authenticate with Binance.
+    case binanceMissingAuthentication
+    
+    /// And error ocurred while executing the function `SwiftTrader.binanceSpotNewStopLimitOrder`.
+    case binanceSpotNewStopLimitOrder(error: Error)
+    
+    /// The response status code is something other than `200`.
+    case binanceStatusCodeNotOK(
+        statusCode: Int,
+        localizedErrorMessage: String,
+        code: Int? = nil,
+        message: String? = nil
+    )
+    
     // MARK: - FTX Related
     
     /// The number of the assets that were bought has to be greater than zero.

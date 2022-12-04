@@ -1,5 +1,5 @@
 //
-//  BinanceNewOrderResponse.swift
+//  BinanceSpotNewOrderResponse.swift
 //  
 //
 //  Created by Fernando Fernandes on 04.12.22.
@@ -10,7 +10,7 @@ import Foundation
 /// Binance "New Order" REST API response.
 ///
 /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
-public struct BinanceNewOrderResponse: Codable {
+public struct BinanceSpotNewOrderResponse: Codable {
     let symbol: String
     let orderID, orderListID: Int
     let clientOrderID: String

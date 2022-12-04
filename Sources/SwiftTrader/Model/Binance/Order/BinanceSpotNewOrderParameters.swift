@@ -1,5 +1,5 @@
 //
-//  BinanceSpotOrderParameters.swift
+//  BinanceSpotNewOrderParameters.swift
 //  
 //
 //  Created by Fernando Fernandes on 04.12.22.
@@ -10,7 +10,7 @@ import Foundation
 /// Encapsulates parameters to place a spot order.
 ///
 /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
-public struct BinanceSpotOrderParameters {
+public struct BinanceSpotNewOrderParameters {
     
     // MARK: - Properties
     
@@ -23,7 +23,7 @@ public struct BinanceSpotOrderParameters {
     }
 }
 
-/// Holds the keys of the parameters for placing a Binance order.
-public enum BinanceOrderParameterKey: String {
+/// Holds the keys of the parameters for placing a new Binance order.
+public enum BinanceSpotNewOrderParameterKey: String {
     case symbol
 }

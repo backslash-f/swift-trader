@@ -10,6 +10,10 @@ import Foundation
 /// The currently running `SwiftTrader` operation.
 public enum SwiftTraderOperation {
     
+    // MARK: - Binance
+    
+    case binanceSpotNewStopLimitOrder
+    
     // MARK: - FTX
     
     case ftxCancelAllOrders

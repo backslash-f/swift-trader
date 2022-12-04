@@ -1,5 +1,5 @@
 //
-//  BinanceSpotPlaceOrderRequest.swift
+//  BinanceSpotNewOrderRequest.swift
 //  
 //
 //  Created by Fernando Fernandes on 04.12.22.
@@ -11,14 +11,14 @@ import FoundationNetworking
 #endif
 import Logging
 
-/// The **request** for placing an order (spot).
+/// The **request** for placing a new order (spot).
 ///
 /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
-public struct BinanceSpotPlaceOrderRequest: NetworkRequest {
+public struct BinanceSpotNewOrderRequest: NetworkRequest {
     
     // MARK: - Properties
     
-    public typealias DecodableModel = BinanceNewOrderResponse
+    public typealias DecodableModel = BinanceSpotNewOrderResponse
     
     public var logger: Logger {
         NetworkRequestLogger().default
@@ -28,8 +28,8 @@ public struct BinanceSpotPlaceOrderRequest: NetworkRequest {
     
     public var request: URLRequest {
         get throws {
-            let spotPlaceOrderResource = BinanceSpotPlaceOrderResource()
-            var urlRequest = URLRequest(url: try spotPlaceOrderResource.url)
+            let spotNewOrderResource = BinanceSpotNewOrderResource()
+            var urlRequest = URLRequest(url: try spotNewOrderResource.url)
             urlRequest.httpMethod = HTTPMethod.POST.rawValue
             
             // Parameters.
@@ -52,20 +52,20 @@ public struct BinanceSpotPlaceOrderRequest: NetworkRequest {
     
     // MARK: Private
     
-    private let orderParameters: BinanceSpotOrderParameters
+    private let orderParameters: BinanceSpotNewOrderParameters
     
     private let binanceAuth: BinanceAuth
     
     // MARK: - Lifecycle
     
-    /// Creates a new `BinanceSpotPlaceOrdersRequest` instance.
+    /// Creates a new `BinanceSpotNewOrdersRequest` instance.
     ///
     /// - Parameters:
-    ///   - orderParameters: `BinanceSpotOrderParameters`, which define an order.
+    ///   - orderParameters: `BinanceSpotNewOrderParameters`, which define an order.
     ///   - binanceAuth: Binance authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
-    public init(orderParameters: BinanceSpotOrderParameters,
+    public init(orderParameters: BinanceSpotNewOrderParameters,
                 binanceAuth: BinanceAuth,
                 session: URLSession = .shared,
                 settings: NetworkRequestSettings) {
@@ -78,20 +78,20 @@ public struct BinanceSpotPlaceOrderRequest: NetworkRequest {
 
 // MARK: - Network Request Protocol
 
-public extension BinanceSpotPlaceOrderRequest {
+public extension BinanceSpotNewOrderRequest {
     
     func decode(_ data: Data) throws -> DecodableModel {
-        try JSONDecoder().decode(BinanceNewOrderResponse.self, from: data)
+        try JSONDecoder().decode(BinanceSpotNewOrderResponse.self, from: data)
     }
 }
 
 // MARK: - Private
 
-private extension BinanceSpotPlaceOrderRequest {
+private extension BinanceSpotNewOrderRequest {
     
-    func createJSONParameters(from orderParameters: BinanceSpotOrderParameters) -> [String: Any] {
+    func createJSONParameters(from orderParameters: BinanceSpotNewOrderParameters) -> [String: Any] {
         [
-            BinanceOrderParameterKey.symbol.rawValue: orderParameters.symbol
+            BinanceSpotNewOrderParameterKey.symbol.rawValue: orderParameters.symbol
         ]
     }
 }
