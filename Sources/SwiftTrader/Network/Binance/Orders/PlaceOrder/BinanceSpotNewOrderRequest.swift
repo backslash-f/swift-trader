@@ -33,16 +33,9 @@ public struct BinanceSpotNewOrderRequest: NetworkRequest {
             urlRequest.httpMethod = HTTPMethod.POST.rawValue
             
             // Parameters.
-            let parametersJSON = createJSONParameters(from: orderParameters)
-            do {
-                let data = try JSONSerialization.data(withJSONObject: parametersJSON, options: [])
-                urlRequest.httpBody = data
-                urlRequest.addValue(HTTPHeader.Value.applicationJSON, forHTTPHeaderField: HTTPHeader.Field.contentType)
-                urlRequest.addValue(HTTPHeader.Value.applicationJSON, forHTTPHeaderField: HTTPHeader.Field.accept)
-            } catch {
-                throw NetworkRequestError.invalidJSONParameters(error: error)
-            }
-            
+            let dataParameter = try createDataParameter(from: orderParameters)
+            urlRequest.httpBody = dataParameter
+            urlRequest.addValue(HTTPHeader.Value.urlEncoded, forHTTPHeaderField: HTTPHeader.Field.contentType)
             try BinanceAPI.setRequestHeaderFields(request: &urlRequest, binanceAuth: binanceAuth.spot)
             return urlRequest
         }
@@ -89,9 +82,13 @@ public extension BinanceSpotNewOrderRequest {
 
 private extension BinanceSpotNewOrderRequest {
     
-    func createJSONParameters(from orderParameters: BinanceSpotNewOrderParameters) -> [String: Any] {
-        [
-            BinanceSpotNewOrderParameterKey.symbol.rawValue: orderParameters.symbol
-        ]
+    func createDataParameter(from orderParameters: BinanceSpotNewOrderParameters) throws -> Data {
+        let symbolParameter = "\(BinanceSpotNewOrderParameterKey.symbol.rawValue)=\(orderParameters.symbol)"
+        let stringParameter = "\(symbolParameter)" //"username=\(user1)&password=\(pass)&grant_type=password"
+        if let dataParameter = stringParameter.data(using: .utf8) {
+            return dataParameter
+        } else {
+            throw NetworkRequestError.invalidDataFromString(string: stringParameter)
+        }
     }
 }

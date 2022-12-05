@@ -16,6 +16,9 @@ public enum NetworkRequestError: Error {
     /// Data from response is `nil`.
     case invalidData
     
+    /// Could not return a `Data` representation of the given String (e.g. via `.data(using: .utf8)`).
+    case invalidDataFromString(string: String)
+    
     /// Could not cast response to `HTTPURLResponse`.
     case invalidResponse
     
