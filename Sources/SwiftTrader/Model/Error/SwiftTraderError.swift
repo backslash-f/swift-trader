@@ -40,8 +40,8 @@ public enum SwiftTraderError: Error {
     /// No `BinanceAuth` instance was given; it will be impossible to authenticate with Binance.
     case binanceMissingAuthentication
     
-    /// And error ocurred while executing the function `SwiftTrader.binanceSpotNewStopLimitOrder`.
-    case binanceSpotNewStopLimitOrder(error: Error)
+    /// And error ocurred while executing the function `SwiftTrader.binanceSpotNewOrder`.
+    case binanceSpotNewOrder(error: Error)
     
     /// The response status code is something other than `200`.
     case binanceStatusCodeNotOK(

@@ -12,7 +12,7 @@ public enum SwiftTraderOperation {
     
     // MARK: - Binance
     
-    case binanceSpotNewStopLimitOrder
+    case binanceSpotNewOrder
     
     // MARK: - FTX
     

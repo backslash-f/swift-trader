@@ -12,7 +12,7 @@ public extension SwiftTraderError {
     
     static func error(for operation: SwiftTraderOperation, statusCode: Int, localizedErrorMessage: String, data: Data) -> SwiftTraderError {
         switch operation {
-        case .binanceSpotNewStopLimitOrder:
+        case .binanceSpotNewOrder:
             guard let binanceError = try? JSONDecoder().decode(BinanceError.self, from: data) else {
                 return .binanceStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
             }
