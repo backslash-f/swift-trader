@@ -16,18 +16,15 @@ public extension SwiftTrader {
     ///
     /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
     ///
-    /// - Parameter orderInput: `SwiftTraderPlaceOrder` instance that encapsulates
+    /// - Parameter orderInput: `BinanceSpotNewOrderParameters` instance that encapsulates
     /// all the arguments required for submiting the order.
     /// - Returns: An instance of `BinanceNewOrderResponse` or `SwiftTraderError`.
-    func binanceSpotNewOrder(_ orderInput: SwiftTraderPlaceOrder) async throws -> Result<BinanceSpotNewOrderResponse, SwiftTraderError> {
+    func binanceSpotNewOrder(_ orderInput: BinanceSpotNewOrderParameters) async throws -> Result<BinanceSpotNewOrderResponse, SwiftTraderError> {
         guard let auth = binanceAuth else {
             return .failure(.binanceMissingAuthentication)
         }
-        let orderParameters = BinanceSpotNewOrderParameters(
-            symbol: orderInput.symbol
-        )
         let request = BinanceSpotNewOrderRequest(
-            orderParameters: orderParameters,
+            orderParameters: orderInput,
             binanceAuth: auth,
             settings: settings.networkRequestSettings
         )

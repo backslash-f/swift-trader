@@ -37,6 +37,9 @@ public struct BinanceSpotNewOrderRequest: NetworkRequest {
             urlRequest.httpBody = dataParameter
             urlRequest.addValue(HTTPHeader.Value.urlEncoded, forHTTPHeaderField: HTTPHeader.Field.contentType)
             try BinanceAPI.setRequestHeaderFields(request: &urlRequest, binanceAuth: binanceAuth.spot)
+            
+#warning("TODO: Add signature - here?")
+            
             return urlRequest
         }
     }
@@ -84,7 +87,15 @@ private extension BinanceSpotNewOrderRequest {
     
     func createDataParameter(from orderParameters: BinanceSpotNewOrderParameters) throws -> Data {
         let symbolParameter = "\(BinanceSpotNewOrderParameterKey.symbol.rawValue)=\(orderParameters.symbol)"
-        let stringParameter = "\(symbolParameter)" //"username=\(user1)&password=\(pass)&grant_type=password"
+        let sideParameter = "\(BinanceSpotNewOrderParameterKey.side.rawValue)=\(orderParameters.side)"
+        let typeParameter = "\(BinanceSpotNewOrderParameterKey.type.rawValue)=\(orderParameters.type)"
+        let quoteQtyParameter = "\(BinanceSpotNewOrderParameterKey.quoteOrderQty.rawValue)=\(orderParameters.quoteOrderQty)"
+        
+#warning("TODO: Add timestamp")
+        
+        // E.g.: "symbol=BTCUSDT&side=buy&type=market&quoteOrderQty=100.0"
+        let stringParameter = "\(symbolParameter)&\(sideParameter)&\(typeParameter)&\(quoteQtyParameter)"
+        
         if let dataParameter = stringParameter.data(using: .utf8) {
             return dataParameter
         } else {
