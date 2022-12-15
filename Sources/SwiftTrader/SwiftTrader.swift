@@ -22,7 +22,7 @@ public struct SwiftTrader {
     // MARK: - Lifecycle
     
     public init(binanceAuth: BinanceAuth,
-                ftxAuth: FTXAuth?,
+                ftxAuth: FTXAuth? = nil,
                 kucoinAuth: KucoinAuth?,
                 settings: SwiftTraderSettings = DefaultSwiftTraderSettings()) {
         self.binanceAuth = binanceAuth

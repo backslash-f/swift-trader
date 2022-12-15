@@ -38,4 +38,6 @@ public enum BinanceSpotNewOrderParameterKey: String {
     case side
     case type
     case quoteOrderQty
+    case timestamp
+    case signature
 }

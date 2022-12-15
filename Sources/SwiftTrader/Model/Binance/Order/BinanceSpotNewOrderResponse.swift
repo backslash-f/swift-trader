@@ -17,17 +17,16 @@ public struct BinanceSpotNewOrderResponse: Codable {
     let transactTime: Int
     let price, origQty, executedQty, cummulativeQuoteQty: String
     let status, timeInForce, type, side: String
-    let strategyID, strategyType: Int
+    let workingTime: Int
     let fills: [BinanceOrderFill]
+    let selfTradePreventionMode: String
     
     enum CodingKeys: String, CodingKey {
         case symbol
         case orderID = "orderId"
         case orderListID = "orderListId"
         case clientOrderID = "clientOrderId"
-        case transactTime, price, origQty, executedQty, cummulativeQuoteQty, status, timeInForce, type, side
-        case strategyID = "strategyId"
-        case strategyType, fills
+        case transactTime, price, origQty, executedQty, cummulativeQuoteQty, status, timeInForce, type, side, workingTime, fills, selfTradePreventionMode
     }
 }
 

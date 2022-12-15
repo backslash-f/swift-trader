@@ -16,6 +16,8 @@ public extension SwiftTrader {
     ///
     /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
     ///
+    /// Notice: only MARKET orders are supported for the time being.
+    ///
     /// - Parameter orderInput: `BinanceSpotNewOrderParameters` instance that encapsulates
     /// all the arguments required for submiting the order.
     /// - Returns: An instance of `BinanceNewOrderResponse` or `SwiftTraderError`.
@@ -33,14 +35,6 @@ public extension SwiftTrader {
             guard let placeOrder = model as? BinanceSpotNewOrderResponse else {
                 return .failure(.unexpectedResponse(modelString: "\(model)"))
             }
-#warning("TODO: how to handle cancelling order within Binance")
-            //            if orderInput.cancelStopOrders {
-            //                do {
-            //                    try await kucoinSpotCancelStopOrders(symbol: orderInput.contractSymbol)
-            //                } catch {
-            //                    logger.log("Could not cancel untriggered stop orders: \(error)")
-            //                }
-            //            }
             return .success(placeOrder)
         case .failure(let error):
             let swiftTraderError = handle(networkRequestError: error, operation: .binanceSpotNewOrder)

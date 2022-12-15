@@ -32,13 +32,20 @@ public struct BinanceSpotNewOrderRequest: NetworkRequest {
             var urlRequest = URLRequest(url: try spotNewOrderResource.url)
             urlRequest.httpMethod = HTTPMethod.POST.rawValue
             
-            // Parameters.
-            let dataParameter = try createDataParameter(from: orderParameters)
-            urlRequest.httpBody = dataParameter
+            // Body parameters.
+            let stringParameters = createStringParameters(from: orderParameters)
+            let dataParameters = try createDataParameter(from: stringParameters)
+            
+            // Signature parameter.
+            let stringSignature = try createSignature(for: dataParameters, binanceAuth: binanceAuth)
+            let dataSignature = try createDataParameter(from: stringParameters + "&\(stringSignature)")
+            
+            // Add the parameters.
+            urlRequest.httpBody = dataSignature
+            
+            // Add header fields.
             urlRequest.addValue(HTTPHeader.Value.urlEncoded, forHTTPHeaderField: HTTPHeader.Field.contentType)
             try BinanceAPI.setRequestHeaderFields(request: &urlRequest, binanceAuth: binanceAuth.spot)
-            
-#warning("TODO: Add signature - here?")
             
             return urlRequest
         }
@@ -85,21 +92,34 @@ public extension BinanceSpotNewOrderRequest {
 
 private extension BinanceSpotNewOrderRequest {
     
-    func createDataParameter(from orderParameters: BinanceSpotNewOrderParameters) throws -> Data {
-        let symbolParameter = "\(BinanceSpotNewOrderParameterKey.symbol.rawValue)=\(orderParameters.symbol)"
-        let sideParameter = "\(BinanceSpotNewOrderParameterKey.side.rawValue)=\(orderParameters.side)"
-        let typeParameter = "\(BinanceSpotNewOrderParameterKey.type.rawValue)=\(orderParameters.type)"
-        let quoteQtyParameter = "\(BinanceSpotNewOrderParameterKey.quoteOrderQty.rawValue)=\(orderParameters.quoteOrderQty)"
-        
-#warning("TODO: Add timestamp")
-        
-        // E.g.: "symbol=BTCUSDT&side=buy&type=market&quoteOrderQty=100.0"
-        let stringParameter = "\(symbolParameter)&\(sideParameter)&\(typeParameter)&\(quoteQtyParameter)"
-        
-        if let dataParameter = stringParameter.data(using: .utf8) {
-            return dataParameter
+    /// Creates the `String` parameters to be later added into the request body.
+    ///
+    /// For example: *symbol=BTCUSDT&side=buy&type=market&quoteOrderQty=100.0&timestamp=1670998246731*
+    ///
+    func createStringParameters(from orderParameters: BinanceSpotNewOrderParameters) -> String {
+        let symbolParam     = "\(BinanceSpotNewOrderParameterKey.symbol.rawValue)=\(orderParameters.symbol)"
+        let sideParam       = "\(BinanceSpotNewOrderParameterKey.side.rawValue)=\(orderParameters.side)"
+        let typeParam       = "\(BinanceSpotNewOrderParameterKey.type.rawValue)=\(orderParameters.type)"
+        let quoteQtyParam   = "\(BinanceSpotNewOrderParameterKey.quoteOrderQty.rawValue)=\(orderParameters.quoteOrderQty)"
+        let timestampParam  = "\(BinanceSpotNewOrderParameterKey.timestamp.rawValue)=\(Date().timestampMilliseconds)"
+    
+        return "\(symbolParam)&\(sideParam)&\(typeParam)&\(quoteQtyParam)&\(timestampParam)"
+    }
+    
+    /// Creates the `Data` parameter to be added into the request body via `urlRequest.httpBody = dataParameter`.
+    func createDataParameter(from string: String) throws -> Data {
+        if let data = string.data(using: .utf8) {
+            return data
         } else {
-            throw NetworkRequestError.invalidDataFromString(string: stringParameter)
+            throw NetworkRequestError.invalidDataFromString(string: string)
         }
+    }
+    
+    func createSignature(for data: Data, binanceAuth: BinanceAuth) throws -> String {
+        let signature = try NetworkRequestSignee.createHMACSignature(for: data,
+                                                                     secret: binanceAuth.spot.apiSecret,
+                                                                     isHexString: true)
+        let symbolParam = "\(BinanceSpotNewOrderParameterKey.signature.rawValue)=\(signature)"
+        return symbolParam
     }
 }

@@ -44,6 +44,24 @@ public struct NetworkRequestSignee {
         )
         request.setValue(signature, forHTTPHeaderField: httpHeaderField)
     }
+    
+    /// Creates a `SHA256 HMAC` signature using the given `secret`.
+    ///
+    /// - Parameters:
+    ///   - data: The `Data` to be signed. This for example could be `Data` from a `String`
+    ///   using `stringToSign.data(using: .utf8)`. The `String` contains the parameters
+    ///   that require signing. Taking Binance as an example, that would be something like
+    ///   "symbol=BTCUSDT&side=buy&type=market&quoteOrderQty=100.0&timestamp=1670998246731".
+    ///   - secret: The API secret required to sign the request.
+    ///   - isHexString: if `true`, then the generated String signature will be encoded using `Data.hexStringEncoded()`.
+    ///   If `false` (the default), then `Data.base64EncodedString()` will be used instead.
+    static func createHMACSignature(for data: Data,
+                                    secret: String,
+                                    isHexString: Bool = false) throws -> String {
+        let key = try createSymmetricKey(from: secret)
+        let signature = HMAC<SHA256>.authenticationCode(for: data, using: key)
+        return isHexString ? Data(signature).hexStringEncoded() : Data(signature).base64EncodedString()
+    }
 }
 
 // MARK: - Private
@@ -88,21 +106,22 @@ private extension NetworkRequestSignee {
     }
     
     static func createHMACSignature(for method: HTTPMethod,
-                                path: String,
-                                body: String,
-                                secret: String,
-                                isHexString: Bool = false) throws -> String {
-        guard let secretData = secret.data(using: .utf8) else {
-            throw NetworkRequestError.stringToDataFailed(string: secret)
-        }
-        let key = SymmetricKey(data: secretData)
+                                    path: String,
+                                    body: String,
+                                    secret: String,
+                                    isHexString: Bool = false) throws -> String {
         let timestamp = Date().timestampMilliseconds
         let stringToSign = "\(timestamp)" + method.rawValue + path + body
         guard let stringToSignData = stringToSign.data(using: .utf8) else {
             throw NetworkRequestError.stringToDataFailed(string: stringToSign)
         }
-        let signature = HMAC<SHA256>.authenticationCode(for: stringToSignData, using: key)
-        return isHexString ? Data(signature).hexStringEncoded() : Data(signature).base64EncodedString()
+        return try createHMACSignature(for: stringToSignData, secret: secret, isHexString: isHexString)
+    }
+    
+    static func createSymmetricKey(from secret: String) throws -> SymmetricKey {
+        guard let secretData = secret.data(using: .utf8) else {
+            throw NetworkRequestError.stringToDataFailed(string: secret)
+        }
+        return SymmetricKey(data: secretData)
     }
 }
-
