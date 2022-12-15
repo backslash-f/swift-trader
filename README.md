@@ -6,7 +6,7 @@
 
 
 # swift-trader
-A Swift package for connecting and trading on crypto exchanges such as Kucoin and FTX.
+A Swift package for connecting and trading on crypto exchanges such as Kucoin and Binance.
 
 💰 It can calculate the stop and limit prices for a **trailing stop strategy** based on a set of given input parameters.  
 Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BTrailingStop.swift)
@@ -14,6 +14,9 @@ Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-t
 🤖 Supports being deployed to Heroku (Linux). Tested with [Vapor](https://github.com/vapor/vapor). This means [trading automation](https://youtu.be/gMRee2srpe8) by using webhooks and scripts such as the [Profit Percentage Tracker](https://www.tradingview.com/script/p6NBsV48-Profit-Percentage-Tracker/) (TradingView). #ka-ching!
 
 📖 List of working APIs:
+
+## Kucoin
+
 [Kucoin Futures](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BKucoinFutures.swift) | Explanation | API Documentation
 --- | --- | ---
 `SwiftTrader.kucoinFuturesAccountOverview` | Retrieves the overview of a Kucoin Futures account. | https://docs.kucoin.com/futures/#account
@@ -33,9 +36,19 @@ Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-t
 `SwiftTrader.kucoinSpotStopOrderList` | Lists active Spot **stop** orders. | https://docs.kucoin.com/#list-stop-orders
 `SwiftTrader.kucoinSpotCancelStopOrders` | Cancels all untriggered stop orders of a given symbol (contract). | https://docs.kucoin.com/#cancel-orders
 
-[FTX](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BFTX.swift) | Explanation | API Documentation
+## Binance
+
+[Binance Spot](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BBinanceSpot.swift) | Explanation | API Documentation
 --- | --- | ---
-`SwiftTrader.ftxTriggerOrdersList` | Retrieves the list of open trigger orders. | https://docs.ftx.com/?python#get-open-trigger-orders
-`SwiftTrader.ftxPositions` | Lists open positions. | https://docs.ftx.com/#get-positions
-`SwiftTrader.ftxPlaceStopLimitOrder` | Places a stop limit order within FTX. | https://docs.ftx.com/?python#place-trigger-order
-`SwiftTrader.cancelAllOrders` | Cancels all open orders. | https://docs.ftx.com/?python#cancel-all-orders
+`SwiftTrader.binanceSpotNewOrder` | Send in a new order. Currently only `MARKET` orders are supported (but this can be easily changed). | https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
+
+## FTX
+
+⚠️👮🏻 FTX won't work anymore, because its CEO is in jail. Great job! 👮🏻⚠️
+
+[~~FTX~~](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BFTX.swift) | Explanation | API Documentation
+--- | --- | ---
+~~`SwiftTrader.ftxTriggerOrdersList`~~ | ~~Retrieves the list of open trigger orders.~~ | ~~https://docs.ftx.com/?python#get-open-trigger-orders~~
+~~`SwiftTrader.ftxPositions`~~ | ~~Lists open positions.~~ | ~~https://docs.ftx.com/#get-positions~~
+~~`SwiftTrader.ftxPlaceStopLimitOrder`~~ | ~~Places a stop limit order within FTX.~~ | ~~https://docs.ftx.com/?python#place-trigger-order~~
+~~`SwiftTrader.cancelAllOrders`~~ | ~~Cancels all open orders.~~ | ~~https://docs.ftx.com/?python#cancel-all-orders~~
