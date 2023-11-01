@@ -14,7 +14,6 @@ public struct SwiftTrader {
     // MARK: - Properties
 
     public let binanceAuth: BinanceAuth?
-    public let ftxAuth: FTXAuth?
     public let kucoinAuth: KucoinAuth?
     public let logger = SwiftTraderLogger()
     public let settings: SwiftTraderSettings
@@ -22,11 +21,9 @@ public struct SwiftTrader {
     // MARK: - Lifecycle
     
     public init(binanceAuth: BinanceAuth,
-                ftxAuth: FTXAuth? = nil,
                 kucoinAuth: KucoinAuth?,
                 settings: SwiftTraderSettings = DefaultSwiftTraderSettings()) {
         self.binanceAuth = binanceAuth
-        self.ftxAuth = ftxAuth
         self.kucoinAuth = kucoinAuth
         self.settings = settings
     }

@@ -13,7 +13,7 @@ import Logging
 
 /// A **request** for an overview of a Kucoin Futures account.
 ///
-/// https://docs.kucoin.com/futures/#account
+/// https://www.kucoin.com/docs/rest/funding/funding-overview/get-account-detail-futures
 public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
     
     // MARK: - Properties

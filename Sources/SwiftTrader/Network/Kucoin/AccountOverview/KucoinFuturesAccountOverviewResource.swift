@@ -9,7 +9,7 @@ import Foundation
 
 /// The **resource** for requesting an overview of a Kucoin Futures account.
 ///
-/// https://docs.kucoin.com/futures/#account
+/// https://www.kucoin.com/docs/rest/funding/funding-overview/get-account-detail-futures
 public struct KucoinFuturesAccountOverviewResource: NetworkResource {
     
     // MARK: - Properties

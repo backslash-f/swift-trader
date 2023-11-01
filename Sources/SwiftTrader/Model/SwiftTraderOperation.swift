@@ -14,13 +14,6 @@ public enum SwiftTraderOperation {
     
     case binanceSpotNewOrder
     
-    // MARK: - FTX
-    
-    case ftxCancelAllOrders
-    case ftxPlaceStopLimitOrder
-    case ftxPositions
-    case ftxTriggerOrdersList
-    
     // MARK: - Kucoin
     
     // MARK: Spot

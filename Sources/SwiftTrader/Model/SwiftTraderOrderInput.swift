@@ -19,7 +19,6 @@ public struct SwiftTraderStopLimitOrderInput {
     public let isLong: Bool
     public let offset: Double
     public let profitPercentage: Double
-    public let retryUntilFilled: Bool
     public let size: Double
     public let ticker: String
     public let tickerSize: String
@@ -42,7 +41,6 @@ public struct SwiftTraderStopLimitOrderInput {
     ///   of the entry price (`1.0%` - `0.75%`). Using the same `offset`, if the `profitPercentage` is now `2.0%`, the stop order
     ///   will be placed at `1.25%` of the entry price (`2.0%` - `0.75%`).
     ///   - profitPercentage: The percentage of the profit at this point, e.g.: "1.5", "0.67".
-    ///   - retryUntilFilled: (FTX only) Whether or not to keep re-triggering the order until filled. Default is `true`.
     ///   - size: How much assets were bought.
     ///   - ticker: E.g.: BTCUSDT
     ///   - tickerSize: E.g.: "1", "0.05", "0.00001"
@@ -53,7 +51,6 @@ public struct SwiftTraderStopLimitOrderInput {
                 isLong: Bool,
                 offset: Double,
                 profitPercentage: Double,
-                retryUntilFilled: Bool = true,
                 size: Double,
                 ticker: String,
                 tickerSize: String) {
@@ -64,7 +61,6 @@ public struct SwiftTraderStopLimitOrderInput {
         self.isLong = isLong
         self.offset = offset
         self.profitPercentage = profitPercentage
-        self.retryUntilFilled = retryUntilFilled
         self.size = size
         self.ticker = ticker
         self.tickerSize = tickerSize

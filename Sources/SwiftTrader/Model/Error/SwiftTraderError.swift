@@ -50,34 +50,6 @@ public enum SwiftTraderError: Error {
         code: Int? = nil,
         message: String? = nil
     )
-    
-    // MARK: - FTX Related
-    
-    /// The number of the assets that were bought has to be greater than zero.
-    case ftxInvalidSize
-    
-    /// No `FTXAuth` instance was given; it will be impossible to authenticate with FTX.
-    case ftxMissingAuthentication
-    
-    /// And error ocurred while executing the function `SwiftTrader.ftxCancelAllOrders`.
-    case ftxCancelAllOrders(error: Error)
-    
-    /// And error ocurred while executing the function `SwiftTrader.ftxPlaceStopLimitOrder`.
-    case ftxPlaceStopLimitOrder(error: Error)
-    
-    /// And error ocurred while executing the function `SwiftTrader.ftxPositions`.
-    case ftxPositions(error: Error)
-    
-    /// And error ocurred while executing the function `SwiftTrader.ftxTriggerOrdersList`.
-    case ftxTriggerOrdersList(error: Error)
-    
-    /// The response status code is something other than `200`.
-    case ftxStatusCodeNotOK(
-        statusCode: Int,
-        localizedErrorMessage: String,
-        isSuccess: Bool? = nil,
-        errorMessage: String? = nil
-    )
 
     // MARK: - Kucoin Related
     

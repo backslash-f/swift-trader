@@ -41,14 +41,3 @@ Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-t
 [Binance Spot](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BBinanceSpot.swift) | Explanation | API Documentation
 --- | --- | ---
 `SwiftTrader.binanceSpotNewOrder` | Send in a new order. Currently only `MARKET` orders are supported (but this can be easily changed). | https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
-
-## FTX
-
-⚠️👮🏻 FTX won't work anymore, because its CEO is in jail. Great job! 👮🏻⚠️
-
-[~~FTX~~](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BFTX.swift) | Explanation | API Documentation
---- | --- | ---
-~~`SwiftTrader.ftxTriggerOrdersList`~~ | ~~Retrieves the list of open trigger orders.~~ | ~~https://docs.ftx.com/?python#get-open-trigger-orders~~
-~~`SwiftTrader.ftxPositions`~~ | ~~Lists open positions.~~ | ~~https://docs.ftx.com/#get-positions~~
-~~`SwiftTrader.ftxPlaceStopLimitOrder`~~ | ~~Places a stop limit order within FTX.~~ | ~~https://docs.ftx.com/?python#place-trigger-order~~
-~~`SwiftTrader.cancelAllOrders`~~ | ~~Cancels all open orders.~~ | ~~https://docs.ftx.com/?python#cancel-all-orders~~

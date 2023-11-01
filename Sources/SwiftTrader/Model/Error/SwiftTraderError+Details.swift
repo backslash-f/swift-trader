@@ -22,20 +22,7 @@ public extension SwiftTraderError {
                 code: binanceError.code,
                 message: binanceError.message
             )
-            
-        case .ftxCancelAllOrders,
-                .ftxPlaceStopLimitOrder,
-                .ftxPositions,
-                .ftxTriggerOrdersList:
-            guard let ftxError = try? JSONDecoder().decode(FTXError.self, from: data) else {
-                return .ftxStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
-            }
-            return .ftxStatusCodeNotOK(
-                statusCode: statusCode,
-                localizedErrorMessage: localizedErrorMessage,
-                isSuccess: ftxError.isSuccess,
-                errorMessage: ftxError.errorMessage
-            )
+
         case .kucoinSpotListAccounts,
                 .kucoinSpotGetAccount,
                 .kucoinSpotGetTransferable,
