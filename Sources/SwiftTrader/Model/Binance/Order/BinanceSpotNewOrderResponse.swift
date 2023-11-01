@@ -22,11 +22,11 @@ public struct BinanceSpotNewOrderResponse: Codable {
     let selfTradePreventionMode: String
 
     enum CodingKeys: String, CodingKey {
-        case symbol
         case orderID = "orderId"
         case orderListID = "orderListId"
         case clientOrderID = "clientOrderId"
-        case transactTime, price, origQty, executedQty, cummulativeQuoteQty, status, timeInForce, type, side, workingTime, fills, selfTradePreventionMode
+        case symbol, transactTime, price, origQty, executedQty, cummulativeQuoteQty, status, timeInForce, type, side
+        case workingTime, fills, selfTradePreventionMode
     }
 }
 

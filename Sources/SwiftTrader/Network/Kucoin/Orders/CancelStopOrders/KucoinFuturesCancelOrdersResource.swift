@@ -40,8 +40,8 @@ public struct KucoinFuturesCancelOrdersResource: NetworkResource {
 
     /// Creates a new `KucoinFuturesCancelOrdersResource` instance.
     ///
-    /// - Parameter symbol: `String`,  represents the specific contract for which all the untriggered stop orders will be cancelled.
-    /// E.g.: "XBTUSDM".
+    /// - Parameter symbol: `String`,  represents the specific contract for which all the
+    /// untriggered stop orders will be cancelled. E.g.: "XBTUSDM".
     init(symbol: String) {
         self.symbol = symbol
     }

@@ -40,8 +40,8 @@ public struct KucoinSpotCancelOrdersResource: NetworkResource {
 
     /// Creates a new `KucoinSpotCancelOrdersResource` instance.
     ///
-    /// - Parameter symbol: `String`,  represents the specific contract for which all the untriggered stop orders will be cancelled.
-    /// E.g.: "BTC-USDT".
+    /// - Parameter symbol: `String`,  represents the specific contract for which all the
+    /// untriggered stop orders will be cancelled. E.g.: "BTC-USDT".
     init(symbol: String) {
         self.symbol = symbol
     }

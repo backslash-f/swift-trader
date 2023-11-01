@@ -2,6 +2,12 @@
 identifier_name:
   allowed_symbols:
     - "_"
+  excluded:
+    - "id"
+    - "TP"
+    - "IP"
+    - "MP"
+    - "up"
 
 disabled_rules:
   - nesting  # Opinion-based (https://stackoverflow.com/a/46767132/584548)

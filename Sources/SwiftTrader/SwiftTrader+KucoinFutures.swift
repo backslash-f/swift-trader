@@ -18,7 +18,9 @@ public extension SwiftTrader {
     ///
     /// - Parameter currencySymbol: The `CurrencySymbol` of the account balance. The default is `.USDT`.
     /// - Returns: An instance of `KucoinFuturesAccountOverview` or `SwiftTraderError`.
-    func kucoinFuturesAccountOverview(currencySymbol: CurrencySymbol = .USDT) async throws -> Result<KucoinFuturesAccountOverview, SwiftTraderError> {
+    func kucoinFuturesAccountOverview(
+        currencySymbol: CurrencySymbol = .USDT
+    ) async throws -> Result<KucoinFuturesAccountOverview, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
@@ -47,7 +49,9 @@ public extension SwiftTrader {
     ///
     /// - Parameter orderStatus: `KucoinFuturesOrderStatus`, default is `.active`.
     /// - Returns: An instance of `KucoinFuturesOrderList` or `SwiftTraderError`.
-    func kucoinFuturesStopOrderList(symbol: String) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
+    func kucoinFuturesStopOrderList(
+        symbol: String
+    ) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
@@ -75,7 +79,9 @@ public extension SwiftTrader {
     ///
     /// - Parameter orderStatus: `KucoinFuturesOrderStatus`, default is `.active`.
     /// - Returns: An instance of `KucoinFuturesOrderList` or `SwiftTraderError`.
-    func kucoinFuturesOrderList(orderStatus: KucoinOrderStatus = .active) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
+    func kucoinFuturesOrderList(
+        orderStatus: KucoinOrderStatus = .active
+    ) async throws -> Result<KucoinFuturesOrderList, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
@@ -105,7 +111,9 @@ public extension SwiftTrader {
     /// - Parameter orderInput: `SwiftTraderStopLimitOrderInput` instance that encapsulates
     /// all the arguments required for submiting the stop limit order.
     /// - Returns: An instance of `KucoinPlaceOrderResponse` or `SwiftTraderError`.
-    func kucoinFuturesPlaceStopLimitOrder(_ orderInput: SwiftTraderStopLimitOrderInput) async throws -> Result<KucoinPlaceOrderResponse, SwiftTraderError> {
+    func kucoinFuturesPlaceStopLimitOrder(
+        _ orderInput: SwiftTraderStopLimitOrderInput
+    ) async throws -> Result<KucoinPlaceOrderResponse, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
@@ -162,9 +170,12 @@ public extension SwiftTrader {
     ///
     /// https://docs.kucoin.com/futures/#stop-order-mass-cancelation
     ///
-    /// - Parameter symbol: `String`, represents the specific contract for which all the untriggered stop orders will be cancelled.
+    /// - Parameter symbol: `String`, represents the specific contract for which all the
+    /// untriggered stop orders will be cancelled.
     /// - Returns: An instance of `KucoinFuturesCancelStopOrders` or `SwiftTraderError`.
-    @discardableResult func kucoinFuturesCancelStopOrders(symbol: String) async throws -> Result<KucoinCancelStopOrdersResponse, SwiftTraderError> {
+    @discardableResult func kucoinFuturesCancelStopOrders(
+        symbol: String
+    ) async throws -> Result<KucoinCancelStopOrdersResponse, SwiftTraderError> {
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }

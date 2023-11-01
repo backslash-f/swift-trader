@@ -16,13 +16,14 @@ public extension SwiftTrader {
 
     /// Calculates the stop and limit prices for a trailing stop strategy based on the given input parameters.
     ///
-    /// - Parameter input: `SwiftTraderStopLimitOrderInput` containing required info such as `profitPercentage` and `offset`.
+    /// - Parameter input: `SwiftTraderStopLimitOrderInput` containing required info,
+    /// such as `profitPercentage` and `offset`.
     /// - Returns: `StopLimitPriceTuple`, which contains the calculated stop (trigger) price and limit price.
-    /// The stop price and the limit price are also tuples. These tuples provide the price in both `String` and `Double` format.
+    /// The stop price and the limit price are also tuples. These tuples provide the price in both `String`
+    /// and `Double` format.
     func calculateStopLimitPrice(for input: SwiftTraderStopLimitOrderInput) throws -> StopLimitPriceTuple {
         logger.log("Exchange: \(input.exchange.rawValue.uppercased())")
         logger.log("Contract: \(input.contractSymbol)")
-
         logger.log("Calculating stop and limit prices...")
         logger.log("Side: \(input.isLong ? "LONG": "SHORT")")
         logger.log("Size: \(input.size)")
@@ -170,7 +171,7 @@ private extension SwiftTrader {
                       priceLastDigit != tickerLastDigit {
                 let digitsToAdd = (tickerDigits - priceDecimalDigits)
                 let digits: [String] = Array(repeating: "0", count: digitsToAdd)
-                priceString = priceString + digits.joined(separator: "")
+                priceString += digits.joined(separator: "")
                 priceString = priceString.dropLast() + "\(tickerLastDigit)"
             }
         }

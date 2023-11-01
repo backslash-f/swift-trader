@@ -19,7 +19,8 @@ public extension NetworkRequest {
 
     /// Executes the `NetworkRequest.getter:request` asynchronously and returns the `NetworkRequestResult`.
     ///
-    ///  Failed requests are to be retried `n` times, according to the `numberOfRetries` of `NetworkRequest.getter:settings`.
+    ///  Failed requests are to be retried `n` times, according to the `numberOfRetries` of
+    ///  `NetworkRequest.getter:settings`.
     ///
     /// - Returns: `NetworkRequestResult`.
     func execute(attemptNumber: Int = 1) async -> NetworkRequestResult {

@@ -38,12 +38,11 @@ public struct KucoinSpotStopOrder: Codable {
     let funds, stp, visibleSize, remark, tags, stopTriggerTime: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, symbol
         case userID = "userId"
-        case status, type, side, price, size, funds, stp, timeInForce, cancelAfter, postOnly, hidden, iceberg, visibleSize, channel
         case clientOID = "clientOid"
-        case remark, tags, orderTime
         case domainID = "domainId"
-        case tradeSource, tradeType, feeCurrency, takerFeeRate, makerFeeRate, createdAt, stop, stopTriggerTime, stopPrice
+        case id, symbol, status, type, side, price, size, funds, stp, timeInForce, cancelAfter, postOnly, hidden
+        case iceberg, visibleSize, channel, remark, tags, orderTime, tradeSource, tradeType, feeCurrency, takerFeeRate
+        case makerFeeRate, createdAt, stop, stopTriggerTime, stopPrice
     }
 }

@@ -21,7 +21,9 @@ public extension SwiftTrader {
     /// - Parameter orderInput: `BinanceSpotNewOrderParameters` instance that encapsulates
     /// all the arguments required for submiting the order.
     /// - Returns: An instance of `BinanceNewOrderResponse` or `SwiftTraderError`.
-    func binanceSpotNewOrder(_ orderInput: BinanceSpotNewOrderParameters) async throws -> Result<BinanceSpotNewOrderResponse, SwiftTraderError> {
+    func binanceSpotNewOrder(
+        _ orderInput: BinanceSpotNewOrderParameters
+    ) async throws -> Result<BinanceSpotNewOrderResponse, SwiftTraderError> {
         guard let auth = binanceAuth else {
             return .failure(.binanceMissingAuthentication)
         }

@@ -49,8 +49,8 @@ public struct KucoinSpotCancelOrdersRequest: NetworkRequest {
     /// Creates a new `KucoinSpotCancelOrdersRequest` instance.
     ///
     /// - Parameters:
-    ///   - symbol: `String`, represents the specific contract for which all the untriggered stop orders will be cancelled.
-    ///   E.g.: "BTC-USDT".
+    ///   - symbol: `String`, represents the specific contract for which all the
+    ///   untriggered stop orders will be cancelled. E.g.: "BTC-USDT".
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.

@@ -100,7 +100,9 @@ private extension BinanceSpotNewOrderRequest {
         let symbolParam     = "\(BinanceSpotNewOrderParameterKey.symbol.rawValue)=\(orderParameters.symbol)"
         let sideParam       = "\(BinanceSpotNewOrderParameterKey.side.rawValue)=\(orderParameters.side)"
         let typeParam       = "\(BinanceSpotNewOrderParameterKey.type.rawValue)=\(orderParameters.type)"
-        let quoteQtyParam   = "\(BinanceSpotNewOrderParameterKey.quoteOrderQty.rawValue)=\(orderParameters.quoteOrderQty)"
+        let quoteQtyParam   = """
+            \(BinanceSpotNewOrderParameterKey.quoteOrderQty.rawValue)=\(orderParameters.quoteOrderQty)
+        """
         let timestampParam  = "\(BinanceSpotNewOrderParameterKey.timestamp.rawValue)=\(Date().timestampMilliseconds)"
 
         return "\(symbolParam)&\(sideParam)&\(typeParam)&\(quoteQtyParam)&\(timestampParam)"

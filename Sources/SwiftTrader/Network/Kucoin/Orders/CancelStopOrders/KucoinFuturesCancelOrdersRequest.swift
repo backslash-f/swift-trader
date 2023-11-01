@@ -49,8 +49,8 @@ public struct KucoinFuturesCancelOrdersRequest: NetworkRequest {
     /// Creates a new `KucoinFuturesOrdersListRequest` instance.
     ///
     /// - Parameters:
-    ///   - symbol: `String`, represents the specific contract for which all the untriggered stop orders will be cancelled.
-    ///   E.g.: "XBTUSDM".
+    ///   - symbol: `String`, represents the specific contract for which all the
+    ///   untriggered stop orders will be cancelled. E.g.: "XBTUSDM".
     ///   - kucoinAuth: Kucoin authentication data.
     ///   - session: `URLSession`, default is `.shared`.
     ///   - settings: `NetworkRequestSettings`.
