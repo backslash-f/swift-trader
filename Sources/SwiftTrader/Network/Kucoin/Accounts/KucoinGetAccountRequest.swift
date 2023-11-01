@@ -16,17 +16,17 @@ import Logging
 ///
 /// https://docs.kucoin.com/#get-an-account
 public struct KucoinGetAccountRequest: NetworkRequest {
-    
+
     // MARK: - Properties
-    
+
     public typealias DecodableModel = KucoinSpotGetAccountResponse
-    
+
     public var logger: Logger {
         NetworkRequestLogger().default
     }
-    
+
     public var session: URLSession
-    
+
     public var request: URLRequest {
         get throws {
             let accountResource = KucoinGetAccountResource(accountID: accountID)
@@ -36,17 +36,17 @@ public struct KucoinGetAccountRequest: NetworkRequest {
             return urlRequest
         }
     }
-    
+
     public var settings: NetworkRequestSettings
-    
+
     // MARK: Private
-    
+
     private let accountID: String
-    
+
     private let kucoinAuth: KucoinAuth
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinListAccountsRequest` instance.
     ///
     /// - Parameters:
@@ -68,7 +68,7 @@ public struct KucoinGetAccountRequest: NetworkRequest {
 // MARK: - Network Request Protocol
 
 public extension KucoinGetAccountRequest {
-    
+
     func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinSpotGetAccountResponse.self, from: data)
     }

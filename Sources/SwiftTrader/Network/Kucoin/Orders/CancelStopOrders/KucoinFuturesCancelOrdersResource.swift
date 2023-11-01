@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/futures/#stop-order-mass-cancelation
 public struct KucoinFuturesCancelOrdersResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Futures.baseURL()
@@ -31,13 +31,13 @@ public struct KucoinFuturesCancelOrdersResource: NetworkResource {
             return url
         }
     }
-    
+
     // MARK: Private
-    
+
     private let symbol: String
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesCancelOrdersResource` instance.
     ///
     /// - Parameter symbol: `String`,  represents the specific contract for which all the untriggered stop orders will be cancelled.

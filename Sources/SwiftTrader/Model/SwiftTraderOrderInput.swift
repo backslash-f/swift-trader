@@ -9,9 +9,9 @@ import Foundation
 
 /// Encapsulates all the arguments required for submiting stop limit orders to supported exchanges.
 public struct SwiftTraderStopLimitOrderInput {
-    
+
     // MARK: - Properties
-    
+
     public let cancelStopOrders: Bool
     public let contractSymbol: String
     public let entryPrice: Double
@@ -22,9 +22,9 @@ public struct SwiftTraderStopLimitOrderInput {
     public let size: Double
     public let ticker: String
     public let tickerSize: String
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a `SwiftTraderOrderInput` instance.
     ///
     /// - Parameters:

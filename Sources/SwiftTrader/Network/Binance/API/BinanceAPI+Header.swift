@@ -12,7 +12,7 @@ import FoundationNetworking
 
 /// Holds logic to set values for default HTTP header fields common to all Binance APIs requests.
 extension BinanceAPI {
-    
+
     /// Sets values for default header fields in the given `URLRequest`
     ///
     /// Default header fields include `X-MBX-APIKEY`.
@@ -29,7 +29,7 @@ extension BinanceAPI {
 // MARK: - Private
 
 private extension BinanceAPI {
-    
+
     /// "X-MBX-APIKEY"
     static func setAPIKey(request: inout URLRequest,
                           binanceAuth: BinanceAuthorizing) {

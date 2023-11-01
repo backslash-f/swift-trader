@@ -8,13 +8,13 @@
 import Foundation
 
 public extension BinanceAPI {
-    
+
     struct Spot {
-        
+
         public struct Path {
             static let newOrder = "/api/v3/order"
         }
-        
+
         /// Returns the base `URL` based on an Xcode environment variable.
         ///
         /// In case the above fails/is absent, returns the `production` base `URL`.

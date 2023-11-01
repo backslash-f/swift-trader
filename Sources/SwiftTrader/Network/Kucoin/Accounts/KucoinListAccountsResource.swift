@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/#list-accounts
 public struct KucoinListAccountsResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Spot.baseURL()
@@ -31,13 +31,13 @@ public struct KucoinListAccountsResource: NetworkResource {
             return url
         }
     }
-    
+
     // MARK: Private
-    
+
     private let currencySymbol: CurrencySymbol
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinListAccountsResource` instance.
     ///
     /// - Parameter currencySymbol: `CurrencySymbol`.

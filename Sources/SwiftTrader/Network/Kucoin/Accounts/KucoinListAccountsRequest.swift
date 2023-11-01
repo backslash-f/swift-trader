@@ -16,17 +16,17 @@ import Logging
 ///
 /// https://docs.kucoin.com/#list-accounts
 public struct KucoinListAccountsRequest: NetworkRequest {
-    
+
     // MARK: - Properties
-    
+
     public typealias DecodableModel = KucoinSpotListAccountsResponse
-    
+
     public var logger: Logger {
         NetworkRequestLogger().default
     }
-    
+
     public var session: URLSession
-    
+
     public var request: URLRequest {
         get throws {
             let accountsResource = KucoinListAccountsResource(currencySymbol: currencySymbol)
@@ -36,17 +36,17 @@ public struct KucoinListAccountsRequest: NetworkRequest {
             return urlRequest
         }
     }
-    
+
     public var settings: NetworkRequestSettings
-    
+
     // MARK: Private
-    
+
     private let currencySymbol: CurrencySymbol
-    
+
     private let kucoinAuth: KucoinAuth
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinListAccountsRequest` instance.
     ///
     /// - Parameters:
@@ -68,7 +68,7 @@ public struct KucoinListAccountsRequest: NetworkRequest {
 // MARK: - Network Request Protocol
 
 public extension KucoinListAccountsRequest {
-    
+
     func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinSpotListAccountsResponse.self, from: data)
     }

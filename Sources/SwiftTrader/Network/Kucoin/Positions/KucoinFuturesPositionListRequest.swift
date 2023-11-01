@@ -15,17 +15,17 @@ import Logging
 ///
 /// https://docs.kucoin.com/futures/#get-position-list
 public struct KucoinFuturesPositionListRequest: NetworkRequest {
-    
+
     // MARK: - Properties
-    
+
     public typealias DecodableModel = KucoinFuturesPositionList
-    
+
     public var logger: Logger {
         NetworkRequestLogger().default
     }
-    
+
     public var session: URLSession
-    
+
     public var request: URLRequest {
         get throws {
             let futuresPositionListResource = KucoinFuturesPositionListResource()
@@ -35,15 +35,15 @@ public struct KucoinFuturesPositionListRequest: NetworkRequest {
             return urlRequest
         }
     }
-    
+
     public var settings: NetworkRequestSettings
-    
+
     // MARK: Private
-    
+
     private let kucoinAuth: KucoinAuth
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesAccountOverviewRequest` instance.
     ///
     /// - Parameters:
@@ -62,7 +62,7 @@ public struct KucoinFuturesPositionListRequest: NetworkRequest {
 // MARK: - Network Request Protocol
 
 public extension KucoinFuturesPositionListRequest {
-    
+
     func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinFuturesPositionList.self, from: data)
     }

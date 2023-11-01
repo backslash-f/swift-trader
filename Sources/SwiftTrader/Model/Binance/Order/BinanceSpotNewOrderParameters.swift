@@ -11,16 +11,16 @@ import Foundation
 ///
 /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
 public struct BinanceSpotNewOrderParameters {
-    
+
     // MARK: - Properties
-    
+
     public let symbol: String
     public let side: OrderSide
     public let type: BinanceOrderType
     public let quoteOrderQty: Double
-    
+
     // MARK: - Lifecycle
-    
+
     public init(symbol: String,
                 side: OrderSide,
                 type: BinanceOrderType,

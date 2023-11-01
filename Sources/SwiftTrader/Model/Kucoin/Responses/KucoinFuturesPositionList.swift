@@ -16,28 +16,28 @@ public struct KucoinFuturesPositionList: Codable {
 }
 
 public struct KucoinFuturesPosition: Codable {
-    
+
     // MARK: - Properties
-    
+
     public let id: String
-    
+
     /// E.g.: XBTUSDTM
     public let symbol: String
     public let autoDeposit: Bool
     public let realLeverage: Double
     public let crossMode: Bool
     public let delevPercentage: Double
-    
+
     /// Opening date in milliseconds.
     public let openingTimestamp: Int64
     /// Opening date as string (E.g.: "Saturday, 5. February 2022 at 22:32:16").
     public let openingTimestampString: String
-    
+
     /// Current date in milliseconds.
     public let currentTimestamp: Int64
     /// Current date as string (E.g.: "Saturday, 5. February 2022 at 22:32:16").
     public let currentTimestampString: String
-    
+
     public let posInit: Double
     public let currentQty: Int
     public let isOpen: Bool
@@ -46,7 +46,7 @@ public struct KucoinFuturesPosition: Codable {
     public let unrealisedPnl: Double
     public let avgEntryPrice: Double
     public let liquidationPrice: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case symbol
@@ -67,9 +67,9 @@ public struct KucoinFuturesPosition: Codable {
         case avgEntryPrice
         case liquidationPrice
     }
-    
+
     // MARK: - Lifecycle
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
@@ -78,13 +78,13 @@ public struct KucoinFuturesPosition: Codable {
         self.realLeverage = try container.decode(Double.self, forKey: .realLeverage)
         self.crossMode = try container.decode(Bool.self, forKey: .crossMode)
         self.delevPercentage = try container.decode(Double.self, forKey: .delevPercentage)
-        
+
         self.openingTimestamp = try container.decode(Int64.self, forKey: .openingTimestamp)
         self.openingTimestampString = Date(milliseconds: self.openingTimestamp).toString()
-        
+
         self.currentTimestamp = try container.decode(Int64.self, forKey: .currentTimestamp)
         self.currentTimestampString = Date(milliseconds: self.currentTimestamp).toString()
-        
+
         self.posInit = try container.decode(Double.self, forKey: .posInit)
         self.currentQty = try container.decode(Int.self, forKey: .currentQty)
         self.isOpen = try container.decode(Bool.self, forKey: .isOpen)

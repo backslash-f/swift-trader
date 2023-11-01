@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/#get-an-account
 public struct KucoinGetAccountResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Spot.baseURL()
@@ -27,13 +27,13 @@ public struct KucoinGetAccountResource: NetworkResource {
             return url
         }
     }
-    
+
     // MARK: Private
-    
+
     private let accountID: String
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinGetAccountResource` instance.
     ///
     /// - Parameter accountID: `String`.

@@ -9,9 +9,9 @@ import Foundation
 
 /// Interface to Kucoin APIs.
 public extension SwiftTrader {
-    
+
     // MARK: - Account Overview
-    
+
     /// Retrieves the overview of a Kucoin Futures account.
     ///
     /// https://docs.kucoin.com/futures/#account
@@ -38,9 +38,9 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
-    
+
     // MARK: - List Orders
-    
+
     /// Retrieves the list of un-triggered stop orders.
     ///
     /// https://docs.kucoin.com/futures/#get-untriggered-stop-order-list
@@ -67,7 +67,7 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
-    
+
     /// Retrieves the list of active Futures orders.
     ///
     /// Notice: this does **not** include the list of stop orders
@@ -95,9 +95,9 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
-    
+
     // MARK: - Place Orders
-    
+
     /// Places a Futures stop limit order.
     ///
     /// https://docs.kucoin.com/futures/#place-an-order
@@ -111,7 +111,7 @@ public extension SwiftTrader {
         }
         do {
             let stopLimitPrice = try calculateStopLimitPrice(for: orderInput)
-            
+
             if orderInput.cancelStopOrders {
                 do {
                     try await kucoinFuturesCancelStopOrders(symbol: orderInput.contractSymbol)
@@ -119,7 +119,7 @@ public extension SwiftTrader {
                     logger.log("Could not cancel untriggered stop orders: \(error)")
                 }
             }
-            
+
             let orderParameters = KucoinFuturesOrderParameters(
                 symbol: orderInput.contractSymbol,
                 side: .sell,
@@ -131,7 +131,7 @@ public extension SwiftTrader {
                 reduceOnly: true,
                 closeOrder: true
             )
-            
+
             let request = KucoinFuturesPlaceOrdersRequest(
                 orderParameters: orderParameters,
                 kucoinAuth: auth,
@@ -155,9 +155,9 @@ public extension SwiftTrader {
             }
         }
     }
-    
+
     // MARK: - Cancel Orders
-    
+
     /// Cancels all untriggered Futures stop orders of a given symbol (contract).
     ///
     /// https://docs.kucoin.com/futures/#stop-order-mass-cancelation
@@ -184,9 +184,9 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
-    
+
     // MARK: - Positions
-    
+
     /// Lists open Futures positions.
     ///
     /// https://docs.kucoin.com/futures/#get-position-list

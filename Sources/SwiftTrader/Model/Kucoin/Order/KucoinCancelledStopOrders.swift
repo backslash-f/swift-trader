@@ -9,9 +9,9 @@ import Foundation
 
 /// Holds a list of cancelled orders.
 public struct KucoinCancelledStopOrders: Codable {
-    
+
     public let cancelledOrderIDs: [String]
-    
+
     enum CodingKeys: String, CodingKey {
         case cancelledOrderIDs = "cancelledOrderIds"
     }

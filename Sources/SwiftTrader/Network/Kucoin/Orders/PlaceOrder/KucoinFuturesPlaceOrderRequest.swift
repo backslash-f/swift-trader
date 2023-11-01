@@ -15,23 +15,23 @@ import Logging
 ///
 /// https://docs.kucoin.com/futures/#place-an-order
 public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
-    
+
     // MARK: - Properties
-    
+
     public typealias DecodableModel = KucoinPlaceOrderResponse
-    
+
     public var logger: Logger {
         NetworkRequestLogger().default
     }
-    
+
     public var session: URLSession
-    
+
     public var request: URLRequest {
         get throws {
             let futuresPlaceOrderResource = KucoinFuturesPlaceOrderResource()
             var urlRequest = URLRequest(url: try futuresPlaceOrderResource.url)
             urlRequest.httpMethod = HTTPMethod.POST.rawValue
-            
+
             // Parameters.
             let parametersJSON = createJSONParameters(from: orderParameters)
             do {
@@ -42,22 +42,22 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
             } catch {
                 throw NetworkRequestError.invalidJSONParameters(error: error)
             }
-            
+
             try KucoinAPI.setRequestHeaderFields(request: &urlRequest, kucoinAuth: kucoinAuth.futures)
             return urlRequest
         }
     }
-    
+
     public var settings: NetworkRequestSettings
-    
+
     // MARK: Private
-    
+
     private let orderParameters: KucoinFuturesOrderParameters
-    
+
     private let kucoinAuth: KucoinAuth
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesPlaceOrdersRequest` instance.
     ///
     /// - Parameters:
@@ -79,7 +79,7 @@ public struct KucoinFuturesPlaceOrdersRequest: NetworkRequest {
 // MARK: - Network Request Protocol
 
 public extension KucoinFuturesPlaceOrdersRequest {
-    
+
     func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinPlaceOrderResponse.self, from: data)
     }
@@ -88,7 +88,7 @@ public extension KucoinFuturesPlaceOrdersRequest {
 // MARK: - Private
 
 private extension KucoinFuturesPlaceOrdersRequest {
-    
+
     func createJSONParameters(from orderParameters: KucoinFuturesOrderParameters) -> [String: Any] {
         [
             KucoinOrderParameterKey.clientOid.rawValue: UUID().uuidString,

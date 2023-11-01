@@ -16,7 +16,7 @@ public enum Environment: String {
 // MARK: - Interface
 
 public extension Environment {
-    
+
     /// An `ENVIRONMENT` variable can be set in the run schema in Xcode to easily switch between them.
     /// This functions returns it or `nil` if it's absent.
     static func environmentFromXcode() -> Environment? {

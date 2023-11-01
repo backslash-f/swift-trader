@@ -14,13 +14,13 @@ public protocol SwiftTraderSettings {
 
 /// The default conformance/values of the `SwiftTraderSettings` protocol.
 public struct DefaultSwiftTraderSettings: SwiftTraderSettings {
-    
+
     // MARK: - Properties
-    
+
     public var networkRequestSettings: NetworkRequestSettings
-    
+
     // MARK: - Lifecycle
-    
+
     public init(networkRequestSettings: NetworkRequestSettings = DefaultNetworkRequestSettings()) {
         self.networkRequestSettings = networkRequestSettings
     }

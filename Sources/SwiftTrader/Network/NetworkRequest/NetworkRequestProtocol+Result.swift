@@ -12,7 +12,7 @@ import FoundationNetworking
 
 /// Holds logic to parse and return results of type `NetworkRequestResult`.
 public extension NetworkRequest {
-    
+
     func handleResult(data: Data?, response: URLResponse?, error: Error? = nil) -> NetworkRequestResult {
         if let error = error {
             return .failure(.requestFailed(error: error))

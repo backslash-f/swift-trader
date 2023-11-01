@@ -10,7 +10,7 @@ import Logging
 
 /// Holds the default logging implementation.
 public extension NetworkRequest {
-    
+
     func log(message: Logger.Message) {
         guard settings.isLoggingEnable else {
             return

@@ -15,17 +15,17 @@ import Logging
 ///
 /// https://www.kucoin.com/docs/rest/funding/funding-overview/get-account-detail-futures
 public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
-    
+
     // MARK: - Properties
-    
+
     public typealias DecodableModel = KucoinFuturesAccountOverview
-    
+
     public var logger: Logger {
         NetworkRequestLogger().default
     }
-    
+
     public var session: URLSession
-    
+
     public var request: URLRequest {
         get throws {
             let futuresAccountOverviewResource = KucoinFuturesAccountOverviewResource(currencySymbol: currencySymbol)
@@ -35,17 +35,17 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
             return urlRequest
         }
     }
-    
+
     public var settings: NetworkRequestSettings
-    
+
     // MARK: Private
-    
+
     private let currencySymbol: CurrencySymbol
-    
+
     private let kucoinAuth: KucoinAuth
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesAccountOverviewRequest` instance.
     ///
     /// - Parameters:
@@ -67,7 +67,7 @@ public struct KucoinFuturesAccountOverviewRequest: NetworkRequest {
 // MARK: - Network Request Protocol
 
 public extension KucoinFuturesAccountOverviewRequest {
-    
+
     func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinFuturesAccountOverview.self, from: data)
     }

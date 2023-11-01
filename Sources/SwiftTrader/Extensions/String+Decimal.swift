@@ -8,7 +8,7 @@
 import Foundation
 
 public extension String {
-    
+
     /// Returns the decimal numbers of `self`.
     ///
     /// Examples:

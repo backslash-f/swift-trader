@@ -8,15 +8,15 @@
 import Foundation
 
 public extension KucoinAPI {
-    
+
     struct Spot {
-        
+
         public struct Path {
             static let orders           = "/api/v1/orders"
             static let stopOrder        = "/api/v1/stop-order"
             static let stopOrderCancel  = "/api/v1/stop-order/cancel"
             static let transferable     = accounts(pathComponent: "transferable")
-            
+
             /// Returns the path for getting accounts within Kucoin spot.
             ///
             /// `pathComponent` required as `URL.appendingPathComponent(_:)` will be deprecated and
@@ -33,7 +33,7 @@ public extension KucoinAPI {
                 }
             }
         }
-        
+
         /// Returns the base `URL` based on an Xcode environment variable.
         ///
         /// In case the above fails/is absent, returns the `production` base `URL`.

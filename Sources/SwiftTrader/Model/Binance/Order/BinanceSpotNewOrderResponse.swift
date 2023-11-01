@@ -20,7 +20,7 @@ public struct BinanceSpotNewOrderResponse: Codable {
     let workingTime: Int
     let fills: [BinanceOrderFill]
     let selfTradePreventionMode: String
-    
+
     enum CodingKeys: String, CodingKey {
         case symbol
         case orderID = "orderId"
@@ -33,7 +33,7 @@ public struct BinanceSpotNewOrderResponse: Codable {
 public struct BinanceOrderFill: Codable {
     let price, qty, commission, commissionAsset: String
     let tradeID: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case price, qty, commission, commissionAsset
         case tradeID = "tradeId"

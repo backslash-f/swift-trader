@@ -8,7 +8,7 @@
 import Foundation
 
 public extension Date {
-    
+
     /// E.g.: *"Saturday, 5. February 2022 at 22:32:16"*.
     func toString() -> String {
         let formatter = DateFormatter()

@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://www.kucoin.com/docs/rest/funding/funding-overview/get-account-detail-futures
 public struct KucoinFuturesAccountOverviewResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Futures.baseURL()
@@ -31,13 +31,13 @@ public struct KucoinFuturesAccountOverviewResource: NetworkResource {
             return url
         }
     }
-    
+
     // MARK: Private
-    
+
     private let currencySymbol: CurrencySymbol
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesAccountOverviewResource` instance.
     ///
     /// - Parameter currencySymbol: `CurrencySymbol`.

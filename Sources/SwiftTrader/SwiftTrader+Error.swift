@@ -8,7 +8,7 @@
 import Foundation
 
 public extension SwiftTrader {
-    
+
     /// Translates a `NetworkRequestError` to a `SwiftTraderError`.
     func handle(networkRequestError: NetworkRequestError, operation: SwiftTraderOperation) -> SwiftTraderError {
         switch networkRequestError {

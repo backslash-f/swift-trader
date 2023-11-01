@@ -67,4 +67,3 @@ public extension KucoinSpotStopOrdersListRequest {
         try JSONDecoder().decode(KucoinSpotStopOrderListResponse.self, from: data)
     }
 }
-

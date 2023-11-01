@@ -8,9 +8,9 @@
 import Foundation
 
 public extension Data {
-    
+
     private static let hexAlphabet = Array("0123456789abcdef".unicodeScalars)
-    
+
     /// Converts `self` to HEX String.
     ///
     /// https://stackoverflow.com/a/47476781/584548

@@ -15,17 +15,17 @@ import Logging
 ///
 /// https://docs.kucoin.com/futures/#get-order-list
 public struct KucoinFuturesOrdersListRequest: NetworkRequest {
-    
+
     // MARK: - Properties
-    
+
     public typealias DecodableModel = KucoinFuturesOrderList
-    
+
     public var logger: Logger {
         NetworkRequestLogger().default
     }
-    
+
     public var session: URLSession
-    
+
     public var request: URLRequest {
         get throws {
             let futuresOrderListResource = KucoinFuturesOrderListResource(orderStatus: orderStatus)
@@ -35,17 +35,17 @@ public struct KucoinFuturesOrdersListRequest: NetworkRequest {
             return urlRequest
         }
     }
-    
+
     public var settings: NetworkRequestSettings
-    
+
     // MARK: Private
-    
+
     private let orderStatus: KucoinOrderStatus
-    
+
     private let kucoinAuth: KucoinAuth
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesOrdersListRequest` instance.
     ///
     /// - Parameters:
@@ -67,7 +67,7 @@ public struct KucoinFuturesOrdersListRequest: NetworkRequest {
 // MARK: - Network Request Protocol
 
 public extension KucoinFuturesOrdersListRequest {
-    
+
     func decode(_ data: Data) throws -> DecodableModel {
         try JSONDecoder().decode(KucoinFuturesOrderList.self, from: data)
     }

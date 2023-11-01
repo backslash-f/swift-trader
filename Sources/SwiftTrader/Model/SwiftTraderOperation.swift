@@ -9,15 +9,15 @@ import Foundation
 
 /// The currently running `SwiftTrader` operation.
 public enum SwiftTraderOperation {
-    
+
     // MARK: - Binance
-    
+
     case binanceSpotNewOrder
-    
+
     // MARK: - Kucoin
-    
+
     // MARK: Spot
-    
+
     case kucoinSpotListAccounts
     case kucoinSpotGetAccount
     case kucoinSpotGetTransferable
@@ -25,9 +25,9 @@ public enum SwiftTraderOperation {
     case kucoinSpotOrderList
     case kucoinSpotStopOrderList
     case kucoinSpotCancelStopOrders
-    
+
     // MARK: Futures
-    
+
     case kucoinFuturesAccountOverview
     case kucoinFuturesCancelStopOrders
     case kucoinFuturesOrderList

@@ -11,13 +11,13 @@ import Foundation
 ///
 /// Need to be defined if `KucoinOrderStop` is specified.
 public enum KucoinOrderStopPriceType: String {
-    
+
     /// Trade price.
     case TP
-    
+
     /// Index price
     case IP
-    
+
     /// Mark price.
     case MP
 }

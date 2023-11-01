@@ -13,7 +13,7 @@ import Foundation
 public struct KucoinSystemError: Codable {
     public let code: String
     public let message: String
-    
+
     enum CodingKeys: String, CodingKey {
         case code
         case message = "msg"

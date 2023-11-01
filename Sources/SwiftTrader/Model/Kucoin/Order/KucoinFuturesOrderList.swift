@@ -25,59 +25,59 @@ public struct KucoinFuturesOrderData: Codable {
 }
 
 public struct KucoinFuturesOrder: Codable {
-    
+
     // MARK: - Properties
-    
+
     public let id: String
-    
+
     /// E.g.: BTCUSDT
     public let symbol: String
-    
+
     public let type: KucoinOrderType
     public let side: OrderSide
-    
+
     /// The price of one asset's unit. Although this is returned in Sandbox,
     /// it returns `null` in production. Therefore it's an optional.
     public let price: String?
-    
+
     /// How much assets were bought.
     public let size: Int
-    
+
     /// The total value of the order.
     public let value: String
     public let filledValue: String
     public let filledSize: Int
     public let stp: KucoinOrderSTP?
-    
+
     /// Stop order type (limit or market).
     public let stop: KucoinOrderType?
-    
+
     /// Whether the stop order is triggered.
     public let stopTriggered: Bool
-    
+
     /// Whether the stop order is triggered.
     public let stopPrice: String?
     public let leverage: String
     public let reduceOnly: Bool
-    
+
     /// Unique order id created by users to identify their orders.
     public let clientOid: String?
     public let isActive: Bool
-    
+
     /// Mark of the canceled orders.
     public let cancelExist: Bool
     public let status: KucoinOrderStatus
-    
+
     /// Creation date in milliseconds.
     public let createdAt: Int64
     /// Creation date as string (E.g.: "Saturday, 5. February 2022 at 22:32:16").
     public let createdAtString: String
-    
+
     /// Last update time in milliseconds.
     public let updatedAt: Int64
     /// Last update time as string (E.g.: "Saturday, 5. February 2022 at 22:32:16")
     public let updatedAtString: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case symbol
@@ -103,12 +103,12 @@ public struct KucoinFuturesOrder: Codable {
         case updatedAt
         case updatedAtString
     }
-    
+
     // MARK: - Lifecycle
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         self.id = try container.decode(String.self, forKey: .id)
         self.symbol = try container.decode(String.self, forKey: .symbol)
         self.type = try container.decode(KucoinOrderType.self, forKey: .type)
@@ -118,7 +118,7 @@ public struct KucoinFuturesOrder: Codable {
         self.value = try container.decode(String.self, forKey: .value)
         self.filledValue = try container.decode(String.self, forKey: .filledValue)
         self.filledSize = try container.decode(Int.self, forKey: .filledSize)
-        
+
         let decodedSTP = try container.decode(String.self, forKey: .stp)
         if !decodedSTP.isEmpty,
            let orderSTP = KucoinOrderSTP(rawValue: decodedSTP) {
@@ -126,7 +126,7 @@ public struct KucoinFuturesOrder: Codable {
         } else {
             self.stp = nil
         }
-        
+
         let decodedStop = try container.decode(String.self, forKey: .stop)
         if !decodedStop.isEmpty,
            let stopType = KucoinOrderType(rawValue: decodedStop) {
@@ -134,7 +134,7 @@ public struct KucoinFuturesOrder: Codable {
         } else {
             self.stop = nil
         }
-        
+
         self.stopTriggered = try container.decodeIfPresent(Bool.self, forKey: .stopTriggered) ?? false
         self.stopPrice = try container.decodeIfPresent(String.self, forKey: .stopPrice)
         self.leverage = try container.decode(String.self, forKey: .leverage)
@@ -143,10 +143,10 @@ public struct KucoinFuturesOrder: Codable {
         self.isActive = try container.decode(Bool.self, forKey: .isActive)
         self.cancelExist = try container.decode(Bool.self, forKey: .cancelExist)
         self.status = try container.decode(KucoinOrderStatus.self, forKey: .status)
-        
+
         self.createdAt = try container.decode(Int64.self, forKey: .createdAt)
         self.createdAtString = Date(milliseconds: self.createdAt).toString()
-    
+
         self.updatedAt = try container.decode(Int64.self, forKey: .updatedAt)
         self.updatedAtString = Date(milliseconds: self.updatedAt).toString()
     }

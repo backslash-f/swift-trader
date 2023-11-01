@@ -9,7 +9,7 @@ import Foundation
 
 /// Holds logic to return meaningful error messages containing detailed system errors whenever possible.
 public extension SwiftTraderError {
-    
+
     static func error(for operation: SwiftTraderOperation, statusCode: Int, localizedErrorMessage: String, data: Data) -> SwiftTraderError {
         switch operation {
         case .binanceSpotNewOrder:

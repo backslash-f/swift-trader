@@ -11,7 +11,7 @@ import Foundation
 public struct BinanceError: Codable {
     public let code: Int
     public let message: String
-    
+
     enum CodingKeys: String, CodingKey {
         case code
         case message = "msg"

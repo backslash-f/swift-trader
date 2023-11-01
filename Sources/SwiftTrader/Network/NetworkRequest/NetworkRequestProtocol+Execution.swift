@@ -14,9 +14,9 @@ import FoundationNetworking
 ///
 /// Supports multiplatforms such as macOS, iOS and Linux / Heroku.
 public extension NetworkRequest {
-    
+
     // MARK: - Default Execution
-    
+
     /// Executes the `NetworkRequest.getter:request` asynchronously and returns the `NetworkRequestResult`.
     ///
     ///  Failed requests are to be retried `n` times, according to the `numberOfRetries` of `NetworkRequest.getter:settings`.
@@ -29,7 +29,7 @@ public extension NetworkRequest {
         } catch {
             return .failure(.invalidRequest(error: error))
         }
-        
+
         let result: NetworkRequestResult
 #if os(macOS) || os(iOS)
         result = await runOnApplePlatforms(request: urlRequest)
@@ -54,7 +54,7 @@ public extension NetworkRequest {
 // MARK: - Private
 
 private extension NetworkRequest {
-    
+
 #if os(macOS) || os(iOS)
     /// `async/await` can be simply called on macOS and iOS platforms; no further action is needed.
     func runOnApplePlatforms(request: URLRequest) async -> NetworkRequestResult {
@@ -66,7 +66,7 @@ private extension NetworkRequest {
         }
     }
 #endif
-    
+
     /// `async/await` isn't fully ported to Linux; use "**withCheckedContinuation(function:_:)**" instead.
     func runOnLinux(request: URLRequest) async -> NetworkRequestResult {
         let (data, response, error) = await withCheckedContinuation { continuation in

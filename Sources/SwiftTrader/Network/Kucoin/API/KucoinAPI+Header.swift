@@ -12,7 +12,7 @@ import FoundationNetworking
 
 /// Holds logic to set values for default HTTP header fields common to all Kucoin APIs requests.
 extension KucoinAPI {
-    
+
     /// Sets values for default header fields in the given `URLRequest`
     ///
     /// Default header fields include `KC-API-KEY`, `KC-API-SIGN`, `KC-API-TIMESTAMP`, `KC-API-PASSPHRASE`, etc
@@ -32,7 +32,7 @@ extension KucoinAPI {
 // MARK: - Private
 
 private extension KucoinAPI {
-    
+
     /// "KC-API-KEY"
     static func setAPIKey(request: inout URLRequest,
                           kucoinAuth: KucoinAuthorizing) {
@@ -41,7 +41,7 @@ private extension KucoinAPI {
             forHTTPHeaderField: KucoinAPI.HeaderField.apiKey
         )
     }
-    
+
     /// "KC-API-PASSPHRASE"
     static func setAPIPassphrase(request: inout URLRequest,
                                  kucoinAuth: KucoinAuthorizing) {
@@ -50,7 +50,7 @@ private extension KucoinAPI {
             forHTTPHeaderField: KucoinAPI.HeaderField.apiPassphrase
         )
     }
-    
+
     /// "KC-API-SIGN"
     static func setAPISignature(request: inout URLRequest,
                                 kucoinAuth: KucoinAuthorizing) throws {
@@ -60,7 +60,7 @@ private extension KucoinAPI {
             httpHeaderField: KucoinAPI.HeaderField.apiSign
         )
     }
-    
+
     /// "KC-API-TIMESTAMP"
     static func setAPITimestamp(request: inout URLRequest) {
         request.setValue(

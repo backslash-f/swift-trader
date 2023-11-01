@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/futures/#get-position-list
 public struct KucoinFuturesPositionListResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Futures.baseURL()

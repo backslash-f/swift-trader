@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
 public struct BinanceSpotNewOrderResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try BinanceAPI.Spot.baseURL()

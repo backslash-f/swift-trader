@@ -9,9 +9,9 @@ import Foundation
 
 /// Interface to Kucoin APIs.
 public extension SwiftTrader {
-    
+
     // MARK: - List Accounts
-    
+
     /// Gets the list of accounts.
     ///
     /// There are three types of accounts: 1) main account 2) trade account 3) margin account.
@@ -40,9 +40,9 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
-    
+
     // MARK: - Account
-    
+
     /// Retrieves information for a single account.
     ///
     /// https://docs.kucoin.com/#get-an-account
@@ -69,9 +69,9 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
-    
+
     // MARK: - Transferable
-    
+
     /// Returns the transferable balance of a specified account.
     ///
     /// https://docs.kucoin.com/#get-the-transferable

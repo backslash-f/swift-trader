@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/futures/#get-order-list
 public struct KucoinFuturesOrderListResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Futures.baseURL()
@@ -31,13 +31,13 @@ public struct KucoinFuturesOrderListResource: NetworkResource {
             return url
         }
     }
-    
+
     // MARK: Private
-    
+
     private let orderStatus: KucoinOrderStatus
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesOrderListResource` instance.
     ///
     /// - Parameter orderStatus: `KucoinOrderStatus`.

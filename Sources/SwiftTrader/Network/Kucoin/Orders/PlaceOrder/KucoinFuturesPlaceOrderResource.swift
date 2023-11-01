@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/futures/#place-an-order
 public struct KucoinFuturesPlaceOrderResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Futures.baseURL()

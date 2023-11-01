@@ -10,13 +10,13 @@ import Logging
 
 /// Logs information via Apple's `swift-log` package.
 public struct SwiftTraderLogger {
-    
+
     // MARK: - Private Properties
-    
+
     private let logger: Logger
-    
+
     // MARK: - Lifecycle
-    
+
     public init(label: String = "com.backslash-f.swift-trader") {
         self.logger = Logger(label: label)
     }
@@ -25,9 +25,8 @@ public struct SwiftTraderLogger {
 // MARK: - Interface
 
 public extension SwiftTraderLogger {
-    
+
     func log(_ message: Logger.Message) {
         logger.log(level: .debug, message)
     }
 }
-

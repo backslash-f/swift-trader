@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/futures/#place-an-order
 public struct KucoinFuturesOrderParameters {
-    
+
     // MARK: - Properties
-    
+
     public let clientOid = UUID().uuidString
     public let symbol: String
     public let side: OrderSide
@@ -24,9 +24,9 @@ public struct KucoinFuturesOrderParameters {
     public let price: String
     public let reduceOnly: Bool
     public let closeOrder: Bool
-    
+
     // MARK: - Lifecycle
-    
+
     public init(symbol: String,
                 side: OrderSide,
                 type: KucoinOrderType,

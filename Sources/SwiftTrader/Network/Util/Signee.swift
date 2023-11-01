@@ -13,7 +13,7 @@ import FoundationNetworking
 
 /// Holds generic algorithms to sign network requests (e.g.: `SHA256 HMAC`).
 public struct NetworkRequestSignee {
-    
+
     /// Creates a `SHA256 HMAC` signature and add it into the given header field.
     ///
     /// Using the given `secret`, the created signature covers the following strings:
@@ -44,7 +44,7 @@ public struct NetworkRequestSignee {
         )
         request.setValue(signature, forHTTPHeaderField: httpHeaderField)
     }
-    
+
     /// Creates a `SHA256 HMAC` signature using the given `secret`.
     ///
     /// - Parameters:
@@ -67,7 +67,7 @@ public struct NetworkRequestSignee {
 // MARK: - Private
 
 private extension NetworkRequestSignee {
-    
+
     static func extractHTTPMethod(from request: URLRequest) throws -> HTTPMethod {
         guard let httpMethodString = request.httpMethod else {
             throw NetworkRequestError.missingHTTPMethod
@@ -77,7 +77,7 @@ private extension NetworkRequestSignee {
         }
         return httpMethod
     }
-    
+
     static func extractPath(from request: URLRequest) throws -> String {
         guard let url = request.url else {
             throw NetworkRequestError.missingURL(url: request.url)
@@ -93,7 +93,7 @@ private extension NetworkRequestSignee {
         }
         return finalPath
     }
-    
+
     static func extractBody(from request: URLRequest) throws -> String {
         let body: String
         if let bodyData = request.httpBody,
@@ -104,7 +104,7 @@ private extension NetworkRequestSignee {
         }
         return body
     }
-    
+
     static func createHMACSignature(for method: HTTPMethod,
                                     path: String,
                                     body: String,
@@ -117,7 +117,7 @@ private extension NetworkRequestSignee {
         }
         return try createHMACSignature(for: stringToSignData, secret: secret, isHexString: isHexString)
     }
-    
+
     static func createSymmetricKey(from secret: String) throws -> SymmetricKey {
         guard let secretData = secret.data(using: .utf8) else {
             throw NetworkRequestError.stringToDataFailed(string: secret)

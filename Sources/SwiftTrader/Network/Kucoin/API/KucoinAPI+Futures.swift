@@ -8,16 +8,16 @@
 import Foundation
 
 public extension KucoinAPI {
-    
+
     struct Futures {
-        
+
         public struct Path {
             static let accountOverview  = "/api/v1/account-overview"
             static let orders           = "/api/v1/orders"
             static let positions        = "/api/v1/positions"
             static let stopOrders       = "/api/v1/stopOrders"
         }
-        
+
         /// Returns the base `URL` based on an Xcode environment variable.
         ///
         /// In case the above fails/is absent, returns the `production` base `URL`.
@@ -29,7 +29,7 @@ public extension KucoinAPI {
                 case .production:
                     return production
                 case .sandbox:
-                    return sandbox                
+                    return sandbox
                 }
             } else {
                 // Fallback to production.

@@ -11,9 +11,9 @@ import Foundation
 ///
 /// https://docs.kucoin.com/futures/#get-untriggered-stop-order-list
 public struct KucoinFuturesListStopOrdersResource: NetworkResource {
-    
+
     // MARK: - Properties
-    
+
     public var url: URL {
         get throws {
             let baseURLString = try KucoinAPI.Futures.baseURL()
@@ -31,13 +31,13 @@ public struct KucoinFuturesListStopOrdersResource: NetworkResource {
             return url
         }
     }
-    
+
     // MARK: Private
-    
+
     private let symbol: String
-    
+
     // MARK: - Lifecycle
-    
+
     /// Creates a new `KucoinFuturesListStopOrdersResource` instance.
     ///
     /// - Parameter symbol: `String`,  represents the specific contract for which all the untriggered stop orders will be listed.

@@ -14,7 +14,7 @@ public struct HTTPHeader {
         static let contentType      = "Content-Type"
         static let accept           = "Accept"
     }
-    
+
     public struct Value {
         static let applicationJSON  = "application/json"
         static let urlEncoded       = "application/x-www-form-urlencoded"

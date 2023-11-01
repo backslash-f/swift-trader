@@ -9,9 +9,9 @@ import Foundation
 
 /// Interface to Binance APIs.
 public extension SwiftTrader {
-    
+
     // MARK: - Orders
-    
+
     /// Places a new order.
     ///
     /// https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
@@ -42,4 +42,3 @@ public extension SwiftTrader {
         }
     }
 }
-
