@@ -1,5 +1,5 @@
 ---
-name: "Run Tests"
+name: "ci"
 
 on:
   push:
@@ -8,10 +8,8 @@ on:
     branches: [main]
 
 jobs:
-  build:
-
+  test:
     runs-on: macOS-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Run Tests
