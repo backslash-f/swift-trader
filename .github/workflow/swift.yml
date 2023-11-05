@@ -1,0 +1,14 @@
+---
+name: "Run Tests"
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Tests
+        run: swift test -v
