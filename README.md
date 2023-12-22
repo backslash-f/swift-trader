@@ -7,7 +7,7 @@
 
 
 # swift-trader
-A Swift package for connecting and trading on crypto exchanges such as Kucoin and Binance.
+A Swift package for connecting and trading on crypto exchanges such as Kucoin and Binance via REST.
 
 💰 It can calculate the stop and limit prices for a **trailing stop strategy** based on a set of given input parameters.  
 Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BTrailingStop.swift)
