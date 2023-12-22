@@ -196,7 +196,7 @@ private extension SwiftTrader {
             let tickerDigits = input.tickerSize.decimalCount()
             let priceDecimalDigits = priceString.decimalCount()
 
-            if ((priceDecimalDigits == 0) || (priceDecimalDigits == tickerDigits)),
+            if priceDecimalDigits == 0 || priceDecimalDigits == tickerDigits,
                priceLastDigit != tickerLastDigit {
                 priceString = priceString.dropLast() + "\(tickerLastDigit)"
 
