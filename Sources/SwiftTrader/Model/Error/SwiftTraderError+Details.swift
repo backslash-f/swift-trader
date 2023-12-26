@@ -38,7 +38,8 @@ public extension SwiftTraderError {
                 .kucoinFuturesOrderList,
                 .kucoinFuturesStopOrderList,
                 .kucoinFuturesPlaceStopLimitOrder,
-                .kucoinFuturesPositionList:
+                .kucoinFuturesPositionList,
+                .kucoinSpotWebSocketPrivateToken:
             guard let kucoinError = try? JSONDecoder().decode(KucoinSystemError.self, from: data) else {
                 return .kucoinStatusCodeNotOK(statusCode: statusCode, localizedErrorMessage: localizedErrorMessage)
             }
