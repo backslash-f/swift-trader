@@ -244,4 +244,32 @@ public extension SwiftTrader {
             return .failure(swiftTraderError)
         }
     }
+
+    // MARK: - WebSocket
+
+    /// Requests an authorized token for subscribing to private channels and messages via WebSocket.
+    ///
+    /// https://www.kucoin.com/docs/websocket/basic-info/apply-connect-token/private-channels-authentication-request-required-
+    ///
+    /// - Returns: An instance of `KucoinWebSocketPrivateTokenResponse` or `SwiftTraderError`.
+    @discardableResult func kucoinSpotWebSocketRequestPrivateToken() async throws
+    -> Result<KucoinWebSocketPrivateTokenResponse, SwiftTraderError> {
+        guard let auth = kucoinAuth else {
+            return .failure(.kucoinMissingAuthentication)
+        }
+        let request = KucoinSpotWebSocketBulletPrivateRequest(
+            kucoinAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+        switch await request.execute() {
+        case .success(let model):
+            guard let privateTokenResponse = model as? KucoinWebSocketPrivateTokenResponse else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(privateTokenResponse)
+        case .failure(let error):
+            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotWebSocketPrivateToken)
+            return .failure(swiftTraderError)
+        }
+    }
 }
