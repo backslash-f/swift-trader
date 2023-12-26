@@ -249,7 +249,7 @@ public extension SwiftTrader {
 
     /// Requests an authorized token for subscribing to private channels and messages via WebSocket.
     ///
-    /// https://www.kucoin.com/docs/websocket/basic-info/apply-connect-token/private-channels-authentication-request-required-
+    /// https://bit.ly/kucoinPrivateConnectToken
     ///
     /// - Returns: An instance of `KucoinWebSocketPrivateTokenResponse` or `SwiftTraderError`.
     @discardableResult func kucoinSpotWebSocketRequestPrivateToken() async throws

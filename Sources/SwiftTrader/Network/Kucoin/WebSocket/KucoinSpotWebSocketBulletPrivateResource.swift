@@ -9,7 +9,7 @@ import Foundation
 
 /// The **resource** to obtain an authorized token for subscribing to private channels and messages via WebSocket.
 ///
-/// https://www.kucoin.com/docs/websocket/basic-info/apply-connect-token/private-channels-authentication-request-required-
+/// https://bit.ly/kucoinPrivateConnectToken
 public struct KucoinSpotWebSocketBulletPrivateResource: NetworkResource {
 
     // MARK: - Properties
