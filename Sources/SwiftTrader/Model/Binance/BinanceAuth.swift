@@ -34,3 +34,11 @@ public extension BinanceAuth {
         }
     }
 }
+
+// MARK: - Equatable
+
+extension BinanceAuth: Equatable {
+    public static func == (lhs: BinanceAuth, rhs: BinanceAuth) -> Bool {
+        lhs.spot.apiKey == rhs.spot.apiKey
+    }
+}

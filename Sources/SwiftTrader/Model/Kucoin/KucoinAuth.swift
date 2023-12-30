@@ -51,3 +51,12 @@ public extension KucoinAuth {
         }
     }
 }
+
+// MARK: - Equatable
+
+extension KucoinAuth: Equatable {
+    public static func == (lhs: KucoinAuth, rhs: KucoinAuth) -> Bool {
+        lhs.spot.apiKey == rhs.spot.apiKey &&
+        lhs.futures.apiKey == rhs.futures.apiKey
+    }
+}
