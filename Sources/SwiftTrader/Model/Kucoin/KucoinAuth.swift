@@ -16,8 +16,8 @@ public protocol KucoinAuthorizing {
 /// Holds data required to authenticate requests against Kucoin APIs.
 public struct KucoinAuth {
 
-    let spot: KucoinAuthorizing
-    let futures: KucoinAuthorizing
+    public let spot: KucoinAuthorizing
+    public let futures: KucoinAuthorizing
 
     public init(spot: KucoinAuthorizing, futures: KucoinAuthorizing) {
         self.spot = spot

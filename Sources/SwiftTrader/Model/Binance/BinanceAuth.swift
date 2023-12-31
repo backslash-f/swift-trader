@@ -15,7 +15,7 @@ public protocol BinanceAuthorizing {
 /// Holds data required to authenticate requests against Binance APIs.
 public struct BinanceAuth {
 
-    let spot: BinanceAuthorizing
+    public let spot: BinanceAuthorizing
 
     public init(spot: BinanceAuthorizing) {
         self.spot = spot
