@@ -11,15 +11,15 @@ import Foundation
 ///
 /// https://docs.kucoin.com/#list-accounts
 public struct KucoinSpotListAccountsResponse: Codable {
-    let code: String
-    let data: [KucoinAccount]
+    public let code: String
+    public let data: [KucoinAccount]
 }
 
 /// Encapsulates Kucoin  accounts data.
 public struct KucoinAccount: Codable {
-    let id, currency, balance: String
-    let type: KucoinAccountType
-    let available, holds: String
+    public let id, currency, balance: String
+    public let type: KucoinAccountType
+    public let available, holds: String
 }
 
 /// There are three types of accounts: 1) main account 2) trade account 3) margin account.

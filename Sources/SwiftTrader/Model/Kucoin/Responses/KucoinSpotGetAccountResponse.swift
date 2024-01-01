@@ -11,12 +11,12 @@ import Foundation
 ///
 /// https://docs.kucoin.com/#get-an-account
 public struct KucoinSpotGetAccountResponse: Codable {
-    let code: String
-    let data: KucoinSpotAccount
+    public let code: String
+    public let data: KucoinSpotAccount
 }
 
 /// Encapsulates Kucoin spot account data.
 public struct KucoinSpotAccount: Codable {
-    let currency, balance: String
-    let available, holds: String
+    public let currency, balance: String
+    public let available, holds: String
 }

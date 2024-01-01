@@ -8,21 +8,21 @@
 import Foundation
 
 public struct KucoinWebSocketPrivateTokenResponse: Codable {
-    let code: String
-    let data: KucoinDataClass
+    public let code: String
+    public let data: KucoinDataClass
 }
 
 public struct KucoinDataClass: Codable {
-    let token: String
-    let instanceServers: [KucoinInstanceServer]
+    public let token: String
+    public let instanceServers: [KucoinInstanceServer]
 }
 
 public struct KucoinInstanceServer: Codable {
-    let endpoint: String
-    let encrypt: Bool
-    let instanceServerProtocol: String
-    let pingInterval: Int
-    let pingTimeout: Int
+    public let endpoint: String
+    public let encrypt: Bool
+    public let instanceServerProtocol: String
+    public let pingInterval: Int
+    public let pingTimeout: Int
 
     enum CodingKeys: String, CodingKey {
         case endpoint

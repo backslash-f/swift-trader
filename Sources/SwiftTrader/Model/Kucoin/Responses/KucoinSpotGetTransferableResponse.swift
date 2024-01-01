@@ -11,11 +11,11 @@ import Foundation
 ///
 /// https://docs.kucoin.com/#get-the-transferable
 public struct KucoinSpotGetTransferableResponse: Codable {
-    let code: String
-    let data: KucoinSpotTransferable
+    public let code: String
+    public let data: KucoinSpotTransferable
 }
 
 /// Encapsulates Kucoin spot account data.
 public struct KucoinSpotTransferable: Codable {
-    let currency, balance, available, holds, transferable: String
+    public let currency, balance, available, holds, transferable: String
 }
