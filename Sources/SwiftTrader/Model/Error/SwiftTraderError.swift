@@ -115,11 +115,3 @@ public enum SwiftTraderError: Error {
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPositionList()`.
     case kucoinFuturesPositionList(error: Error)
 }
-
-// MARK: - Equatable
-
-extension SwiftTraderError: Equatable {
-    public static func == (lhs: SwiftTraderError, rhs: SwiftTraderError) -> Bool {
-        lhs.localizedDescription == rhs.localizedDescription
-    }
-}
