@@ -7,6 +7,8 @@
 
 import Foundation
 
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable function_body_length
 extension SwiftTraderError: Equatable {
     public static func == (lhs: SwiftTraderError, rhs: SwiftTraderError) -> Bool {
         switch (lhs, rhs) {
@@ -133,4 +135,5 @@ extension SwiftTraderError: Equatable {
         }
     }
 }
-
+// swiftlint:enable cyclomatic_complexity
+// swiftlint:enable function_body_length
