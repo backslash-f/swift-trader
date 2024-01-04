@@ -1,6 +1,6 @@
 //
 //  SwiftTrader+KucoinSpot.swift
-//  
+//
 //
 //  Created by Fernando Fernandes on 16.07.22.
 //

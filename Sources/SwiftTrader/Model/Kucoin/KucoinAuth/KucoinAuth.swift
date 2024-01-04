@@ -7,12 +7,6 @@
 
 import Foundation
 
-public protocol KucoinAuthorizing {
-    var apiKey: String { get }
-    var apiSecret: String { get }
-    var apiPassphrase: String { get }
-}
-
 /// Holds data required to authenticate requests against Kucoin APIs.
 public struct KucoinAuth {
 
@@ -27,7 +21,7 @@ public struct KucoinAuth {
 
 public extension KucoinAuth {
 
-    struct Spot: KucoinAuthorizing {
+    struct Spot: KucoinAuthorizing, Codable {
         public let apiKey: String
         public let apiSecret: String
         public let apiPassphrase: String
@@ -39,7 +33,7 @@ public extension KucoinAuth {
         }
     }
 
-    struct Futures: KucoinAuthorizing {
+    struct Futures: KucoinAuthorizing, Codable {
         public let apiKey: String
         public let apiSecret: String
         public let apiPassphrase: String
@@ -49,14 +43,5 @@ public extension KucoinAuth {
             self.apiSecret = apiSecret
             self.apiPassphrase = apiPassphrase
         }
-    }
-}
-
-// MARK: - Equatable
-
-extension KucoinAuth: Equatable {
-    public static func == (lhs: KucoinAuth, rhs: KucoinAuth) -> Bool {
-        lhs.spot.apiKey == rhs.spot.apiKey &&
-        lhs.futures.apiKey == rhs.futures.apiKey
     }
 }
