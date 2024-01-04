@@ -7,11 +7,6 @@
 
 import Foundation
 
-public protocol BinanceAuthorizing {
-    var apiKey: String { get }
-    var apiSecret: String { get }
-}
-
 /// Holds data required to authenticate requests against Binance APIs.
 public struct BinanceAuth {
 
@@ -24,7 +19,7 @@ public struct BinanceAuth {
 
 public extension BinanceAuth {
 
-    struct Spot: BinanceAuthorizing {
+    struct Spot: BinanceAuthorizing, Codable {
         public let apiKey: String
         public let apiSecret: String
 
@@ -32,13 +27,5 @@ public extension BinanceAuth {
             self.apiKey = apiKey
             self.apiSecret = apiSecret
         }
-    }
-}
-
-// MARK: - Equatable
-
-extension BinanceAuth: Equatable {
-    public static func == (lhs: BinanceAuth, rhs: BinanceAuth) -> Bool {
-        lhs.spot.apiKey == rhs.spot.apiKey
     }
 }
