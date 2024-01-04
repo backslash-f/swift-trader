@@ -15,7 +15,7 @@ Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-t
 
 📖 List of supported APIs:
 
-## Kucoin
+## Kucoin Futures
 
 [Kucoin Futures](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BKucoinFutures.swift) | Explanation | API Documentation
 --- | --- | ---
@@ -25,6 +25,8 @@ Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-t
 `SwiftTrader.kucoinFuturesPlaceStopLimitOrder` | Places a Futures stop limit order. | https://docs.kucoin.com/futures/#place-an-order
 `SwiftTrader.kucoinFuturesCancelStopOrders` | Cancels all untriggered Futures stop orders of a given symbol (contract). | https://docs.kucoin.com/futures/#stop-order-mass-cancelation
 `SwiftTrader.kucoinFuturesPositionList` | Lists open Futures positions. | https://docs.kucoin.com/futures/#get-position-list
+
+## Kucoin Spot
 
 [Kucoin Spot](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BKucoinSpot.swift) | Explanation | API Documentation
 --- | --- | ---
@@ -38,7 +40,7 @@ Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-t
 `SwiftTrader.kucoinSpotWebSocketRequestPrivateToken` | Apply for a private token to create a WebSocket connection, subscribe to private topics, and receive private messages (e.g., account balance, open orders, etc.). | https://www.kucoin.com/docs/websocket/basic-info/apply-connect-token/private-channels-authentication-request-required-
 
 
-## Binance
+## Binance Spot
 
 [Binance Spot](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BBinanceSpot.swift) | Explanation | API Documentation
 --- | --- | ---
