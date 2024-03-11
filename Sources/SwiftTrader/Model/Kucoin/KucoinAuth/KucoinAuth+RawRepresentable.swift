@@ -17,7 +17,7 @@ extension KucoinAuth: RawRepresentable {
         }
         self = result
     }
-    
+
     public var rawValue: RawValue {
         guard let data = try? JSONEncoder().encode(self) else {
             return "Failed to encode data"
