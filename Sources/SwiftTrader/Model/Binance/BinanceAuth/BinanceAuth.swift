@@ -15,17 +15,8 @@ public struct BinanceAuth {
     public init(spot: BinanceAuthorizing) {
         self.spot = spot
     }
-}
 
-public extension BinanceAuth {
-
-    struct Spot: BinanceAuthorizing, Codable {
-        public let apiKey: String
-        public let apiSecret: String
-
-        public init(apiKey: String, apiSecret: String) {
-            self.apiKey = apiKey
-            self.apiSecret = apiSecret
-        }
+    public static func empty() -> BinanceAuth {
+        BinanceAuth(spot: BinanceAuth.Spot.empty())
     }
 }
