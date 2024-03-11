@@ -41,7 +41,7 @@ public extension KucoinAPI {
         public static func baseURL() throws -> String {
             let production  = "https://api.kucoin.com"
             let sandbox     = "https://openapi-sandbox.kucoin.com"
-            if let environment = Environment.environmentFromXcode() {
+            if let environment = ExchangeEnvironment.environmentFromXcode() {
                 switch environment {
                 case .production:
                     return production

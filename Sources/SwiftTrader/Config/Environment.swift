@@ -8,21 +8,21 @@
 import Foundation
 
 /// Defines the target exchange environment, such as `production` or `sandbox`.
-public enum Environment: String {
+public enum ExchangeEnvironment: String {
     case production
     case sandbox
 }
 
 // MARK: - Interface
 
-public extension Environment {
+public extension ExchangeEnvironment {
 
     /// An `ENVIRONMENT` variable can be set in the run schema in Xcode to easily switch between them.
     /// This functions returns it or `nil` if it's absent.
-    static func environmentFromXcode() -> Environment? {
+    static func environmentFromXcode() -> ExchangeEnvironment? {
 #if os(macOS) || os(iOS)
         guard let environmentValue = ProcessInfo.processInfo.environment["ENVIRONMENT"],
-              let environment = Environment(rawValue: environmentValue) else {
+              let environment = ExchangeEnvironment(rawValue: environmentValue) else {
                   return nil
               }
         return environment

@@ -21,7 +21,7 @@ public extension BinanceAPI {
         public static func baseURL() throws -> String {
             let production  = "https://api.binance.com/api"
             let sandbox     = "https://testnet.binance.vision/api"
-            if let environment = Environment.environmentFromXcode() {
+            if let environment = ExchangeEnvironment.environmentFromXcode() {
                 switch environment {
                 case .production:
                     return production
