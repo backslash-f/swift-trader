@@ -21,17 +21,17 @@ extension KucoinAuth: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        let redactedSpot = Spot(
-            apiKey: spot.apiKey.masked(),
-            apiSecret: spot.apiSecret.masked(),
-            apiPassphrase: spot.apiPassphrase.masked()
+        let spot = Spot(
+            apiKey: spot.apiKey,
+            apiSecret: spot.apiSecret,
+            apiPassphrase: spot.apiPassphrase
         )
-        let redactedFutures = Futures(
-            apiKey: futures.apiKey.masked(),
-            apiSecret: futures.apiSecret.masked(),
-            apiPassphrase: futures.apiPassphrase.masked()
+        let futures = Futures(
+            apiKey: futures.apiKey,
+            apiSecret: futures.apiSecret,
+            apiPassphrase: futures.apiPassphrase
         )
-        try container.encode(redactedSpot, forKey: .spot)
-        try container.encode(redactedFutures, forKey: .futures)
+        try container.encode(spot, forKey: .spot)
+        try container.encode(futures, forKey: .futures)
     }
 }

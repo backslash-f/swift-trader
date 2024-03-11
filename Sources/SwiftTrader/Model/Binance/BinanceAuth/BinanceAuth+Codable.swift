@@ -19,10 +19,10 @@ extension BinanceAuth: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        let redactedSpot = Spot(
-            apiKey: spot.apiKey.masked(),
-            apiSecret: spot.apiSecret.masked()
+        let spot = Spot(
+            apiKey: spot.apiKey,
+            apiSecret: spot.apiSecret
         )
-        try container.encode(redactedSpot, forKey: .spot)
+        try container.encode(spot, forKey: .spot)
     }
 }
