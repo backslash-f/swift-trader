@@ -45,3 +45,33 @@ Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-t
 [Binance Spot](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BBinanceSpot.swift) | Explanation | API Documentation
 --- | --- | ---
 `SwiftTrader.binanceSpotNewOrder` | Send in a new order. Currently, only `MARKET` orders are supported (but this can be easily changed). | https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
+
+## Integration
+### Xcode
+Use Xcode's [built-in support for SPM](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
+
+*or...*
+
+### Package.swift
+In your `Package.swift`, add `SwiftTrader` as a dependency:
+
+```swift
+dependencies: [
+  .package(url: "https://github.com/backslash-f/swift-trader", from: "0.0.1")
+]
+```
+
+Associate the dependency with your target:
+
+```swift
+targets: [
+  .target(
+    name: "YourAppName",
+    dependencies: [
+      .product(name: "SwiftTrader", package: "swift-trader")
+    ]
+  )
+]
+```
+
+Run: `swift build`
