@@ -14,6 +14,7 @@ public extension KucoinAPI {
         public struct Path {
             static let bulletPrivate    = "/api/v1/bullet-private"
             static let orders           = "/api/v1/orders"
+            static let hfMultiOrders    = "/api/v1/hf/orders/multi"
             static let stopOrder        = "/api/v1/stop-order"
             static let stopOrderCancel  = "/api/v1/stop-order/cancel"
             static let transferable     = accounts(pathComponent: "transferable")
