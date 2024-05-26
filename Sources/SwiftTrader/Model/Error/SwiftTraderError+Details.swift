@@ -30,6 +30,7 @@ public extension SwiftTraderError {
                 .kucoinSpotGetAccount,
                 .kucoinSpotGetTransferable,
                 .kucoinSpotPlaceStopLimitOrder,
+                .kucoinSpotHFPlaceMultipleOrders,
                 .kucoinSpotOrderList,
                 .kucoinSpotStopOrderList,
                 .kucoinSpotCancelStopOrders,
