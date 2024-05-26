@@ -1,6 +1,6 @@
 //
-//  SwiftTraderOrderInput.swift
-//  
+//  SwiftTraderStopLimitOrderInput.swift
+//
 //
 //  Created by Fernando Fernandes on 11.02.22.
 //
@@ -25,7 +25,7 @@ public struct SwiftTraderStopLimitOrderInput {
 
     // MARK: - Lifecycle
 
-    /// Creates a `SwiftTraderOrderInput` instance.
+    /// Creates a `SwiftTraderStopLimitOrderInput` instance.
     ///
     /// - Parameters:
     ///   - cancelStopOrders: When `true`, all the untriggered stop orders for the `contractSymbol` will be
