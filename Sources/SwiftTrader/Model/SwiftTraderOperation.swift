@@ -27,6 +27,10 @@ public enum SwiftTraderOperation {
     case kucoinSpotCancelStopOrders
     case kucoinSpotWebSocketPrivateToken
 
+    // MARK: Spot HF
+
+    case kucoinSpotHFPlaceMultipleOrders
+
     // MARK: Futures
 
     case kucoinFuturesAccountOverview
