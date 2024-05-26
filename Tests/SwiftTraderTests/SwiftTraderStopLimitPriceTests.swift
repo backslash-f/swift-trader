@@ -1,7 +1,7 @@
 import XCTest
 @testable import SwiftTrader
 
-final class SwiftTraderTests: XCTestCase {
+final class SwiftTraderStopLimitPriceTests: XCTestCase {
 
     var swiftTrader: SwiftTrader!
 
@@ -77,7 +77,7 @@ final class SwiftTraderTests: XCTestCase {
 
 // MARK: - Private
 
-private extension SwiftTraderTests {
+private extension SwiftTraderStopLimitPriceTests {
     var pepeInputInvalidOffset: SwiftTraderStopLimitOrderInput {
         .init(
             cancelStopOrders: true,
