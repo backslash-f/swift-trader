@@ -10,13 +10,13 @@ import Foundation
 /// Kucoin "Place Multiple Orders" HF REST API response.
 ///
 /// https://www.kucoin.com/docs/rest/spot-trading/spot-hf-trade-pro-account/place-multiple-orders
-public struct KucoinHFPlaceMultiOrdersResponse: Codable {
+public struct KucoinHFPlaceMultiOrdersResponse: Equatable, Codable {
     public let success: Bool
     public let code, msg: String
     public let retry: Bool
     public let data: [Data]
 
-    public struct Data: Codable {
+    public struct Data: Equatable, Codable {
         public let orderID: String
         public let success: Bool
 
