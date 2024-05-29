@@ -8,10 +8,9 @@
 import Foundation
 
 /// Holds logic to create multiple orders at once.
-
 public extension SwiftTrader {
 
-    /// Creates 5 buy/limit orders using the parameters from the given `SwiftTraderMultiLimitOrderInput` instance.
+    /// Creates five orders using the parameters from the given `SwiftTraderMultiLimitOrderInput` instance.
     func createMultipleLongLimitOrders(
         for orderInput: SwiftTraderMultiLimitOrderInput
     ) -> [KucoinSpotHFOrderParameters] {
@@ -23,11 +22,19 @@ public extension SwiftTrader {
         let maxBidDouble = Double(orderInput.maxBid) ?? 0.0
         let decimalPlaces = decimalPlaces(for: orderInput.maxBid)
 
+        var prices = [Double]()
         for orderIndex in 1...Int(numberOfOrders) {
-            let price = calculatePrice(maxBid: maxBidDouble,
-                                       initialPriceIncrement: orderInput.initialPriceIncrement,
-                                       priceIncrement: orderInput.priceIncrement,
-                                       orderIndex: orderIndex)
+            let price: Double
+            if orderIndex == 1 {
+                price = (maxBidDouble * orderInput.initialPriceIncrement) + maxBidDouble
+            } else {
+                let previousPrice = prices[orderIndex - 2]
+                price = (previousPrice * orderInput.priceIncrement) + previousPrice
+            }
+            prices.append(price)
+        }
+
+        for price in prices {
             let formattedPrice = format(price, decimalPlaces: decimalPlaces)
             let priceDouble = Double(formattedPrice) ?? 0.0
             let size = fundPerOrder / priceDouble
@@ -76,24 +83,6 @@ private extension SwiftTrader {
             )
         } else {
             return 0
-        }
-    }
-
-    /// Helper function to calculate the price for each order.
-    func calculatePrice(maxBid: Double,
-                        initialPriceIncrement: Double,
-                        priceIncrement: Double,
-                        orderIndex: Int) -> Double {
-        if orderIndex == 1 {
-            return (maxBid * initialPriceIncrement) + maxBid
-        } else {
-            let previousPrice = calculatePrice(
-                maxBid: maxBid,
-                initialPriceIncrement: initialPriceIncrement,
-                priceIncrement: priceIncrement,
-                orderIndex: orderIndex - 1
-            )
-            return previousPrice * (1 + priceIncrement)
         }
     }
 }
