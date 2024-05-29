@@ -24,8 +24,10 @@ public extension SwiftTrader {
     /// - Returns: An instance of `KucoinHFPlaceMultiOrdersResponse` or `SwiftTraderError`.
     ///
     /// - Example: consider a new listed coin called "NEW"; the strategy is to create five buy orders for it as soon as
-    /// it gets listed, based on its current max bid. Via the `orderInput`, the price of the first order is set to be 11% higher,
-    /// while subsequent order prices are set to be 1% higher (compared to previous prices). In short:
+    /// it gets listed, based on its current max bid. Via the `orderInput`, the price of the first order is set to be
+    /// 11% higher, while subsequent order prices are set to be 1% higher (compared to previous prices).
+    ///
+    /// In short:
     ///   - The current max bid of NEW-USDT is "0.046"
     ///     - (`SwiftTraderMultiLimitOrderInput.maxBid`)
     ///   - The first order should be above the max bid by 0.11
@@ -56,9 +58,9 @@ public extension SwiftTrader {
     ///   even if that means paying more.
     ///
     ///   To quickly exit the position is as important, so just after the above buying orders are submitted,
-    ///   one could trigger five selling orders targeting the desired profit percentage, for example, 60% (conservative),
-    ///   100% or 200% of the given highest bid or last order price (some new listings could go as high as 800%,
-    ///   or even more).
+    ///   one could trigger five selling orders targeting the desired profit percentage, for example,
+    ///   60% (conservative), 100% or 200% of the given highest bid or last order price
+    ///   (some new listings could go as high as 800%, or even more).
     func kucoinSpotHFPlaceMultipleOrders(
         _ orderInput: SwiftTraderMultiLimitOrderInput
     ) async throws -> Result<KucoinHFPlaceMultiOrdersResponse, SwiftTraderError> {
