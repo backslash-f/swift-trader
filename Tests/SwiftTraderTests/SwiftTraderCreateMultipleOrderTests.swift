@@ -79,8 +79,8 @@ private extension SwiftTraderCreateMultipleOrderTests {
         .init(
             symbol: "MERLUSDT",
             maxBid: "0.4692",
-            initialPriceIncrement: 0.16,
-            priceIncrement: 0.1,
+            initialPriceIncrement: 0.11,
+            priceIncrement: 0.01,
             totalFunds: 50
         )
     }
@@ -89,9 +89,9 @@ private extension SwiftTraderCreateMultipleOrderTests {
         .init(
             symbol: "PEPEUSDT",
             maxBid: "0.00000121",
-            initialPriceIncrement: 0.16,
-            priceIncrement: 0.1,
-            totalFunds: 50
+            initialPriceIncrement: 0.12,
+            priceIncrement: 0.2,
+            totalFunds: 100
         )
     }
 
@@ -99,19 +99,19 @@ private extension SwiftTraderCreateMultipleOrderTests {
         .init(
             symbol: "ETHUSDT",
             maxBid: "208.04",
-            initialPriceIncrement: 0.16,
-            priceIncrement: 0.1,
-            totalFunds: 50
+            initialPriceIncrement: 0.13,
+            priceIncrement: 0.3,
+            totalFunds: 150
         )
     }
 
     var oneAndSomethingInput: SwiftTraderMultiLimitOrderInput {
         .init(
-            symbol: "ONESOMETHINGUSDT",
+            symbol: "ONEANDSOMETHINGUSDT",
             maxBid: "1.17",
-            initialPriceIncrement: 0.16,
-            priceIncrement: 0.1,
-            totalFunds: 50
+            initialPriceIncrement: 0.14,
+            priceIncrement: 0.4,
+            totalFunds: 200
         )
     }
 
@@ -120,72 +120,72 @@ private extension SwiftTraderCreateMultipleOrderTests {
             TestCase(
                 input: merlInput,
                 expectedPrices: [
-                    "0.5443",
-                    "0.5987",
-                    "0.6586",
-                    "0.7244",
-                    "0.7969"
+                    "0.5208",
+                    "0.5260",
+                    "0.5313",
+                    "0.5366",
+                    "0.5420"
                 ],
                 expectedSizes: [
+                    "19",
+                    "19",
                     "18",
-                    "16",
-                    "15",
-                    "13",
-                    "12"
+                    "18",
+                    "18"
                 ]
             ),
 
             TestCase(
                 input: pepeInput,
                 expectedPrices: [
-                    "0.00000140",
-                    "0.00000154",
-                    "0.00000170",
-                    "0.00000187",
-                    "0.00000206"
+                    "0.00000136",
+                    "0.00000163",
+                    "0.00000195",
+                    "0.00000234",
+                    "0.00000281"
                 ],
                 expectedSizes: [
-                    "7142857",
-                    "6493506",
-                    "5882352",
-                    "5347593",
-                    "4854368"
+                    "14705882",
+                    "12269938",
+                    "10256410",
+                    "8547008",
+                    "7117437"
                 ]
             ),
 
             TestCase(
                 input: ethInput,
                 expectedPrices: [
-                    "241.33",
-                    "265.46",
-                    "292.00",
-                    "321.21",
-                    "353.33"
+                    "235.09",
+                    "305.61",
+                    "397.29",
+                    "516.48",
+                    "671.43"
                 ],
                 expectedSizes: [
-                    "0.04",
-                    "0.04",
-                    "0.03",
-                    "0.03",
-                    "0.03"
+                    "0.13",
+                    "0.10",
+                    "0.08",
+                    "0.06",
+                    "0.04"
                 ]
             ),
 
             TestCase(
                 input: oneAndSomethingInput,
                 expectedPrices: [
-                    "1.36",
-                    "1.49",
-                    "1.64",
-                    "1.81",
-                    "1.99"
+                    "1.33",
+                    "1.87",
+                    "2.61",
+                    "3.66",
+                    "5.12"
                 ],
                 expectedSizes: [
-                    "7",
-                    "6",
-                    "6",
-                    "5",
-                    "5"
+                    "30",
+                    "21",
+                    "15",
+                    "10",
+                    "7"
                 ]
             )
         ]
