@@ -10,7 +10,7 @@ import Foundation
 /// Encapsulates parameters to place a spot HF order.
 ///
 /// https://www.kucoin.com/docs/rest/spot-trading/spot-hf-trade-pro-account/place-hf-order
-public struct KucoinSpotHFOrderParameters {
+public struct KucoinSpotHFOrderParameters: Equatable, Codable {
 
     // MARK: - Properties
 
