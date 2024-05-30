@@ -63,7 +63,7 @@ public extension SwiftTrader {
     ///   one could trigger five selling orders targeting the desired profit percentage, for example,
     ///   60% (conservative), 100% or 200% of the given highest bid or last order price
     ///   (some new listings could go as high as 800%, or even more).
-    func kucoinSpotHFPlaceMultipleBuyLimitOrders(
+    func kucoinSpotHFPlaceMultipleLongLimitOrders(
         _ orderInput: SwiftTraderMultiLongLimitOrderInput
     ) async throws -> Result<KucoinHFPlaceMultiOrdersResponse, SwiftTraderError> {
 
@@ -86,7 +86,7 @@ public extension SwiftTrader {
         case .failure(let error):
             let swiftTraderError = handle(
                 networkRequestError: error,
-                operation: .kucoinSpotHFPlaceMultipleBuyLimitOrders
+                operation: .kucoinSpotHFPlaceMultipleLongLimitOrders
             )
             return .failure(swiftTraderError)
         }

@@ -28,7 +28,7 @@ public extension SwiftTrader {
                 .kucoinSpotOrderList: SwiftTraderError.kucoinSpotOrderList,
                 .kucoinSpotStopOrderList: SwiftTraderError.kucoinFuturesPositionList,
                 .kucoinSpotCancelStopOrders: SwiftTraderError.kucoinSpotCancelStopOrders,
-                .kucoinSpotHFPlaceMultipleBuyLimitOrders: SwiftTraderError.kucoinSpotHFPlaceMultipleBuyLimitOrders,
+                .kucoinSpotHFPlaceMultipleLongLimitOrders: SwiftTraderError.kucoinSpotHFPlaceMultipleLongLimitOrders,
                 .kucoinFuturesAccountOverview: SwiftTraderError.kucoinFuturesAccountOverview,
                 .kucoinFuturesCancelStopOrders: SwiftTraderError.kucoinFuturesCancelStopOrders,
                 .kucoinFuturesStopOrderList: SwiftTraderError.kucoinFuturesStopOrderList,
