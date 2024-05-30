@@ -65,7 +65,7 @@ public extension SwiftTrader {
     ///   (some new listings could go as high as 800%, or even more).
     func kucoinSpotHFPlaceMultipleLongLimitOrders(
         _ orderInput: SwiftTraderMultiLongLimitOrderInput
-    ) async throws -> Result<KucoinHFPlaceMultiOrdersResponse, SwiftTraderError> {
+    ) async throws -> Result<KucoinSpotHFLongLimitOrdersResult, SwiftTraderError> {
 
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
@@ -79,10 +79,10 @@ public extension SwiftTrader {
 
         switch await request.execute() {
         case .success(let model):
-            guard let placeOrder = model as? KucoinHFPlaceMultiOrdersResponse else {
+            guard let response = model as? KucoinHFPlaceMultiOrdersResponse else {
                 return .failure(.unexpectedResponse(modelString: "\(model)"))
             }
-            return .success(placeOrder)
+            return .success(.init(orders: request.orders, response: response))
         case .failure(let error):
             let swiftTraderError = handle(
                 networkRequestError: error,
