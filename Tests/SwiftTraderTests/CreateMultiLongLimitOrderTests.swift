@@ -1,5 +1,5 @@
 //
-//  SwiftTraderCreateMultipleOrderTests.swift
+//  CreateMultiLongLimitOrderTests.swift
 //
 //
 //  Created by Fernando Fernandes on 26.05.24.
@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 @testable import SwiftTrader
 
-final class SwiftTraderCreateMultipleOrderTests: XCTestCase {
+final class CreateMultiLongLimitOrderTests: XCTestCase {
 
     var swiftTrader: SwiftTrader!
 
@@ -33,7 +33,7 @@ final class SwiftTraderCreateMultipleOrderTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_createMultipleOrders() {
+    func test_createMultiLongLimitOrders() {
         for testCase in testCases {
             let result = swiftTrader.createMultipleLongLimitOrders(for: testCase.input)
 
@@ -73,11 +73,11 @@ final class SwiftTraderCreateMultipleOrderTests: XCTestCase {
 
 // MARK: - Private
 
-private extension SwiftTraderCreateMultipleOrderTests {
+private extension CreateMultiLongLimitOrderTests {
 
     var merlInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
-            symbol: "MERLUSDT",
+            symbol: "MERL-USDT",
             initialPrice: "0.4692",
             initialPriceIncrement: 0.11,
             priceIncrement: 0.01,
@@ -87,30 +87,30 @@ private extension SwiftTraderCreateMultipleOrderTests {
 
     var pepeInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
-            symbol: "PEPEUSDT",
+            symbol: "PEPE-USDT",
             initialPrice: "0.00000121",
             initialPriceIncrement: 0.12,
-            priceIncrement: 0.2,
+            priceIncrement: 0.02,
             totalFunds: 100
         )
     }
 
     var ethInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
-            symbol: "ETHUSDT",
+            symbol: "ETH-USDT",
             initialPrice: "208.04",
             initialPriceIncrement: 0.13,
-            priceIncrement: 0.3,
+            priceIncrement: 0.03,
             totalFunds: 150
         )
     }
 
     var oneAndSomethingInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
-            symbol: "ONEANDSOMETHINGUSDT",
+            symbol: "ONEANDSOMETHING-USDT",
             initialPrice: "1.17",
             initialPriceIncrement: 0.14,
-            priceIncrement: 0.4,
+            priceIncrement: 0.04,
             totalFunds: 200
         )
     }
@@ -139,17 +139,17 @@ private extension SwiftTraderCreateMultipleOrderTests {
                 input: pepeInput,
                 expectedPrices: [
                     "0.00000136",
-                    "0.00000163",
-                    "0.00000195",
-                    "0.00000234",
-                    "0.00000281"
+                    "0.00000138",
+                    "0.00000141",
+                    "0.00000144",
+                    "0.00000147"
                 ],
                 expectedSizes: [
                     "14705882",
-                    "12269938",
-                    "10256410",
-                    "8547008",
-                    "7117437"
+                    "14492753",
+                    "14184397",
+                    "13888888",
+                    "13605442"
                 ]
             ),
 
@@ -157,17 +157,17 @@ private extension SwiftTraderCreateMultipleOrderTests {
                 input: ethInput,
                 expectedPrices: [
                     "235.09",
-                    "305.61",
-                    "397.29",
-                    "516.48",
-                    "671.43"
+                    "242.14",
+                    "249.40",
+                    "256.88",
+                    "264.59"
                 ],
                 expectedSizes: [
                     "0.13",
-                    "0.10",
-                    "0.08",
-                    "0.06",
-                    "0.04"
+                    "0.12",
+                    "0.12",
+                    "0.12",
+                    "0.11"
                 ]
             ),
 
@@ -175,17 +175,17 @@ private extension SwiftTraderCreateMultipleOrderTests {
                 input: oneAndSomethingInput,
                 expectedPrices: [
                     "1.33",
-                    "1.87",
-                    "2.61",
-                    "3.66",
-                    "5.12"
+                    "1.39",
+                    "1.44",
+                    "1.50",
+                    "1.56"
                 ],
                 expectedSizes: [
                     "30",
-                    "21",
-                    "15",
-                    "10",
-                    "7"
+                    "28",
+                    "27",
+                    "26",
+                    "25"
                 ]
             )
         ]
