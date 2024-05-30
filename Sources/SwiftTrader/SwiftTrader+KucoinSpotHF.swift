@@ -14,14 +14,16 @@ public extension SwiftTrader {
 
     /// Places multiple orders.
     ///
-    /// This function calculates the distance of the price of each order
-    /// using the parameters of the given `SwiftTraderOrderInput` instance.
+    /// This function calculates the distance of the price of each order using the parameters of the given
+    /// `SwiftTraderMultiLongLimitOrderInput` instance.
     ///
     /// [Kucoin](https://www.kucoin.com/docs/rest/spot-trading/spot-hf-trade-pro-account/place-multiple-orders)
     ///
-    /// - Parameter orderInput: `SwiftTraderMultiLimitOrderInput` instance that encapsulates
-    /// all the arguments required for submitting multiple orders against one asset.
+    /// - Parameter orderInput: `SwiftTraderMultiLongLimitOrderInput` instance that encapsulates
+    /// all the arguments required for submitting multiple orders (five) against one asset.
     /// - Returns: An instance of `KucoinHFPlaceMultiOrdersResponse` or `SwiftTraderError`.
+    ///
+    /// - Note: Five orders are created at once; the number can't go higher, as this is a limitation of the Kucoin API.
     ///
     /// - Example: consider a new listed coin called "NEW"; the strategy is to create five buy orders for it as soon as
     /// it gets listed, based on its current max bid. Via the `orderInput`, the price of the first order is set to be
@@ -29,13 +31,13 @@ public extension SwiftTrader {
     ///
     /// In short:
     ///   - The current max bid of NEW-USDT is "0.046"
-    ///     - (`SwiftTraderMultiLimitOrderInput.initialPrice`)
+    ///     - (`SwiftTraderMultiLongLimitOrderInput.initialPrice`)
     ///   - The first order should be above the max bid by 0.11
-    ///     - (`SwiftTraderMultiLimitOrderInput.initialPriceIncrement`)
+    ///     - (`SwiftTraderMultiLongLimitOrderInput.initialPriceIncrement`)
     ///   - The second, third, fourth, and fifth orders should increment the previous price by 0.01
-    ///     - (`SwiftTraderMultiLimitOrderInput.priceIncrement`)
+    ///     - (`SwiftTraderMultiLongLimitOrderInput.priceIncrement`)
     ///   - The total funds for the five orders is 50
-    ///     - (`SwiftTraderMultiLimitOrderInput.totalFunds`)
+    ///     - (`SwiftTraderMultiLongLimitOrderInput.totalFunds`)
     ///
     ///  Based on the above input, the price and size for the five buy/limit NEW-USDT orders will be:
     ///   ```
@@ -61,8 +63,8 @@ public extension SwiftTrader {
     ///   one could trigger five selling orders targeting the desired profit percentage, for example,
     ///   60% (conservative), 100% or 200% of the given highest bid or last order price
     ///   (some new listings could go as high as 800%, or even more).
-    func kucoinSpotHFPlaceMultipleOrders(
-        _ orderInput: SwiftTraderMultiLimitOrderInput
+    func kucoinSpotHFPlaceMultipleBuyLimitOrders(
+        _ orderInput: SwiftTraderMultiLongLimitOrderInput
     ) async throws -> Result<KucoinHFPlaceMultiOrdersResponse, SwiftTraderError> {
 
         guard let auth = kucoinAuth else {
@@ -82,7 +84,10 @@ public extension SwiftTrader {
             }
             return .success(placeOrder)
         case .failure(let error):
-            let swiftTraderError = handle(networkRequestError: error, operation: .kucoinSpotHFPlaceMultipleOrders)
+            let swiftTraderError = handle(
+                networkRequestError: error,
+                operation: .kucoinSpotHFPlaceMultipleBuyLimitOrders
+            )
             return .failure(swiftTraderError)
         }
     }

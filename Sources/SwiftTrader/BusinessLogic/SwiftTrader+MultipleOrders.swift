@@ -10,9 +10,9 @@ import Foundation
 /// Holds logic to create multiple orders at once.
 public extension SwiftTrader {
 
-    /// Creates five orders using the parameters from the given `SwiftTraderMultiLimitOrderInput` instance.
+    /// Creates five orders using the parameters from the given `SwiftTraderMultiLongLimitOrderInput` instance.
     func createMultipleLongLimitOrders(
-        for orderInput: SwiftTraderMultiLimitOrderInput
+        for orderInput: SwiftTraderMultiLongLimitOrderInput
     ) -> [KucoinSpotHFOrderParameters] {
 
         var orders = [KucoinSpotHFOrderParameters]()

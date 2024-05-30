@@ -75,7 +75,7 @@ final class SwiftTraderCreateMultipleOrderTests: XCTestCase {
 
 private extension SwiftTraderCreateMultipleOrderTests {
 
-    var merlInput: SwiftTraderMultiLimitOrderInput {
+    var merlInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
             symbol: "MERLUSDT",
             initialPrice: "0.4692",
@@ -85,7 +85,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
         )
     }
 
-    var pepeInput: SwiftTraderMultiLimitOrderInput {
+    var pepeInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
             symbol: "PEPEUSDT",
             initialPrice: "0.00000121",
@@ -95,7 +95,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
         )
     }
 
-    var ethInput: SwiftTraderMultiLimitOrderInput {
+    var ethInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
             symbol: "ETHUSDT",
             initialPrice: "208.04",
@@ -105,7 +105,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
         )
     }
 
-    var oneAndSomethingInput: SwiftTraderMultiLimitOrderInput {
+    var oneAndSomethingInput: SwiftTraderMultiLongLimitOrderInput {
         .init(
             symbol: "ONEANDSOMETHINGUSDT",
             initialPrice: "1.17",
@@ -192,7 +192,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
     }
 
     struct TestCase {
-        let input: SwiftTraderMultiLimitOrderInput
+        let input: SwiftTraderMultiLongLimitOrderInput
         let expectedPrices: [String]
         let expectedSizes: [String]
     }

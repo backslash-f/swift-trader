@@ -1,5 +1,5 @@
 //
-//  SwiftTraderMultiLimitOrderInput.swift
+//  SwiftTraderMultiLongLimitOrderInput.swift
 //
 //
 //  Created by Fernando Fernandes on 25.05.24.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Encapsulates all the arguments required for submiting multiple limit orders at once to supported exchanges.
-public struct SwiftTraderMultiLimitOrderInput {
+public struct SwiftTraderMultiLongLimitOrderInput {
 
     // MARK: - Properties
 
@@ -20,12 +20,10 @@ public struct SwiftTraderMultiLimitOrderInput {
 
     // MARK: - Lifecycle
 
-    /// Creates a `SwiftTraderMultiLimitOrderInput` instance.
+    /// Creates a `SwiftTraderMultiLongLimitOrderInput` instance.
     ///
-    /// Currently, only the following are supported/hardcoded:
-    ///  - Kucoin exchange.
-    ///  - Long+limit order types.
-    ///  - Five orders at once.
+    /// - Note: Currently, only the following are supported/hardcoded:
+    /// Kucoin exchange, buy/limit orders and five orders at once.
     ///
     /// - Parameters:
     ///   - symbol: For example BTCUSDT
