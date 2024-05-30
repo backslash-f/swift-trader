@@ -29,7 +29,8 @@ public enum SwiftTraderOperation {
 
     // MARK: Spot HF
 
-    case kucoinSpotHFPlaceMultipleLongLimitOrders
+    case kucoinSpotHFPlaceMultiLongLimitOrders
+    case kucoinSpotHFPlaceMultiShortLimitOrders
 
     // MARK: Futures
 

@@ -105,7 +105,10 @@ public enum SwiftTraderError: Error {
     case kucoinFuturesStopOrderList(error: Error)
 
     /// And error ocurred while executing the function `SwiftTrader.kucoinSpotHFPlaceMultipleLongLimitOrders(_:)`.
-    case kucoinSpotHFPlaceMultipleLongLimitOrders(error: Error)
+    case kucoinSpotHFPlaceMultiLongLimitOrders(error: Error)
+
+    /// And error ocurred while executing the function `SwiftTrader.kucoinSpotHFPlaceMultipleShortLimitOrders(_:)`.
+    case kucoinSpotHFPlaceMultiShortLimitOrders(error: Error)
 
     /// And error ocurred while executing the function `SwiftTrader.kucoinFuturesPlaceStopLimitOrder()`.
     case kucoinFuturesPlaceStopLimitOrder(error: Error)
