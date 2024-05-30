@@ -86,7 +86,36 @@ public extension SwiftTrader {
         case .failure(let error):
             let swiftTraderError = handle(
                 networkRequestError: error,
-                operation: .kucoinSpotHFPlaceMultipleLongLimitOrders
+                operation: .kucoinSpotHFPlaceMultiLongLimitOrders
+            )
+            return .failure(swiftTraderError)
+        }
+    }
+
+    func kucoinSpotHFPlaceMultipleShortLimitOrders(
+        _ orderInput: SwiftTraderMultiShortLimitOrderInput
+    ) async throws -> Result<KucoinHFPlaceMultiOrdersResponse, SwiftTraderError> {
+
+        guard let auth = kucoinAuth else {
+            return .failure(.kucoinMissingAuthentication)
+        }
+
+        let request = KucoinSpotHFPlaceMultiOrdersRequest(
+            orders: createMultipleShortLimitOrders(for: orderInput),
+            kucoinAuth: auth,
+            settings: settings.networkRequestSettings
+        )
+
+        switch await request.execute() {
+        case .success(let model):
+            guard let response = model as? KucoinHFPlaceMultiOrdersResponse else {
+                return .failure(.unexpectedResponse(modelString: "\(model)"))
+            }
+            return .success(response)
+        case .failure(let error):
+            let swiftTraderError = handle(
+                networkRequestError: error,
+                operation: .kucoinSpotHFPlaceMultiShortLimitOrders
             )
             return .failure(swiftTraderError)
         }
