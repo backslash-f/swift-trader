@@ -100,7 +100,7 @@ private extension KucoinSpotHFPlaceMultiOrdersRequest {
                 KucoinOrderParameterKey.side.rawValue: $0.side.rawValue
             ]
         }
-        
+
         return ["orderList": ordersArray]
     }
 }

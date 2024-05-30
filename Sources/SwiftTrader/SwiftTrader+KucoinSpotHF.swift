@@ -64,17 +64,17 @@ public extension SwiftTrader {
     func kucoinSpotHFPlaceMultipleOrders(
         _ orderInput: SwiftTraderMultiLimitOrderInput
     ) async throws -> Result<KucoinHFPlaceMultiOrdersResponse, SwiftTraderError> {
-        
+
         guard let auth = kucoinAuth else {
             return .failure(.kucoinMissingAuthentication)
         }
-        
+
         let request = KucoinSpotHFPlaceMultiOrdersRequest(
             orders: createMultipleLongLimitOrders(for: orderInput),
             kucoinAuth: auth,
             settings: settings.networkRequestSettings
         )
-        
+
         switch await request.execute() {
         case .success(let model):
             guard let placeOrder = model as? KucoinHFPlaceMultiOrdersResponse else {
