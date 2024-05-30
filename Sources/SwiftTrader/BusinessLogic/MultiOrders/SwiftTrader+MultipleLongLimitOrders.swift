@@ -1,5 +1,5 @@
 //
-//  SwiftTrader+MultipleOrders.swift
+//  SwiftTrader+MultipleLongLimitOrders.swift
 //
 //
 //  Created by Fernando Fernandes on 10.02.22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Holds logic to create multiple orders at once.
+/// Holds logic to create multiple limit orders at once.
 public extension SwiftTrader {
 
     /// Creates five orders using the parameters from the given `SwiftTraderMultiLongLimitOrderInput` instance.
@@ -52,37 +52,5 @@ public extension SwiftTrader {
         }
 
         return orders
-    }
-}
-
-// MARK: - Helper Functions
-
-private extension SwiftTrader {
-
-    /// Helper function to format the given number to the required number of decimal places.
-    func format(_ number: Double, decimalPlaces: Int) -> String {
-        String(format: "%.\(decimalPlaces)f", number)
-    }
-
-    func formatSize(_ size: Double, decimalPlaces: Int) -> String {
-        if size > 1 {
-            // Round down to the nearest whole number
-            let roundedSize = Int(floor(size))
-            return String(roundedSize)
-        } else {
-            return format(size, decimalPlaces: decimalPlaces)
-        }
-    }
-
-    /// Helper function to determine the number of decimal places in the given String`.
-    func decimalPlaces(for value: String) -> Int {
-        if let decimalRange = value.range(of: ".") {
-            return value.distance(
-                from: decimalRange.upperBound,
-                to: value.endIndex
-            )
-        } else {
-            return 0
-        }
     }
 }
