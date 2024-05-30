@@ -78,7 +78,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
     var merlInput: SwiftTraderMultiLimitOrderInput {
         .init(
             symbol: "MERLUSDT",
-            maxBid: "0.4692",
+            initialPrice: "0.4692",
             initialPriceIncrement: 0.11,
             priceIncrement: 0.01,
             totalFunds: 50
@@ -88,7 +88,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
     var pepeInput: SwiftTraderMultiLimitOrderInput {
         .init(
             symbol: "PEPEUSDT",
-            maxBid: "0.00000121",
+            initialPrice: "0.00000121",
             initialPriceIncrement: 0.12,
             priceIncrement: 0.2,
             totalFunds: 100
@@ -98,7 +98,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
     var ethInput: SwiftTraderMultiLimitOrderInput {
         .init(
             symbol: "ETHUSDT",
-            maxBid: "208.04",
+            initialPrice: "208.04",
             initialPriceIncrement: 0.13,
             priceIncrement: 0.3,
             totalFunds: 150
@@ -108,7 +108,7 @@ private extension SwiftTraderCreateMultipleOrderTests {
     var oneAndSomethingInput: SwiftTraderMultiLimitOrderInput {
         .init(
             symbol: "ONEANDSOMETHINGUSDT",
-            maxBid: "1.17",
+            initialPrice: "1.17",
             initialPriceIncrement: 0.14,
             priceIncrement: 0.4,
             totalFunds: 200

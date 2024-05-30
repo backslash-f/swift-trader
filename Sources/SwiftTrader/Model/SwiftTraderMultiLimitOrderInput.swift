@@ -13,7 +13,7 @@ public struct SwiftTraderMultiLimitOrderInput {
     // MARK: - Properties
 
     public let symbol: String
-    public let maxBid: String
+    public let initialPrice: String
     public let initialPriceIncrement: Double
     public let priceIncrement: Double
     public let totalFunds: Double
@@ -29,21 +29,21 @@ public struct SwiftTraderMultiLimitOrderInput {
     ///
     /// - Parameters:
     ///   - symbol: For example BTCUSDT
-    ///   - maxBid: The maximum price offer for the asset so far. For example "68833.24"
-    ///   - initialPriceIncrement: The price of the first order, based on the `maxBid`.
+    ///   - initialPrice: The asset price from where the calculations should begin, for example "68833.24".
+    ///   - initialPriceIncrement: The price of the first order, based on the `initialPrice`.
     ///   The value indicates the percentage. For example, 0,4 means that the price of the first order will
-    ///   be 40% of the given `maxBid`.
+    ///   be 40% of the given `initialPrice`.
     ///   - priceIncrement: How much the price of subsequent orders (second, third, fourth, and fifth) should go up.
     ///   The value indicates the percentage. For example: 0,1 = 10%.
     ///   - totalFunds: The total funds available for the operation. The number will be distributed evenly
     ///   between all submitted orders.
     public init(symbol: String,
-                maxBid: String,
+                initialPrice: String,
                 initialPriceIncrement: Double,
                 priceIncrement: Double,
                 totalFunds: Double) {
         self.symbol = symbol
-        self.maxBid = maxBid
+        self.initialPrice = initialPrice
         self.initialPriceIncrement = initialPriceIncrement
         self.priceIncrement = priceIncrement
         self.totalFunds = totalFunds

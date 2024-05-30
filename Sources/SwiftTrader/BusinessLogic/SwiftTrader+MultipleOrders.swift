@@ -19,14 +19,14 @@ public extension SwiftTrader {
 
         let numberOfOrders: Double = 5
         let fundPerOrder = orderInput.totalFunds / numberOfOrders
-        let maxBidDouble = Double(orderInput.maxBid) ?? 0.0
-        let decimalPlaces = decimalPlaces(for: orderInput.maxBid)
+        let initialPriceDouble = Double(orderInput.initialPrice) ?? 0.0
+        let decimalPlaces = decimalPlaces(for: orderInput.initialPrice)
 
         var prices = [Double]()
         for orderIndex in 1...Int(numberOfOrders) {
             let price: Double
             if orderIndex == 1 {
-                price = (maxBidDouble * orderInput.initialPriceIncrement) + maxBidDouble
+                price = (initialPriceDouble * orderInput.initialPriceIncrement) + initialPriceDouble
             } else {
                 let previousPrice = prices[orderIndex - 2]
                 price = (previousPrice * orderInput.priceIncrement) + previousPrice

@@ -29,7 +29,7 @@ public extension SwiftTrader {
     ///
     /// In short:
     ///   - The current max bid of NEW-USDT is "0.046"
-    ///     - (`SwiftTraderMultiLimitOrderInput.maxBid`)
+    ///     - (`SwiftTraderMultiLimitOrderInput.initialPrice`)
     ///   - The first order should be above the max bid by 0.11
     ///     - (`SwiftTraderMultiLimitOrderInput.initialPriceIncrement`)
     ///   - The second, third, fourth, and fifth orders should increment the previous price by 0.01
