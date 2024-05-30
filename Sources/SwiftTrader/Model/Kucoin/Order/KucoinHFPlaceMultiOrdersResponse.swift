@@ -11,18 +11,18 @@ import Foundation
 ///
 /// https://www.kucoin.com/docs/rest/spot-trading/spot-hf-trade-pro-account/place-multiple-orders
 public struct KucoinHFPlaceMultiOrdersResponse: Equatable, Codable {
-    public let success: Bool
-    public let code, msg: String
-    public let retry: Bool
-    public let data: [Data]
+    let code: String
+    let data: [Data]
 
     public struct Data: Equatable, Codable {
-        public let orderID: String
         public let success: Bool
+        public let orderID: String?
+        public let failMsg: String?
 
         enum CodingKeys: String, CodingKey {
-            case orderID = "orderId"
             case success
+            case orderID = "orderId"
+            case failMsg
         }
     }
 }
