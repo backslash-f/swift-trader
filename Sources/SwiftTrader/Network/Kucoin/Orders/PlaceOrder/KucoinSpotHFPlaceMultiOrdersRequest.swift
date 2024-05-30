@@ -89,8 +89,8 @@ public extension KucoinSpotHFPlaceMultiOrdersRequest {
 
 private extension KucoinSpotHFPlaceMultiOrdersRequest {
 
-    func createJSONParameters(from orders: [KucoinSpotHFOrderParameters]) -> [[String: Any]] {
-        orders.map {
+    func createJSONParameters(from orders: [KucoinSpotHFOrderParameters]) -> [String: Any] {
+        let ordersArray = orders.map {
             [
                 KucoinOrderParameterKey.clientOid.rawValue: $0.clientOid,
                 KucoinOrderParameterKey.symbol.rawValue: $0.symbol,
@@ -100,5 +100,7 @@ private extension KucoinSpotHFPlaceMultiOrdersRequest {
                 KucoinOrderParameterKey.side.rawValue: $0.side.rawValue
             ]
         }
+        
+        return ["orderList": ordersArray]
     }
 }
