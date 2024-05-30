@@ -50,9 +50,9 @@ public struct KucoinSpotHFPlaceMultiOrdersRequest: NetworkRequest {
 
     public var settings: NetworkRequestSettings
 
-    // MARK: Private
+    public let orders: [KucoinSpotHFOrderParameters]
 
-    private let orders: [KucoinSpotHFOrderParameters]
+    // MARK: Private
 
     private let kucoinAuth: KucoinAuth
 
