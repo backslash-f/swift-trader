@@ -10,13 +10,13 @@ import Foundation
 /// Kucoin "List Acounts" REST API response.
 ///
 /// https://docs.kucoin.com/#list-accounts
-public struct KucoinSpotListAccountsResponse: Codable {
+public struct KucoinSpotListAccountsResponse: Codable, Equatable {
     public let code: String
     public let data: [KucoinAccount]
 }
 
 /// Encapsulates Kucoin  accounts data.
-public struct KucoinAccount: Codable {
+public struct KucoinAccount: Codable, Equatable {
     public let id, currency, balance: String
     public let type: KucoinAccountType
     public let available, holds: String
@@ -26,5 +26,6 @@ public struct KucoinAccount: Codable {
 public enum KucoinAccountType: String, Codable {
     case main
     case trade
+    case trade_hf
     case margin
 }
