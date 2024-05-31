@@ -41,7 +41,7 @@ public extension SwiftTrader {
                 price -= pow(10, -Double(decimalPlaces))
                 formattedPrice = format(price, decimalPlaces: decimalPlaces)
             }
-            
+
             formattedPrices.insert(formattedPrice)
             previousPrice = price
 
