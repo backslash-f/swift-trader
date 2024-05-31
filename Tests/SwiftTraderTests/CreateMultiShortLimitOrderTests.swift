@@ -48,6 +48,17 @@ final class CreateMultiShortLimitOrderTests: XCTestCase {
                 "The number of orders should be \(expectedOrderCount), not \(actualOrderCount)"
             )
 
+            // MARK: Unique prices
+
+            let prices = result.map { $0.price }
+            let uniquePrices = Set(prices)
+
+            XCTAssertEqual(
+                prices.count,
+                uniquePrices.count,
+                "There should be no duplicate prices in the orders: \(uniquePrices)"
+            )
+
             // MARK: Order prices
 
             for (index, order) in result.enumerated() {
@@ -115,6 +126,16 @@ private extension CreateMultiShortLimitOrderTests {
         )
     }
 
+    var cheapInput: SwiftTraderMultiShortLimitOrderInput {
+        .init(
+            symbol: "CHEAP-USDT",
+            initialPrice: "0.046",
+            targetProfitPercentage: 0.66,
+            priceDecrement: 0.01,
+            totalSize: 4333
+        )
+    }
+
     var testCases: [TestCase] {
         [
             TestCase(
@@ -163,6 +184,18 @@ private extension CreateMultiShortLimitOrderTests {
                     "1.73"
                 ],
                 expectedSize: "136"
+            ),
+
+            TestCase(
+                input: cheapInput,
+                expectedPrices: [
+                    "0.076",
+                    "0.075",
+                    "0.074",
+                    "0.073",
+                    "0.072"
+                ],
+                expectedSize: "4333"
             )
         ]
     }
