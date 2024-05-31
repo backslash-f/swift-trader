@@ -21,20 +21,30 @@ public extension SwiftTrader {
         let initialPriceDouble = Double(orderInput.initialPrice) ?? 0.0
         let decimalPlaces = decimalPlaces(for: orderInput.initialPrice)
 
-        var prices = [Double]()
+        var formattedPrices = Set<String>()
+        var previousPrice = initialPriceDouble
+
         for orderIndex in 1...Int(numberOfOrders) {
-            let price: Double
+            var price: Double
             if orderIndex == 1 {
                 price = (initialPriceDouble * orderInput.targetProfitPercentage) + initialPriceDouble
             } else {
-                let previousPrice = prices[orderIndex - 2]
                 price = previousPrice - (previousPrice * orderInput.priceDecrement)
             }
-            prices.append(price)
-        }
 
-        for price in prices {
-            let formattedPrice = format(price, decimalPlaces: decimalPlaces)
+            var formattedPrice = format(price, decimalPlaces: decimalPlaces)
+
+            // Ensure unique formatted prices. For example, eliminate prices like
+            // "0.059, 0.059"; instead, transform them into "0.059, 0.058", etc,
+            // -- avoiding duplicated orders.
+            while formattedPrices.contains(formattedPrice) {
+                price -= pow(10, -Double(decimalPlaces))
+                formattedPrice = format(price, decimalPlaces: decimalPlaces)
+            }
+            
+            formattedPrices.insert(formattedPrice)
+            previousPrice = price
+
             let formattedSize = formatSize(orderInput.totalSize, decimalPlaces: decimalPlaces)
 
             let order = KucoinSpotHFOrderParameters(

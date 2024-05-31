@@ -22,20 +22,30 @@ public extension SwiftTrader {
         let initialPriceDouble = Double(orderInput.initialPrice) ?? 0.0
         let decimalPlaces = decimalPlaces(for: orderInput.initialPrice)
 
-        var prices = [Double]()
+        var formattedPrices = Set<String>()
+        var previousPrice = initialPriceDouble
+
         for orderIndex in 1...Int(numberOfOrders) {
-            let price: Double
+            var price: Double
             if orderIndex == 1 {
                 price = (initialPriceDouble * orderInput.initialPriceIncrement) + initialPriceDouble
             } else {
-                let previousPrice = prices[orderIndex - 2]
                 price = (previousPrice * orderInput.priceIncrement) + previousPrice
             }
-            prices.append(price)
-        }
 
-        for price in prices {
-            let formattedPrice = format(price, decimalPlaces: decimalPlaces)
+            var formattedPrice = format(price, decimalPlaces: decimalPlaces)
+
+            // Ensure unique formatted prices. For example, eliminate prices like
+            // "0.059, 0.059"; instead, transform them into "0.059, 0.060", etc,
+            // -- avoiding duplicated orders.
+            while formattedPrices.contains(formattedPrice) {
+                price += pow(10, -Double(decimalPlaces))
+                formattedPrice = format(price, decimalPlaces: decimalPlaces)
+            }
+
+            formattedPrices.insert(formattedPrice)
+            previousPrice = price
+
             let priceDouble = Double(formattedPrice) ?? 0.0
             let size = fundPerOrder / priceDouble
             let formattedSize = formatSize(size, decimalPlaces: decimalPlaces)
