@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents the success result of `SwiftTrader.kucoinSpotHFPlaceMultipleLongLimitOrders(_:)`.
 ///
-/// Contains the multiple limit orders created as well as the server response.
+/// Contains all the submitted long limit orders, as well as the server response.
 ///
 /// Provides calculated `vars` for checking the submitted prices, sizes, and total size.
 public struct KucoinSpotHFLongLimitOrdersResult: Equatable, Codable {
