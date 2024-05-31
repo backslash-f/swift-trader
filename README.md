@@ -6,45 +6,53 @@
 [![license](https://img.shields.io/badge/license-MIT-67ac5b.svg?logo=data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMi4wMDkgNTEyLjAwOSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyLjAwOSA1MTIuMDA5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPHBhdGggc3R5bGU9ImZpbGw6IzRDQUY1MDsiIGQ9Ik0yNTUuOTQ0LDE1LjkzQzExNC42MTgsMTUuOTAyLDAuMDI4LDEzMC40NDYsMCwyNzEuNzcyQy0wLjAxOCwzNjQuMDg5LDQ5LjY4OSw0NDkuMjYsMTMwLjA3Nyw0OTQuNjUgIGMyLjQ1NiwxLjQxNSw1LjM4LDEuNzc3LDguMTA3LDEuMDAzYzIuNzA4LTAuNzU2LDUuMDA4LTIuNTUsNi40LTQuOTkybDc4LjkzMy0xMzkuNDk5YzIuODk1LTUuMTI2LDEuMDkxLTExLjYyOC00LjAzMi0xNC41MjggIGMtMzUuOTU0LTIwLjE5NC00OC43My02NS43MTItMjguNTM1LTEwMS42NjZzNjUuNzEyLTQ4LjczLDEwMS42NjYtMjguNTM1czQ4LjczLDY1LjcxMiwyOC41MzUsMTAxLjY2NiAgYy02LjcxMiwxMS45NTEtMTYuNTg1LDIxLjgyMy0yOC41MzUsMjguNTM1Yy01LjEyMywyLjktNi45MjcsOS40MDItNC4wMzIsMTQuNTI4bDc4LjcyLDEzOS40OTljMS4zODgsMi40NSwzLjY4OSw0LjI1Myw2LjQsNS4wMTMgIGMwLjkyOSwwLjI2OSwxLjg5MSwwLjQwNiwyLjg1OSwwLjQwNWMxLjg0LTAuMDAyLDMuNjQ4LTAuNDgsNS4yNDgtMS4zODdjMTIzLjA4Ny02OS40NDQsMTY2LjU3My0yMjUuNTIyLDk3LjEyOS0zNDguNjEgIEM0MzMuNTQ4LDY1LjYyOSwzNDguMzE5LDE1Ljg4NCwyNTUuOTQ0LDE1LjkzeiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K)](https://en.wikipedia.org/wiki/MIT_License)
 
 # SwiftTrader 🤑
-A Swift package for connecting and trading on crypto exchanges such as Kucoin and Binance via REST.
+A Swift package for connecting and trading on crypto exchanges such as Kucoin and Binance via REST. Additionally:
 
-💰 It can calculate the stop and limit prices for a **trailing stop strategy** based on a set of given input parameters.  
+ - 💰 It can calculate the stop and limit prices for a **trailing stop strategy** based on a set of given input parameters.  
 Refer to [SwiftTrader+TrailingStop.swift](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BTrailingStop.swift)
 
-🤖 Supports being deployed to Heroku (Linux). Tested with [Vapor](https://github.com/vapor/vapor), which means [automated trading](https://youtu.be/gMRee2srpe8) by using webhooks and scripts such as the [Profit Percentage Tracker](https://www.tradingview.com/script/p6NBsV48-Profit-Percentage-Tracker/) (TradingView). #ka-ching! 🤑
+ - 📈 It can calculate the distance of the price of multiple buying/selling orders simultaneously, creating and placing them. This feature is particularly useful for **new cryptocurrency listings**. Refer to [SwiftTrader+KucoinSpotHFMultiOrders.swift](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/Exchanges/Kucoin/SwiftTrader%2BKucoinSpotHFMultiOrders.swift), [CreateMultiLongLimitOrderTests.swift](https://github.com/backslash-f/swift-trader/blob/main/Tests/SwiftTraderTests/CreateMultiLongLimitOrderTests.swift), and [CreateMultiShortLimitOrderTests.swift](https://github.com/backslash-f/swift-trader/blob/main/Tests/SwiftTraderTests/CreateMultiShortLimitOrderTests.swift) for detailed input/output samples.
 
-📖 List of supported APIs:
+ - 🤖 Supports being deployed to Heroku (Linux). Tested with [Vapor](https://github.com/vapor/vapor), which means [automated trading](https://youtu.be/gMRee2srpe8) by using webhooks and scripts such as the [Profit Percentage Tracker](https://www.tradingview.com/script/p6NBsV48-Profit-Percentage-Tracker/) (TradingView). #ka-ching! 🤑
 
-## Kucoin Futures
+## 📖 List of supported APIs
 
-[Kucoin Futures](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BKucoinFutures.swift) | Explanation | API Documentation
---- | --- | ---
-`SwiftTrader.kucoinFuturesAccountOverview` | Retrieves the overview of a Kucoin Futures account. | https://docs.kucoin.com/futures/#account
-`SwiftTrader.kucoinFuturesStopOrderList` | Retrieves the list of un-triggered stop orders. | https://docs.kucoin.com/futures/#get-untriggered-stop-order-list
-`SwiftTrader.kucoinFuturesOrderList` | Retrieves the list of active Futures orders. | https://docs.kucoin.com/futures/#get-order-list
-`SwiftTrader.kucoinFuturesPlaceStopLimitOrder` | Places a Futures stop limit order. | https://docs.kucoin.com/futures/#place-an-order
-`SwiftTrader.kucoinFuturesCancelStopOrders` | Cancels all untriggered Futures stop orders of a given symbol (contract). | https://docs.kucoin.com/futures/#stop-order-mass-cancelation
-`SwiftTrader.kucoinFuturesPositionList` | Lists open Futures positions. | https://docs.kucoin.com/futures/#get-position-list
-
-## Kucoin Spot
+### Kucoin Spot
 
 [Kucoin Spot](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BKucoinSpot.swift) | Explanation | API Documentation
 --- | --- | ---
-`SwiftTrader.kucoinSpotListAccounts` | Gets the list of accounts. | https://docs.kucoin.com/#list-accounts
-`SwiftTrader.kucoinSpotGetAccount` | Retrieves information for a single account. | https://docs.kucoin.com/#get-an-account
-`SwiftTrader.kucoinSpotGetTransferable` | Returns the transferable balance of a specified account. | https://docs.kucoin.com/#get-the-transferable
-`SwiftTrader.kucoinSpotPlaceStopLimitOrder` | Places a spot stop limit order. | https://docs.kucoin.com/#place-a-new-order
-`SwiftTrader.kucoinSpotOrderList` | Lists active Spot orders. | https://docs.kucoin.com/#list-orders
-`SwiftTrader.kucoinSpotStopOrderList` | Lists active Spot **stop** orders. | https://docs.kucoin.com/#list-stop-orders
-`SwiftTrader.kucoinSpotCancelStopOrders` | Cancels all untriggered stop orders of a given symbol (contract). | https://docs.kucoin.com/#cancel-orders
-`SwiftTrader.kucoinSpotWebSocketRequestPrivateToken` | Apply for a private token to create a WebSocket connection, subscribe to private topics, and receive private messages (e.g., account balance, open orders, etc.). | https://www.kucoin.com/docs/websocket/basic-info/apply-connect-token/private-channels-authentication-request-required-
+`SwiftTrader.kucoinSpotListAccounts` | Gets the list of accounts. | [list-accounts](https://docs.kucoin.com/#list-accounts)
+`SwiftTrader.kucoinSpotGetAccount` | Retrieves information for a single account. | [get-an-account](https://docs.kucoin.com/#get-an-account)
+`SwiftTrader.kucoinSpotGetTransferable` | Returns the transferable balance of a specified account. | [get-the-transferable](https://docs.kucoin.com/#get-the-transferable)
+`SwiftTrader.kucoinSpotPlaceStopLimitOrder` | Places a spot stop limit order. | [place-a-new-order](https://docs.kucoin.com/#place-a-new-order)
+`SwiftTrader.kucoinSpotOrderList` | Lists active Spot orders. | [list-orders](https://docs.kucoin.com/#list-orders)
+`SwiftTrader.kucoinSpotStopOrderList` | Lists active Spot **stop** orders. | [list-stop-orders](https://docs.kucoin.com/#list-stop-orders)
+`SwiftTrader.kucoinSpotCancelStopOrders` | Cancels all untriggered stop orders of a given symbol (contract). | [cancel-orders](https://docs.kucoin.com/#cancel-orders)
+`SwiftTrader.kucoinSpotWebSocketRequestPrivateToken` | Apply for a private token to create a WebSocket connection, subscribe to private topics, and receive private messages (e.g., account balance, open orders, etc.). | [apply-connect-token-private](https://www.kucoin.com/docs/websocket/basic-info/apply-connect-token/private-channels-authentication-request-required-)
 
+### Kucoin Spot HF
 
-## Binance Spot
+[Kucoin Spot HF]((https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/Exchanges/Kucoin/SwiftTrader%2BKucoinSpotHFMultiOrders.swift)) | Explanation | API Documentation
+--- | --- | ---
+`SwiftTrader.kucoinSpotHFPlaceMultipleLongLimitOrders(_:)` | Supports sequential batch **long** order placement from a single endpoint. A maximum of 5orders can be placed simultaneously. | [place-multiple-orders](https://www.kucoin.com/docs/rest/spot-trading/spot-hf-trade-pro-account/place-multiple-orders)
+`SwiftTrader.kucoinSpotHFPlaceMultipleLongLimitOrders(_:)` | Supports sequential batch **short** order placement from a single endpoint. A maximum of 5orders can be placed simultaneously. | [place-multiple-orders](https://www.kucoin.com/docs/rest/spot-trading/spot-hf-trade-pro-account/place-multiple-orders)
+
+### Kucoin Futures
+
+[Kucoin Futures](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BKucoinFutures.swift) | Explanation | API Documentation
+--- | --- | ---
+`SwiftTrader.kucoinFuturesAccountOverview` | Retrieves the overview of a Kucoin Futures account. | [account](https://docs.kucoin.com/futures/#account)
+`SwiftTrader.kucoinFuturesStopOrderList` | Retrieves the list of un-triggered stop orders. | [get-untriggered-stop-order-list](https://docs.kucoin.com/futures/#get-untriggered-stop-order-list)
+`SwiftTrader.kucoinFuturesOrderList` | Retrieves the list of active Futures orders. | [get-order-list](https://docs.kucoin.com/futures/#get-order-list)
+`SwiftTrader.kucoinFuturesPlaceStopLimitOrder` | Places a Futures stop limit order. | [place-an-order](https://docs.kucoin.com/futures/#place-an-order)
+`SwiftTrader.kucoinFuturesCancelStopOrders` | Cancels all untriggered Futures stop orders of a given symbol (contract). | [stop-order-mass-cancelation](https://docs.kucoin.com/futures/#stop-order-mass-cancelation)
+`SwiftTrader.kucoinFuturesPositionList` | Lists open Futures positions. | [get-position-list](https://docs.kucoin.com/futures/#get-position-list)
+
+### Binance Spot
 
 [Binance Spot](https://github.com/backslash-f/swift-trader/blob/main/Sources/SwiftTrader/SwiftTrader%2BBinanceSpot.swift) | Explanation | API Documentation
 --- | --- | ---
-`SwiftTrader.binanceSpotNewOrder` | Send in a new order. Currently, only `MARKET` orders are supported (but this can be easily changed). | https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
+`SwiftTrader.binanceSpotNewOrder` | Send in a new order. Currently, only `MARKET` orders are supported (but this can be easily changed). | [new-order-trade](https://binance-docs.github.io/apidocs/spot/en/#new-order-trade)
 
 ## Integration
 ### Xcode
@@ -57,7 +65,7 @@ In your `Package.swift`, add `SwiftTrader` as a dependency:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/backslash-f/swift-trader", from: "0.0.1")
+  .package(url: "https://github.com/backslash-f/swift-trader", from: "1.0.0")
 ]
 ```
 
