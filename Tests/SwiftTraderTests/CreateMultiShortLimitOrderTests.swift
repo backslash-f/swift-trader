@@ -74,10 +74,21 @@ final class CreateMultiShortLimitOrderTests: XCTestCase {
             for (index, order) in result.enumerated() {
                 XCTAssertEqual(
                     order.size,
-                    testCase.expectedSize,
-                    "Order \(index + 1) size should be \(testCase.expectedSize)"
+                    testCase.expectedSizes[index],
+                    "Order \(index + 1) size should be \(testCase.expectedSizes[index])"
                 )
             }
+
+            let totalExpectedSize = testCase.expectedSizes.compactMap { Double($0) }.reduce(0, +)
+            let totalSize = testCase.input.totalSize
+
+            XCTAssertTrue(
+                totalExpectedSize <= totalSize,
+                """
+                    The expected size should be less then/equal to the total size \(totalSize)
+                    -- and not \(totalExpectedSize)
+                """
+            )
         }
     }
 }
@@ -147,7 +158,13 @@ private extension CreateMultiShortLimitOrderTests {
                     "0.6874",
                     "0.6806"
                 ],
-                expectedSize: "92"
+                expectedSizes: [
+                    "18",
+                    "18",
+                    "18",
+                    "18",
+                    "18"
+                ]
             ),
 
             TestCase(
@@ -159,7 +176,13 @@ private extension CreateMultiShortLimitOrderTests {
                     "0.00000178",
                     "0.00000177"
                 ],
-                expectedSize: "70485494"
+                expectedSizes: [
+                    "14097098",
+                    "14097098",
+                    "14097098",
+                    "14097098",
+                    "14097098"
+                ]
             ),
 
             TestCase(
@@ -171,7 +194,13 @@ private extension CreateMultiShortLimitOrderTests {
                     "308.85",
                     "305.76"
                 ],
-                expectedSize: "0.60"
+                expectedSizes: [
+                    "0.12",
+                    "0.12",
+                    "0.12",
+                    "0.12",
+                    "0.12"
+                ]
             ),
 
             TestCase(
@@ -183,7 +212,13 @@ private extension CreateMultiShortLimitOrderTests {
                     "1.75",
                     "1.73"
                 ],
-                expectedSize: "136"
+                expectedSizes: [
+                    "27",
+                    "27",
+                    "27",
+                    "27",
+                    "27"
+                ]
             ),
 
             TestCase(
@@ -195,7 +230,13 @@ private extension CreateMultiShortLimitOrderTests {
                     "0.073",
                     "0.072"
                 ],
-                expectedSize: "4333"
+                expectedSizes: [
+                    "866",
+                    "866",
+                    "866",
+                    "866",
+                    "866"
+                ]
             )
         ]
     }
@@ -203,6 +244,6 @@ private extension CreateMultiShortLimitOrderTests {
     struct TestCase {
         let input: SwiftTraderMultiShortLimitOrderInput
         let expectedPrices: [String]
-        let expectedSize: String
+        let expectedSizes: [String]
     }
 }

@@ -21,7 +21,13 @@ public struct KucoinSpotHFShortLimitOrdersResult: Equatable, Codable {
         orders.map { $0.price }
     }
 
+    /// An array of the sizes of the submitted orders.
     public var sizes: [String] {
         orders.map { $0.size }
+    }
+
+    /// The total size of all the submitted orders.
+    public var totalSize: Double {
+        orders.compactMap { Double($0.size) }.reduce(0, +)
     }
 }

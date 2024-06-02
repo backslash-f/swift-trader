@@ -45,7 +45,8 @@ public extension SwiftTrader {
             formattedPrices.insert(formattedPrice)
             previousPrice = price
 
-            let formattedSize = formatSize(orderInput.totalSize, decimalPlaces: decimalPlaces)
+            let sizePerOrder = orderInput.totalSize / numberOfOrders
+            let formattedSize = formatSize(sizePerOrder, decimalPlaces: decimalPlaces)
 
             let order = KucoinSpotHFOrderParameters(
                 symbol: orderInput.symbol,

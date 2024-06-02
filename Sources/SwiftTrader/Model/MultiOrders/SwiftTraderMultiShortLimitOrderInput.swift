@@ -34,8 +34,8 @@ public struct SwiftTraderMultiShortLimitOrderInput {
     ///   - priceDecrement: How much the price of subsequent orders (second, third, fourth, and fifth)
     ///   should go **down**.
     ///   The value indicates the percentage. For example: 0,1 = 10%.
-    ///   - totalSize: The total size of the acquired asset. Each created order will use this number as its size.
-    ///  This way, all available assets will be sold once one of the five orders is filled, maximazing the profit.
+    ///   - totalSize: The total size available for the operation. The number will be distributed evenly
+    ///   between all submitted orders.
     public init(symbol: String,
                 initialPrice: String,
                 targetProfitPercentage: Double,
